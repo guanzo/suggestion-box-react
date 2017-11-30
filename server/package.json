@@ -1,0 +1,29 @@
+{
+  "name": "toolbox-server",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "cron": "^1.3.0",
+    "dotenv": "^4.0.0",
+    "express": "4.15.3",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.0",
+    "https": "^1.0.0",
+    "jsonwebtoken": "^8.0.0",
+    "knex": "^0.13.0",
+    "mongodb": "^2.2.33",
+    "node-cleanup": "^2.1.2",
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1"
+  },
+  "scripts": {
+    "start": "nodemon src/",
+    "test": "mocha src/**/*.spec.js --recursive"
+  }
+}
