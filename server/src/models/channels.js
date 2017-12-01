@@ -13,7 +13,7 @@ module.exports = {
         //ensure channel document exists
         let result = await addChannel(channelId, channelName);
         return channels
-                .findOne({ channelId })
+                .findOne({ channelId }, { _id: 0 })
                 .catch(err=>{
                     console.log(err)
                 })

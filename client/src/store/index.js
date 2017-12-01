@@ -1,5 +1,5 @@
 import ReduxThunk from 'redux-thunk'
-import { createStore, combineReducers, applyMiddleware  } from 'redux'
+import { createStore, applyMiddleware  } from 'redux'
 import { channelReducer } from './channel'
 import { suggestionsReducer } from './suggestions'
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
         isAuthed: false,
         token: null,
     },
-    suggestions:['ahahaha']
+    suggestions:[]
 }
 
 

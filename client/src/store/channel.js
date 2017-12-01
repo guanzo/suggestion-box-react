@@ -1,4 +1,5 @@
 import axios from 'axios'
+import _ from 'lodash'
 import { setSuggestions } from './suggestions'
 export const SET_CHANNEL = 'SET_CHANNEL'
 
@@ -16,9 +17,11 @@ export function fetchChannel(channelId, channelName){
             params:{ channelName },
         })
         .then(res=>{
-            dispatch(setChannel(res.data))
-            dispatch(setSuggestions(res.data.suggestions))
-            console.log(getState())
+            let data = _.omit(res.data,'suggestions')
+            let { suggestions } = res.data
+            
+            dispatch(setChannel(data))
+            dispatch(setSuggestions(suggestions))
         })
     }
 }
@@ -26,7 +29,7 @@ export function fetchChannel(channelId, channelName){
 export function channelReducer(state = {}, action){
     switch(action.type) {
         case SET_CHANNEL:
-            return {...state, channel: action.channel}
+            return {...state, ...action.channel}
         default:
             return state
     }

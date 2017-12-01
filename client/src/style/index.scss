@@ -13,3 +13,20 @@ body {
   font-family: sans-serif;
   min-height: 100%;
 }
+
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &.flex-column {
+        flex-direction: column;
+    }
+}
+
+.absolute-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

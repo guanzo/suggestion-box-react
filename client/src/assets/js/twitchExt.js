@@ -11,7 +11,6 @@ if(!inIframe() && process.env.NODE_ENV === 'development'){
     let role = 'broadcaster'
     //store.dispatch(SET_CHANNEL, { channelId: -1, userId: -1, token, role, channelName: 'guanzo' })
 }
-
 var authed = false;
 window.Twitch.ext.onAuthorized(async function(auth) {
     if(authed){
@@ -24,15 +23,17 @@ window.Twitch.ext.onAuthorized(async function(auth) {
     var parts = auth.token.split(".");
     var payload = JSON.parse(window.atob(parts[1]));
     var role = payload.role
-
+    let { channelId, userId } = auth;
+    var channelName = await getChannelName(auth.channelId)
+    
     store.dispatch(setChannel({ 
-        channelId: auth.channelId, 
+        channelId, 
         channelName, 
-        userId: auth.userId, 
+        userId, 
         role 
     }))
-    var channelName = await getChannelName(auth.channelId)
-    store.dispatch(fetchChannel(auth.channelId, channelName))
+    
+    store.dispatch(fetchChannel(channelId, channelName))
     /* 
      */
     //axios.get('')
