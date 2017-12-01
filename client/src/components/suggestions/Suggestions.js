@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
+import store from '@/store'
 import './Suggestions.scss';
 
+
+
 class Suggestions extends Component {
+    constructor(){
+        super()
+        this.state = {
+            suggestions: []
+        }
+        store.subscribe((...args)=>{
+            this.setState({ suggestions: store.getState().suggestions })
+        })
+    }
     render() {
-        var component = this.props.suggestions.length ? this.suggestionList() : this.noSuggestions()
+        var component = this.state.suggestions.length ? this.suggestionList() : this.noSuggestions()
         return (
             <div class="suggestions">
                 {component}
@@ -14,8 +26,8 @@ class Suggestions extends Component {
         return (
             <div class="suggestions-list">
                 {
-                    this.props.suggestions.map(suggestion=>{
-                        return <div class="suggestions">{suggestion}</div>
+                    this.state.suggestions.map(suggestion=>{
+                        return <div class="suggestions">{suggestion.text}</div>
                     })
                 }
             </div>
@@ -30,5 +42,14 @@ class Suggestions extends Component {
         )
     }
 }
+/* 
+const mapDispatchToProps = (dispatch,test) => {
+    return {
+        onSubmit: text => {
+            return dispatch(postSuggestion(text))
+        }
+    }
+}
+const Suggest_C = connect(null,mapDispatchToProps)(Suggest) */
 
 export default Suggestions;

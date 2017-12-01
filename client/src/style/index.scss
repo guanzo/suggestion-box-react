@@ -30,3 +30,16 @@ body {
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
+.flex{
+    display: flex;
+    &.column{
+        flex-direction: column;
+    }
+    &.justify-between{
+        justify-content: space-between;
+    }
+    &.justify-around{
+        justify-content: space-around;
+    }
+}

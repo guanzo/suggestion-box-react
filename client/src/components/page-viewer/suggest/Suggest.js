@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
+import { postSuggestion } from '@/store/suggestions'
+import store from '@/store'
 
 class Suggest extends Component {
     constructor(){
         super()
         this.state = {
-            isExpanded: true,
-            currentLength: 0,
+            isLoading: false,
+            isExpanded: false,
+            suggestion: '',
             maxLength: 100
         }
     }
     render() {
         let component = this.state.isExpanded ? this.postForm() : this.postButton()
-        console.log(component)
         return (
         <div class="suggest" style={this.style()}>
             {component}
@@ -37,7 +39,6 @@ class Suggest extends Component {
         )
     }
     expandToForm(){
-        console.log(this)
         this.setState({ isExpanded: true })
     }
     postForm(){
@@ -54,12 +55,11 @@ class Suggest extends Component {
                     <li>Be nice. Violators will be dealt with.</li>
                 </ol>
                 {this.input()} 
-                <button class="button is-primary is-small">Suggest</button>
             </div>
         )
     }
     input(){
-        let { state } = this;
+        let { state, props } = this;
         return (
             <div class="field">
                 <div class="control">
@@ -67,13 +67,23 @@ class Suggest extends Component {
                             placeholder="A brilliant suggestion..." 
                             style={{resize: 'none', overflow:'hidden'}}
                             maxLength={state.maxLength}
-                            onInput={e=>this.setState({currentLength: e.target.value.length})}
+                            onInput={e=>this.setState({suggestion: e.target.value})}
                     >
                     </textarea>
                 </div>
-                <p class="help has-text-right">{state.currentLength+'/'+state.maxLength}</p>
+                <div class="flex justify-between p-t-5">
+                    <p class="help m-t-0">{state.suggestion.length+'/'+state.maxLength}</p>
+                    <button class="button is-primary is-small"
+                        disabled={state.suggestion.length == 0}
+                        onClick={this.onSubmit.bind(this)}
+                    >Suggest</button>
+                </div>
             </div>
         )
+    }
+    onSubmit(){
+        let result = store.dispatch(postSuggestion(this.state.suggestion))
+        console.log(result)
     }
 }
 

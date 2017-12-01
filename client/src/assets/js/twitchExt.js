@@ -2,6 +2,7 @@
 import axios from 'axios'
 import store from '@/store'
 import { setChannel, fetchChannel } from '@/store/channel'
+import { setUser } from '@/store'
 //testing on localhost window, and not inside twitch iframe
 //i need to join a room so that i can cast votes locally
 if(!inIframe() && process.env.NODE_ENV === 'development'){
@@ -11,26 +12,42 @@ if(!inIframe() && process.env.NODE_ENV === 'development'){
     let role = 'broadcaster'
     //store.dispatch(SET_CHANNEL, { channelId: -1, userId: -1, token, role, channelName: 'guanzo' })
 }
-var authed = false;
+//var authed = false;
 window.Twitch.ext.onAuthorized(async function(auth) {
-    if(authed){
+    /* if(authed){
         return;
     }
-    authed = true;
+    authed = true; */
+
     axios.defaults.headers.common['Authorization'] = auth.token;
+    axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
     //adds token to every request sent thru axios
     var parts = auth.token.split(".");
     var payload = JSON.parse(window.atob(parts[1]));
-    var role = payload.role
-    let { channelId, userId } = auth;
-    var channelName = await getChannelName(auth.channelId)
+
+    var { user_id, role } = payload
+    let { channelId, userId: opaqueUserId } = auth;
     
+    let userId
+    if (user_id) {
+        userId = user_id
+        // user has granted
+        console.log('user has granted')
+    } else {
+        userId = opaqueUserId
+        console.log('user has NOT granted')
+        // user has NOT granted
+    }
+    let user = { id: userId, role }
+    store.dispatch(setUser(user))
+
+    var streamer = await getUser(auth.channelId)
+    let channelName = streamer.display_name
+    console.log(streamer)
     store.dispatch(setChannel({ 
         channelId, 
-        channelName, 
-        userId, 
-        role 
+        channelName
     }))
     
     store.dispatch(fetchChannel(channelId, channelName))
@@ -64,13 +81,13 @@ function inIframe () {
     }
 }
 
-function getChannelName(channelId){
-    return axios.get(`https://api.twitch.tv/helix/users?id=${channelId}`,{
+function getUser(userId){
+    return axios.get(`https://api.twitch.tv/helix/users?id=${userId}`,{
         headers:{
             'Client-Id':process.env.REACT_APP_EXTENSION_CLIENT_ID,
         }
     }).then((response)=>{
-        let channelName = response.data.data[0].display_name;
-        return channelName
+        let user = response.data.data[0];
+        return user
     })
 }

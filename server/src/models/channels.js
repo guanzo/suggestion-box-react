@@ -9,6 +9,7 @@ module.exports = {
      */
     async getChannel({channelId, channelName}){
         var channels = db.get().collection('channels')
+        channels.createIndex({ channelId: 1 })
         
         //ensure channel document exists
         let result = await addChannel(channelId, channelName);
@@ -18,6 +19,18 @@ module.exports = {
                     console.log(err)
                 })
     },
+    postSuggestion(channelId, suggestion){
+        var channels = db.get().collection('channels')
+        return channels.updateOne(
+            { channelId },
+            { 
+                $push: { 
+                    //prepend to array
+                    suggestions: suggestion
+                }
+            }
+        )
+    }
 }
 
 function addChannel(channelId,channelName){

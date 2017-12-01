@@ -11,17 +11,17 @@ export function setChannel(channel){
 }
 
 export function fetchChannel(channelId, channelName){
-    let baseUrl = process.env.REACT_APP_SERVER_URL
     return (dispatch,getState) => {
-        axios.get(`${baseUrl}api/channels/${channelId}`,{
+        axios.get(`/api/channels/${channelId}`,{
             params:{ channelName },
         })
         .then(res=>{
             let data = _.omit(res.data,'suggestions')
             let { suggestions } = res.data
-            
+
             dispatch(setChannel(data))
             dispatch(setSuggestions(suggestions))
+            //console.log(getState())
         })
     }
 }
