@@ -1,5 +1,13 @@
+//enforced by twitch
+$width: 318px;
+$height: 500px;
+
 .app{
     height: 100%;
     font-family: 'Roboto', sans-serif;
     padding: 10px;
+    width: $width;
+    max-width: $width;
+    height: $height;
+    max-height: $height;
 }

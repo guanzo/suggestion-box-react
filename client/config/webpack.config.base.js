@@ -28,6 +28,27 @@ module.exports = {
             amd: 'react-router-dom',
             umd: 'react-router-dom',
             },
+        'redux': {
+            root: 'Redux',
+            commonjs2: 'redux',
+            commonjs: 'redux',
+            amd: 'redux',
+            umd: 'redux',
+        },
+        'react-redux': {
+            root: 'ReactRedux',
+            commonjs2: 'react-redux',
+            commonjs: 'react-redux',
+            amd: 'react-redux',
+            umd: 'react-redux',
+        },
+        'react-thunk': {
+            root: 'ReactThunk',
+            commonjs2: 'react-thunk',
+            commonjs: 'react-thunk',
+            amd: 'react-thunk',
+            umd: 'react-thunk',
+        },
         'axios':'axios',
         lodash : {
             commonjs: "lodash",

@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import './App.scss';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Viewer from './Viewer/Viewer'
-import LiveConfig from './LiveConfig/LiveConfig'
-import Config from './Config/Config'
+import Viewer from './page-viewer/Viewer'
+import LiveConfig from './page-liveconfig/LiveConfig'
+import Config from './page-config/Config'
+import './App.scss';
+
 
 class App extends Component {
+    constructor(){
+        super()
+    }
     render() {
         return (
         <Router>
