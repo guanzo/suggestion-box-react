@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
+import './Viewer.scss';
 
 class Viewer extends Component {
     render() {
         return (
         <div className="viewer">
-            <span>VIEWER</span>
+            <div>VIEWER</div>
+            <div>VIEWER</div>
+            <div>VIEWER</div>
+            <div>VIEWER</div>
+            <div>VIEWER</div>
+            <div>VIEWER</div>
+            <div>VIEWER</div>
+            <div>VIEWER</div>
         </div>
         );
     }

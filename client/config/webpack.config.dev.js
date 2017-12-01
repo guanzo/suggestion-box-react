@@ -12,6 +12,9 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 
+const merge = require('webpack-merge')
+const baseWebpackConfig = require('./webpack.config.base')
+
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 const publicPath = '/';
@@ -25,7 +28,7 @@ const env = getClientEnvironment(publicUrl);
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
-module.exports = {
+const devWebpackConfig = merge(baseWebpackConfig,{
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
   devtool: 'cheap-module-source-map',
@@ -52,29 +55,6 @@ module.exports = {
     // initialization, it doesn't blow up the WebpackDevServer client, and
     // changing JS code would still trigger a refresh.
   ],
-  externals:{
-    react: {
-        root: 'React',
-        commonjs2: 'react',
-        commonjs: 'react',
-        amd: 'react',
-        umd: 'react',
-    },
-    'react-dom': {
-        root: 'ReactDOM',
-        commonjs2: 'react-dom',
-        commonjs: 'react-dom',
-        amd: 'react-dom',
-        umd: 'react-dom',
-    },
-    'react-router-dom': {
-      root: 'ReactRouterDOM',
-      commonjs2: 'react-router-dom',
-      commonjs: 'react-router-dom',
-      amd: 'react-router-dom',
-      umd: 'react-router-dom',
-  },
-  },
   output: {
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: true,
@@ -131,7 +111,7 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
-      /* {
+      {
         test: /\.(js|jsx|mjs)$/,
         enforce: 'pre',
         use: [
@@ -139,13 +119,12 @@ module.exports = {
             options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
-              
             },
             loader: require.resolve('eslint-loader'),
           },
         ],
         include: paths.appSrc,
-      }, */
+      },
       {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall
@@ -250,6 +229,24 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
     }),
+    new HtmlWebpackPlugin({
+      filename: 'viewer.html',
+      template: paths.appHtml,
+      title: 'viewer',
+      inject: true
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'liveconfig.html',
+      template: paths.appHtml,
+      title: 'liveconfig',
+      inject: true
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'config.html',
+      template: paths.appHtml,
+      title: 'config',
+      inject: true
+    }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
@@ -288,4 +285,5 @@ module.exports = {
   performance: {
     hints: false,
   },
-};
+});
+module.exports = devWebpackConfig

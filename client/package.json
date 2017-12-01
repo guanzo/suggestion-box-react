@@ -1,9 +1,10 @@
 {
-  "name": "nomoretabs",
+  "name": "suggestion-box",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.6",
+    "axios": "^0.17.1",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
@@ -96,6 +97,7 @@
   },
   "devDependencies": {
     "node-sass": "^4.7.2",
-    "sass-loader": "^6.0.6"
+    "sass-loader": "^6.0.6",
+    "webpack-merge": "^4.1.1"
   }
 }
