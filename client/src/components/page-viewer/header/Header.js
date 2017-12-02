@@ -16,11 +16,14 @@ class Header extends Component {
         return test
     }
     testBtn(){
+        let style = {
+            position: 'absolute',
+            top: 0,
+            right: 0
+        }
         let generate = ()=> require('axios').post(`/api/channels/${23435553}/suggestions/test`)
         return (
-            <button 
-            onClick={generate}
-            >Gen</button>
+            <button style={style} onClick={generate}>g</button>
         )
     }
 }

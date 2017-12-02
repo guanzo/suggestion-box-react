@@ -6,12 +6,13 @@ import { connect } from 'react-redux'
 import store from '@/store'
 import { userRoles } from '@/store/user' 
 import { delay } from '@/util'
+import './Suggest.scss'
 
 class Suggest extends Component {
     constructor(){
         super()
         this.state = {
-            isExpanded: false,
+            isOverlay: false,
             isLoading: false,
             suggestion: '',
             isApproved: true,
@@ -20,20 +21,12 @@ class Suggest extends Component {
         }
     }
     render() {
-        let { isExpanded, hasSubmitted, isApproved } = this.state
-        let style = {
-            position: 'absolute',
-            bottom: 0,
-            width: '100%',
-            height: isExpanded ? '100%' : 'auto',
-            background: 'white',
-            transition: '0.75s'
-        }
+        let { isOverlay, hasSubmitted, isApproved } = this.state
         let component;
-        if(!isExpanded)
+        if(!isOverlay)
             component = this.openFormButton()
         else if(!hasSubmitted)
-            component = <div class="suggest flex-center" style={style}>
+            component = <div class="suggest">
                             {this.suggestionForm()}
                          </div>
         else{
@@ -60,7 +53,7 @@ class Suggest extends Component {
             <button class="button is-primary is-small"
                 style={style}
                 disabled={isAnonymousUser}
-                onClick={()=>this.setState({ isExpanded: true })}
+                onClick={()=>this.setState({ isOverlay: true })}
             ><i class="fa fa-comment fa-lg has-text-white"></i></button>
         )
     }
@@ -111,7 +104,7 @@ class Suggest extends Component {
         }
     }
     closeForm(){
-        this.setState({ isExpanded: false })
+        this.setState({ isOverlay: false })
     }
     async onSubmit(e){
         e.preventDefault();

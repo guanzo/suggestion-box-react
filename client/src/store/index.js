@@ -5,13 +5,14 @@ import { initialState as user } from './user'
 import { initialState as suggestions } from './suggestions'
 import { userReducer } from './user'
 import { channelReducer } from './channel'
-import { suggestionsReducer, offsetReducer } from './suggestions'
+import { suggestionsReducer, paginationReducer } from './suggestions'
 
 const initialState = {
     token: null,
     ...user,
     ...channel,
-    ...suggestions
+    ...suggestions,
+    hasOverlay: false,
 }
 
 function root(state = initialState, action){
@@ -19,7 +20,7 @@ function root(state = initialState, action){
         user: userReducer(state.user, action),
         channel: channelReducer(state.channel, action),
         suggestions: suggestionsReducer(state.suggestions,action),
-        offset: offsetReducer(state.offset, action)
+        pagination: paginationReducer(state.pagination, action)
     }
 }
 let store = createStore(root,applyMiddleware(ReduxThunk))

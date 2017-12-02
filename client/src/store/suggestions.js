@@ -4,11 +4,16 @@ export const SET_SUGGESTIONS = 'SET_SUGGESTIONS'
 export const ADD_SUGGESTION = 'ADD_SUGGESTION'
 export const POST_SUGGESTION = 'POST_SUGGESTION'
 export const INCREMENT_OFFSET = 'INCREMENT_OFFSET'
+export const NO_MORE_PAGES = 'NO_MORE_PAGES'
+
 const PAGE_LIMIT = 5;
 
 export const initialState = {
     suggestions:[],
-    offset: 0
+    pagination:{
+        offset: 0,
+        noMorePages: false
+    }
 }
 
 export function setSuggestions(suggestions){
@@ -29,16 +34,16 @@ export function fetchSuggestions(){
 
     return (dispatch,getState) => {
         let state = getState()
-        let { offset } = state
+        let { offset } = state.pagination
         let { channelId } = state.channel
         axios.get(`/api/channels/${channelId}/suggestions`,{
             params:{ offset, limit: PAGE_LIMIT },
         })
         .then(res=>{
             dispatch(setSuggestions(res.data))
-            dispatch({
-                type: INCREMENT_OFFSET,
-            })
+            dispatch({ type: INCREMENT_OFFSET })
+            if(res.data.length < PAGE_LIMIT)
+                dispatch({ type: NO_MORE_PAGES })
         })
     }
 }
@@ -79,10 +84,12 @@ export function suggestionsReducer(state = [], action){
     }
 }
 
-export function offsetReducer(state = 0, { type }){
+export function paginationReducer(state = {}, { type }){
     switch(type) {
         case INCREMENT_OFFSET:
-            return state += PAGE_LIMIT
+            return { ...state, offset: state.offset += PAGE_LIMIT }
+        case NO_MORE_PAGES:
+            return { ...state, noMorePages: true }
         default:
             return state
     }

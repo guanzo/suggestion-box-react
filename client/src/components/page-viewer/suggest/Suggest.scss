@@ -1,0 +1,10 @@
+$header-height: 60px;
+
+.suggest{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background: white;
+    //cover entire app except for header
+    height: $app-height - $header-height - $app-padding;
+}
