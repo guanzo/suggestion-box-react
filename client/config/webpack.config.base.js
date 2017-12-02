@@ -1,10 +1,17 @@
-
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
 const paths = require('./paths');
 
 module.exports = {
     output:{
         libraryTarget: 'umd'
+    },
+    resolve:{
+        alias: {
+            '@': path.resolve(__dirname, '../src'),
+        // Support React Native Web
+        // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
+        'react-native': 'react-native-web',
+        },
     },
     externals:{
         react: {
@@ -42,12 +49,12 @@ module.exports = {
             amd: 'react-redux',
             umd: 'react-redux',
         },
-        'react-thunk': {
-            root: 'ReactThunk',
-            commonjs2: 'react-thunk',
-            commonjs: 'react-thunk',
-            amd: 'react-thunk',
-            umd: 'react-thunk',
+        'redux-thunk': {
+            root: 'ReduxThunk',
+            commonjs2: 'redux-thunk',
+            commonjs: 'redux-thunk',
+            amd: 'redux-thunk',
+            umd: 'redux-thunk',
         },
         'axios':'axios',
         lodash : {

@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -23,13 +27,12 @@
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
-    <script src="%PUBLIC_URL%/static/js/lib/react.development.js"></script>
-    <script src="%PUBLIC_URL%/static/js/lib/react-dom.development.js"></script>
-    <script src="%PUBLIC_URL%/static/js/lib/react-dom-test-utils.development.js"></script>
-    <script src="%PUBLIC_URL%/static/js/lib/react-router-dom.js"></script>
-    <script src="%PUBLIC_URL%/static/js/lib/redux.js"></script>
-    <script src="%PUBLIC_URL%/static/js/lib/react-redux.js"></script>
-    <script src="%PUBLIC_URL%/static/js/lib/redux-thunk.js"></script>
+    <script src="%PUBLIC_URL%/static/js/lib/react.production.min.js"></script>
+    <script src="%PUBLIC_URL%/static/js/lib/react-dom.production.min.js"></script>
+    <script src="%PUBLIC_URL%/static/js/lib/react-router-dom.min.js"></script>
+    <script src="%PUBLIC_URL%/static/js/lib/redux.min.js"></script>
+    <script src="%PUBLIC_URL%/static/js/lib/react-redux.min.js"></script>
+    <script src="%PUBLIC_URL%/static/js/lib/redux-thunk.min.js"></script>
     <script src="%PUBLIC_URL%/static/js/lib/axios.min.js"></script>
     <script src="%PUBLIC_URL%/static/js/lib/lodash.min.js"></script>
     <!--
