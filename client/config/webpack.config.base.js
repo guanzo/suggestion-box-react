@@ -35,7 +35,7 @@ module.exports = {
             commonjs: 'react-router-dom',
             amd: 'react-router-dom',
             umd: 'react-router-dom',
-            },
+        },
         'redux': {
             root: 'Redux',
             commonjs2: 'redux',
@@ -63,6 +63,13 @@ module.exports = {
             commonjs: 'reselect',
             amd: 'reselect',
             umd: 'reselect',
+        },
+        'react-transition-group': {
+            root: 'ReactTransitionGroup',
+            commonjs2: 'react-transition-group',
+            commonjs: 'react-transition-group',
+            amd: 'react-transition-group',
+            umd: 'react-transition-group',
         },
         'axios':'axios',
         lodash : {

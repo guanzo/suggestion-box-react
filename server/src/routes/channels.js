@@ -1,15 +1,21 @@
 const channelModel = require('../models/channels')
+const userUtil = require('../../../shared/user-util')
 
 /**
  * Makes api calls on behalf of browser, to circumvent cors
  */
 
-function postSuggestion(channelId, text, userId){
+async function postSuggestion(channelId, text, user){
+
+    let channel = await channelModel.getChannel(channelId)
+    let userId = user.id
+    console.log(user)
     return new Promise(async resolve=>{
         let suggestion = {
             text,
             userId,
             createdAt: new Date(),
+            isApproved: !channel.requireApproval,
             votes: []
         }
  
@@ -25,18 +31,16 @@ function postSuggestion(channelId, text, userId){
 module.exports = (app) => {
     
     app.get('/api/channels/:id',async (req, res) => {
-        let data = {
-            channelId: req.params.id,
-            channelName: req.query.channelName
-        }
-        let channel = await channelModel.getChannel(data)
+        let channelId = req.params.id
+        let channelName = req.query.channelName
+        let channel = await channelModel.getChannel(channelId, channelName)
         res.json(channel)
     })
 
     app.post('/api/channels/:id/suggestions',async (req, res) => {
         let channelId = req.params.id
-        let { text, userId } = req.body
-        let response = await postSuggestion(channelId, text, userId)
+        let { text, user } = req.body
+        let response = await postSuggestion(channelId, text, user)
         if(response.success)
             res.status(201).send(response)
         else

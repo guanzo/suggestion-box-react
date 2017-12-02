@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import './Suggestions.scss';
 import { userRoles } from '@/store/user' 
-import store from '@/store'
 
 
 class Suggestions extends Component {
@@ -12,12 +11,6 @@ class Suggestions extends Component {
         return (
             <div class="suggestions">
                 {component}
-                <div><pre>{JSON.stringify(store.getState(), null, 2) }</pre></div>
-                <div>anon {': '+props.isAnonymousUser}</div>
-                <div>opaque {': '+props.isOpaqueUser}</div>
-                <div>isRealUser {': '+props.isRealUser}</div>
-                <div>isModerator {': '+props.isModerator}</div>
-                <div>isBroadcaster {': '+props.isBroadcaster}</div>
             </div>
         );
     }

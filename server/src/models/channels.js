@@ -1,13 +1,13 @@
 var db = require('../db.js')
 var ObjectID = require('mongodb').ObjectID
-//const e = require('../../../shared/constants')
+const userUtil = require('../../../shared/user-util')
 
 module.exports = {
     /**
      * current vote is first element in "voteHistory". should always return a value
      * handles creation of channel if not exists
      */
-    async getChannel({channelId, channelName}){
+    async getChannel(channelId, channelName){
         var channels = db.get().collection('channels')
         channels.createIndex({ channelId: 1 })
         
@@ -37,6 +37,8 @@ function addChannel(channelId,channelName){
     var channel = {
         channelId,
         suggestions:[],
+        requireApproval: false,
+        allowModAdmin: false
     }
     //keep updating channelName in case it gets changed
     var channels = db.get().collection('channels')

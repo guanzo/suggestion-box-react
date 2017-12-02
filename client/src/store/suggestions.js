@@ -23,14 +23,16 @@ export function postSuggestion(text){
     return (dispatch,getState) => {
         let state = getState()
         let channelId = state.channel.channelId;
-        let userId = state.user.id
+        let user = state.user
         return axios.post(`/api/channels/${channelId}/suggestions`,{
             text,
-            userId
+            user,
         })
         .then(res=>{
-            console.log(res)
-            dispatch(addSuggestion())
+            let suggestion = res.data.suggestion
+            if(suggestion.isApproved)
+                dispatch(addSuggestion(suggestion))
+            return suggestion
         })
         .catch(err=>{
             console.error(err)

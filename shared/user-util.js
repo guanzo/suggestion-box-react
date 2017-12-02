@@ -4,8 +4,6 @@ var self = module.exports = {
     ROLE_VIEWER:        'viewer',
     ROLE_MODERATOR:     'moderator',
     ROLE_BROADCASTER:   'broadcaster',
-    REQUIRE_APPROVAL:   'requireApproval',
-    ALLOW_MOD_ADMIN:    'allowModAdmin',
     //Not logged in user, NOT ALLOWED TO POST
     isAnonymousUser: function (user){
         return _.isNull(user.id) && user.opaqueId.charAt(0) === 'A'

@@ -1,41 +1,56 @@
 import React, { Component } from 'react';
+import Input from './Input'
+import PostResult from './PostResult'
 import { postSuggestion } from '@/store/suggestions'
 import { connect } from 'react-redux'
 import store from '@/store'
 import { userRoles } from '@/store/user' 
+import { delay } from '@/util'
 
 class Suggest extends Component {
     constructor(){
         super()
         this.state = {
-            isLoading: false,
             isExpanded: false,
+            isLoading: false,
             suggestion: '',
-            maxLength: 100
+            isApproved: true,
+            hasSubmitted: false,
+            postAnonymously: false
         }
     }
     render() {
-        let component = this.state.isExpanded ? this.postForm() : this.postButton()
-        return (
-        <div class="suggest" style={this.style()}>
-            {component}
-        </div>
-        );
-    }
-    style(){
-        return {
+        let { isExpanded, hasSubmitted, isApproved } = this.state
+        let style = {
             position: 'absolute',
             bottom: 0,
             width: '100%',
-            height: this.state.isExpanded ? '100%' : 'auto',
-            background: 'white'
+            height: isExpanded ? '100%' : 'auto',
+            background: 'white',
+            transition: '0.75s'
         }
+        let component;
+        if(!isExpanded)
+            component = this.openFormButton()
+        else if(!hasSubmitted)
+            component = this.suggestionForm()
+        else{
+            component = <PostResult 
+                            onClose={this.closeForm.bind(this)} 
+                            isApproved={isApproved}
+                        ></PostResult>
+        }
+        return (
+            <div class="suggest flex-center" style={style}>
+                {component}
+            </div>
+        );
     }
-    postButton(){
+    openFormButton(){
         let {isAnonymousUser} = this.props
         return (
             <div class="has-text-centered">
-                {isAnonymousUser ? <p class="help is-danger">You must login to leave a suggestion</p> : ''}
+                {isAnonymousUser ? <p class="help is-danger m-b-5">You must login to leave a suggestion</p> : ''}
                 <button class="button is-primary is-small"
                     disabled={isAnonymousUser}
                     onClick={()=>this.setState({ isExpanded: true })}
@@ -43,12 +58,16 @@ class Suggest extends Component {
             </div>
         )
     }
-    postForm(){
+    suggestionForm(){
         return (
             <div class="suggestion-form">
                 {this.rules()}
                 {this.settings()}
-                {this.input()}
+                <Input { ...this.state }
+                    onSubmit={this.onSubmit.bind(this)}
+                    onInput={e=>this.setState({suggestion: e.target.value})}
+                    onCancel={this.closeForm.bind(this)}
+                ></Input>
             </div>
         )
     }
@@ -59,56 +78,48 @@ class Suggest extends Component {
                 <ol class="is-size-7 m-b-15 p-l-15">
                     <li>Write a helpful suggestion.<br/> This is not a place for arbitrary comments.</li>
                     <li>Check existing suggestions to see if your idea has already been posted.</li>
-                    <li>Be nice. Violators will be dealt with.</li>
+                    <li>You can provide constructive criticism but don't be rude.</li>
                 </ol>
             </div>
         )
     }
     settings(){
-
-        return (
-            <div class="field">  
-                <div class="control">
-                    <label class="checkbox is-size-7"> 
-                    <input type="checkbox" class="m-r-5" style={{'vertical-align': 'middle'}} />
-                     Post anonymously
-                    </label>
-                </div>
-            </div>
-        )
-    }
-    input(){
-        let { state } = this;
-        return (
-            <div class="field">
-                <div class="control">
-                    <textarea class="textarea is-primary" rows="4" 
-                            placeholder="A brilliant suggestion..." 
-                            style={{resize: 'none', overflow:'hidden'}}
-                            maxLength={state.maxLength}
-                            value={state.suggestion}
-                            onInput={e=>this.setState({suggestion: e.target.value})}
-                    >
-                    </textarea>
-                </div>
-                <div class="flex justify-between p-t-5">
-                    <p class="help m-t-0">{state.suggestion.length+'/'+state.maxLength}</p>
-                    <div class="buttons">    
-                        <button class="button is-danger is-outlined is-small"
-                            onClick={()=>this.setState({ isExpanded: false })}
-                        >Cancel</button>
-                        <button class="button is-primary is-small"
-                            disabled={state.suggestion.length === 0}
-                            onClick={this.onSubmit.bind(this)}
-                        >Post</button> 
+        let { isRealUser } = this.props
+        if(isRealUser){
+            return (
+                <div class="field">  
+                    <div class="control">
+                        <label class="checkbox is-size-7"> 
+                        <input type="checkbox" class="m-r-5" style={{'vertical-align': 'middle'}} 
+                        checked={this.state.postAnonymously}
+                        onChange={e=>this.setState({ postAnonymously: e.target.checked })}
+                        />
+                         Post anonymously
+                        </label>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        }else{
+            this.setState({ postAnonymously: true })
+            return (<p class="help">You will post as anonymous unless you grant this extension your Twitch Id</p>)
+        }
     }
-    onSubmit(){
-        let result = store.dispatch(postSuggestion(this.state.suggestion))
-        console.log(result)
+    closeForm(){
+        this.setState({ isExpanded: false })
+    }
+    async onSubmit(e){
+        e.preventDefault();
+
+        this.setState({ isLoading: true })
+
+        Promise.all([store.dispatch(postSuggestion(this.state.suggestion)), delay()])
+        .then(([suggestion])=>{
+            this.setState({ 
+                isLoading: false, 
+                hasSubmitted: true, 
+                isApproved: suggestion.isApproved 
+            })
+        })
     }
 }
 

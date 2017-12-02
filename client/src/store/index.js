@@ -4,7 +4,6 @@ import { initialState as user } from './user'
 import { userReducer } from './user'
 import { channelReducer } from './channel'
 import { suggestionsReducer } from './suggestions'
-const { REQUIRE_APPROVAL, ALLOW_MOD_ADMIN } = require('@shared/user-util')
 
 const initialState = {
     token: null,
@@ -12,8 +11,8 @@ const initialState = {
     channel:{
         channelId: -1,
         channelName: 'The broadcaster',
-        [REQUIRE_APPROVAL]: false,
-        [ALLOW_MOD_ADMIN]: false
+        requireApproval: false,
+        allowModAdmin: false
     },
     suggestions:[]
 }
