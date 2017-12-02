@@ -7,7 +7,8 @@ module.exports = {
     },
     resolve:{
         alias: {
-            '@': path.resolve(__dirname, '../src'),
+        '@': path.resolve(__dirname, '../src'),
+        '@shared': path.resolve('../shared'),
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
@@ -55,6 +56,13 @@ module.exports = {
             commonjs: 'redux-thunk',
             amd: 'redux-thunk',
             umd: 'redux-thunk',
+        },
+        'reselect': {
+            root: 'Reselect',
+            commonjs2: 'reselect',
+            commonjs: 'reselect',
+            amd: 'reselect',
+            umd: 'reselect',
         },
         'axios':'axios',
         lodash : {

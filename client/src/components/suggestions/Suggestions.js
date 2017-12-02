@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
-import store from '@/store'
+import { connect } from 'react-redux'
 import './Suggestions.scss';
-
+import { userRoles } from '@/store/user' 
+import store from '@/store'
 
 
 class Suggestions extends Component {
-    constructor(){
-        super()
-        this.state = {
-            suggestions: []
-        }
-        store.subscribe((...args)=>{
-            this.setState({ suggestions: store.getState().suggestions })
-        })
-    }
     render() {
-        var component = this.state.suggestions.length ? this.suggestionList() : this.noSuggestions()
+        let { props } = this
+        var component = props.suggestions.length ? this.suggestionList() : this.noSuggestions()
         return (
             <div class="suggestions">
                 {component}
+                <div><pre>{JSON.stringify(store.getState(), null, 2) }</pre></div>
+                <div>anon {': '+props.isAnonymousUser}</div>
+                <div>opaque {': '+props.isOpaqueUser}</div>
+                <div>isRealUser {': '+props.isRealUser}</div>
+                <div>isModerator {': '+props.isModerator}</div>
+                <div>isBroadcaster {': '+props.isBroadcaster}</div>
             </div>
         );
     }
@@ -26,7 +25,7 @@ class Suggestions extends Component {
         return (
             <div class="suggestions-list">
                 {
-                    this.state.suggestions.map(suggestion=>{
+                    this.props.suggestions.map(suggestion=>{
                         return <div class="suggestions">{suggestion.text}</div>
                     })
                 }
@@ -42,14 +41,13 @@ class Suggestions extends Component {
         )
     }
 }
-/* 
-const mapDispatchToProps = (dispatch,test) => {
+
+const mapStateToProps = (state, ownProps) => {
     return {
-        onSubmit: text => {
-            return dispatch(postSuggestion(text))
-        }
+        suggestions: state.suggestions,
+        ...userRoles(state)
     }
 }
-const Suggest_C = connect(null,mapDispatchToProps)(Suggest) */
+const Suggestions_C = connect(mapStateToProps)(Suggestions)
 
-export default Suggestions;
+export default Suggestions_C;
