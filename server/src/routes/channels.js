@@ -1,25 +1,18 @@
 const channelModel = require('../models/channels')
 const userUtil = require('../../../shared/user-util')
 
-/**
- * Makes api calls on behalf of browser, to circumvent cors
- */
-
-async function postSuggestion(channelId, text, user){
-
+async function addSuggestion(channelId, data){
     let channel = await channelModel.getChannel(channelId)
-    let userId = user.id
-    console.log(user)
+    
     return new Promise(async resolve=>{
         let suggestion = {
-            text,
-            userId,
             createdAt: new Date(),
             isApproved: !channel.requireApproval,
-            votes: []
+            votes: [],
+            ...data,
         }
  
-        let result = await channelModel.postSuggestion(channelId, suggestion)
+        let result = await channelModel.addSuggestion(channelId, suggestion)
         let response = {
             success: result.modifiedCount === 1,
             suggestion
@@ -27,6 +20,8 @@ async function postSuggestion(channelId, text, user){
         resolve(response)
     })
 }
+
+
 
 module.exports = (app) => {
     
@@ -37,13 +32,27 @@ module.exports = (app) => {
         res.json(channel)
     })
 
+    app.get('/api/channels/:id/suggestions',async (req, res) => {
+        let channelId = req.params.id
+        let offset = parseInt(req.query.offset)
+        let limit = parseInt(req.query.limit)
+        let suggestions = await channelModel.getSuggestions(channelId, offset, limit)
+        res.send(suggestions)
+    })
+
     app.post('/api/channels/:id/suggestions',async (req, res) => {
         let channelId = req.params.id
-        let { text, user } = req.body
-        let response = await postSuggestion(channelId, text, user)
+        let data = req.body
+        let response = await addSuggestion(channelId, data)
         if(response.success)
             res.status(201).send(response)
         else
             res.status(400).end()
     })
+    
+    if(process.env.NODE_ENV === 'development'){
+        app.post('/api/channels/23435553/suggestions/test',async () => {
+            channelModel.generate()
+        })
+    }
 }

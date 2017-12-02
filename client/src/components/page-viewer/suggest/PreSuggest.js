@@ -1,0 +1,1 @@
+{isAnonymousUser ? <p class="help is-danger m-b-5">You must login to leave a suggestion</p> : ''}

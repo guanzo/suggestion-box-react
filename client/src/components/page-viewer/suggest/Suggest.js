@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Input from './Input'
-import PostResult from './PostResult'
+import PostSuggest from './PostSuggest'
 import { postSuggestion } from '@/store/suggestions'
 import { connect } from 'react-redux'
 import store from '@/store'
@@ -16,7 +16,7 @@ class Suggest extends Component {
             suggestion: '',
             isApproved: true,
             hasSubmitted: false,
-            postAnonymously: false
+            postAnonymously: false,
         }
     }
     render() {
@@ -33,29 +33,35 @@ class Suggest extends Component {
         if(!isExpanded)
             component = this.openFormButton()
         else if(!hasSubmitted)
-            component = this.suggestionForm()
+            component = <div class="suggest flex-center" style={style}>
+                            {this.suggestionForm()}
+                         </div>
         else{
-            component = <PostResult 
+            component = <PostSuggest 
                             onClose={this.closeForm.bind(this)} 
                             isApproved={isApproved}
-                        ></PostResult>
+                        ></PostSuggest>
         }
         return (
-            <div class="suggest flex-center" style={style}>
-                {component}
-            </div>
-        );
+            component
+        )
     }
     openFormButton(){
         let {isAnonymousUser} = this.props
+        let style = {
+            'border-radius': '9999px',
+            position: 'fixed',
+            height: 40,
+            width: 40,
+            right: 25,
+            bottom: 10
+        }
         return (
-            <div class="has-text-centered">
-                {isAnonymousUser ? <p class="help is-danger m-b-5">You must login to leave a suggestion</p> : ''}
-                <button class="button is-primary is-small"
-                    disabled={isAnonymousUser}
-                    onClick={()=>this.setState({ isExpanded: true })}
-                >Suggest</button>
-            </div>
+            <button class="button is-primary is-small"
+                style={style}
+                disabled={isAnonymousUser}
+                onClick={()=>this.setState({ isExpanded: true })}
+            ><i class="fa fa-comment fa-lg has-text-white"></i></button>
         )
     }
     suggestionForm(){
@@ -76,7 +82,7 @@ class Suggest extends Component {
             <div>
                 <h5 class="subtitle is-5 has-text-centered">Rules</h5>
                 <ol class="is-size-7 m-b-15 p-l-15">
-                    <li>Write a helpful suggestion.<br/> This is not a place for arbitrary comments.</li>
+                    <li>Write a helpful suggestion.<br/>Refrain from arbitrary comments.</li>
                     <li>Check existing suggestions to see if your idea has already been posted.</li>
                     <li>You can provide constructive criticism but don't be rude.</li>
                 </ol>
@@ -111,13 +117,16 @@ class Suggest extends Component {
         e.preventDefault();
 
         this.setState({ isLoading: true })
-
-        Promise.all([store.dispatch(postSuggestion(this.state.suggestion)), delay()])
-        .then(([suggestion])=>{
+        let { suggestion, postAnonymously } = this.state
+        Promise.all([
+            store.dispatch(postSuggestion(suggestion, postAnonymously)), 
+            delay()
+        ])
+        .then(([isApproved])=>{
             this.setState({ 
                 isLoading: false, 
                 hasSubmitted: true, 
-                isApproved: suggestion.isApproved 
+                isApproved
             })
         })
     }

@@ -72,6 +72,7 @@ module.exports = {
             umd: 'react-transition-group',
         },
         'axios':'axios',
+        'moment':'moment',
         lodash : {
             commonjs: "lodash",
             commonjs2: "lodash",

@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import Suggestions from '@/components/suggestions/Suggestions'
+import SuggestionList from '@/components/suggestions/SuggestionList'
 import Suggest from '@/components/page-viewer/suggest/Suggest'
 
 const style = {
-    position: 'relative',
-    height: '100%'
+    position: 'relative'
 }
 class Body extends Component {
     render() {
         return (
         <div class="suggestion-body" style={style}>
-            <Suggestions></Suggestions>
+            <SuggestionList></SuggestionList>
             <Suggest></Suggest>
         </div>
         );

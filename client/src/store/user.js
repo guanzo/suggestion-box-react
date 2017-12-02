@@ -2,11 +2,13 @@ import { createSelector } from 'reselect'
 const userUtil = require('@shared/user-util')
 
 export const initialState = {
-    id: null,//never set if anonymous or opaque user
-    opaqueId: '',//always starts with 'A' (anonymous) or 'U' (opaque)
-    name:'',
-    profileImg:'',
-    role: null,
+    user:{
+        id: null,//never set if anonymous or opaque user
+        opaqueId: '',//always starts with 'A' (anonymous) or 'U' (opaque)
+        name:'',
+        profileImg:'',
+        role: null,
+    }
 }
 export function userReducer(state = initialState, { type, user }){
     if(type === SET_USER)

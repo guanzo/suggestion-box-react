@@ -2,7 +2,9 @@
 import axios from 'axios'
 import store from '@/store'
 import { setChannel, fetchChannel } from '@/store/channel'
+import { fetchSuggestions } from '@/store/suggestions'
 import { setUser } from '@/store/user'
+
 //testing on localhost window, and not inside twitch iframe
 //i need to join a room so that i can cast votes locally
 if(!inIframe() && process.env.NODE_ENV === 'development'){
@@ -61,7 +63,8 @@ window.Twitch.ext.onAuthorized(async function(auth) {
         channelName
     }))
     
-    store.dispatch(fetchChannel(channelId, channelName))
+    store.dispatch(fetchChannel())
+    store.dispatch(fetchSuggestions())
 });
 
 window.Twitch.ext.onError(function (err) {

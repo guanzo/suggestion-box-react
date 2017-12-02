@@ -195,6 +195,12 @@ const prodWebpackConfig = merge(baseWebpackConfig,{
                       },
                     },
                     {
+                        loader: 'sass-resources-loader',
+                        options: {
+                            resources: path.resolve(__dirname, '../src/style/variables.scss'),
+                        },
+                    },
+                    {
                       loader: require.resolve('postcss-loader'),
                       options: {
                         // Necessary for external CSS imports to work

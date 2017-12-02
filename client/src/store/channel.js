@@ -1,7 +1,14 @@
 import axios from 'axios'
-import _ from 'lodash'
-import { setSuggestions } from './suggestions'
 export const SET_CHANNEL = 'SET_CHANNEL'
+
+export const initialState = {
+    channel:{
+        channelId: -1,
+        channelName: 'The broadcaster',
+        requireApproval: false,
+        allowModAdmin: false
+    },
+}
 
 export function setChannel(channel){
     return {
@@ -10,18 +17,14 @@ export function setChannel(channel){
     }
 }
 
-export function fetchChannel(channelId, channelName){
+export function fetchChannel(){
     return (dispatch,getState) => {
+        let { channelId, channelName } = getState().channel
         axios.get(`/api/channels/${channelId}`,{
             params:{ channelName },
         })
         .then(res=>{
-            let data = _.omit(res.data,'suggestions')
-            let { suggestions } = res.data
-
-            dispatch(setChannel(data))
-            dispatch(setSuggestions(suggestions))
-            //console.log(getState())
+            dispatch(setChannel(res.data))
         })
     }
 }

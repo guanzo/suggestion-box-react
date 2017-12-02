@@ -1,0 +1,23 @@
+.suggestion {
+
+    .suggestion-header{
+        display: flex;
+        align-items: center;
+        .profile-img{
+            width: 28px;
+            height: 28px;
+        }
+        .suggestion-date{
+            color: grey;
+        }
+    }
+    .suggestion-text{
+        font-size: 0.85rem;
+        word-wrap: break-word;
+    }
+    .suggestion-toolbar{
+        .fa {
+            cursor: pointer;
+        }
+    }
+}

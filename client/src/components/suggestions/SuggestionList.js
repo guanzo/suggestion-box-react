@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import './Suggestions.scss';
+import Suggestion from './Suggestion'
+import LoadMore from './LoadMore'
+import './SuggestionList.scss';
 import { userRoles } from '@/store/user' 
 
 
-class Suggestions extends Component {
+class SuggestionList extends Component {
     render() {
         let { props } = this
         var component = props.suggestions.length ? this.suggestionList() : this.noSuggestions()
@@ -19,9 +21,10 @@ class Suggestions extends Component {
             <div class="suggestions-list">
                 {
                     this.props.suggestions.map(suggestion=>{
-                        return <div class="suggestions">{suggestion.text}</div>
+                        return <Suggestion {...suggestion} ></Suggestion>
                     })
                 }
+                <LoadMore></LoadMore>
             </div>
         )
     }
@@ -41,6 +44,6 @@ const mapStateToProps = (state, ownProps) => {
         ...userRoles(state)
     }
 }
-const Suggestions_C = connect(mapStateToProps)(Suggestions)
+const SuggestionsList_C = connect(mapStateToProps)(SuggestionList)
 
-export default Suggestions_C;
+export default SuggestionsList_C;
