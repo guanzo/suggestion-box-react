@@ -7,6 +7,7 @@ import store from '@/store'
 import { userRoles } from '@/store/user' 
 import { delay } from '@/util'
 import './Suggest.scss'
+const { STATUS_APPROVED } = require('@shared/suggestion-util')
 
 class Suggest extends Component {
     constructor(){
@@ -15,13 +16,13 @@ class Suggest extends Component {
             isOverlay: false,
             isLoading: false,
             suggestion: '',
-            isApproved: true,
+            status: STATUS_APPROVED,
             hasSubmitted: false,
             postAnonymously: false,
         }
     }
     render() {
-        let { isOverlay, hasSubmitted, isApproved } = this.state
+        let { isOverlay, hasSubmitted, status } = this.state
         let component;
         if(!isOverlay)
             component = this.openFormButton()
@@ -32,7 +33,7 @@ class Suggest extends Component {
         else{
             component = <PostSuggest 
                             onClose={this.closeForm.bind(this)} 
-                            isApproved={isApproved}
+                            status={status}
                         ></PostSuggest>
         }
         return (
@@ -115,11 +116,11 @@ class Suggest extends Component {
             store.dispatch(postSuggestion(suggestion, postAnonymously)), 
             delay()
         ])
-        .then(([isApproved])=>{
+        .then(([status])=>{
             this.setState({ 
                 isLoading: false, 
                 hasSubmitted: true, 
-                isApproved
+                status
             })
         })
     }

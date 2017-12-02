@@ -24,6 +24,7 @@ window.Twitch.ext.onAuthorized(async function(auth) {
     authed = true; */
 
     axios.defaults.headers.common['Authorization'] = auth.token;
+    axios.defaults.headers.common['Client-Id'] = auth.clientId;
     axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
     //adds token to every request sent thru axios
@@ -33,8 +34,8 @@ window.Twitch.ext.onAuthorized(async function(auth) {
     let { user_id, opaque_user_id, role } = payload
     let { channelId } = auth;
     
-    //console.log(auth)
-    //console.log(payload)
+    console.log(auth)
+    console.log(payload)
     let userId = null, 
     name = null, 
     profileImg = null;
@@ -80,11 +81,7 @@ function inIframe () {
 }
 
 function getTwitchUser(userId){
-    return axios.get(`https://api.twitch.tv/helix/users?id=${userId}`,{
-        headers:{
-            'Client-Id' :process.env.REACT_APP_EXTENSION_CLIENT_ID,
-        }
-    }).then((response)=>{
+    return axios.get(`https://api.twitch.tv/helix/users?id=${userId}`).then((response)=>{
         let user = response.data.data[0];
         return user
     })

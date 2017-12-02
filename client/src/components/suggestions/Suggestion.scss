@@ -1,11 +1,16 @@
+$avatar-size: 30px;
+
 .suggestion {
 
     .suggestion-header{
         display: flex;
         align-items: center;
         .profile-img{
-            width: 28px;
-            height: 28px;
+            width: $avatar-size;
+            height: $avatar-size;
+            .fa-user-circle-o {
+                font-size: $avatar-size;
+            }
         }
         .suggestion-date{
             color: grey;

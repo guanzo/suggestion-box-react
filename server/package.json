@@ -15,6 +15,7 @@
     "https": "^1.0.0",
     "jsonwebtoken": "^8.0.0",
     "knex": "^0.13.0",
+    "lodash": "^4.17.4",
     "mongodb": "^2.2.33",
     "node-cleanup": "^2.1.2",
     "socket.io": "^2.0.3"

@@ -5,7 +5,7 @@ export const ADD_SUGGESTION = 'ADD_SUGGESTION'
 export const POST_SUGGESTION = 'POST_SUGGESTION'
 export const INCREMENT_OFFSET = 'INCREMENT_OFFSET'
 export const NO_MORE_PAGES = 'NO_MORE_PAGES'
-
+const { STATUS_APPROVED } = require('@shared/suggestion-util')
 const PAGE_LIMIT = 5;
 
 export const initialState = {
@@ -62,9 +62,10 @@ export function postSuggestion(text, postAnonymously){
         })
         .then(res=>{
             let suggestion = res.data.suggestion
-            if(suggestion.isApproved)
+            if(suggestion.status === STATUS_APPROVED)
                 dispatch(addSuggestion(suggestion))
-            return suggestion.isApproved 
+            console.log(suggestion)
+            return suggestion.status
         })
         .catch(err=>{
             console.error(err)

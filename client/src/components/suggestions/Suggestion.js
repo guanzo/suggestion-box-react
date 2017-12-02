@@ -26,7 +26,7 @@ class Suggestion extends Component {
     img(){
         let { postAnonymously, user } = this.props
         return postAnonymously 
-        ? <i class="fa fa-user-circle-o fa-2x"></i> 
+        ? <i class="fa fa-user-circle-o"></i> 
         : <img src={user.profileImg} />
     }
     name(){
@@ -43,16 +43,17 @@ class Suggestion extends Component {
         return date.format(fmt)
     }
     toolbar(){
-        let { votes } = this.props
-        let thumbsClass = classNames('fa fa-thumbs-o-up m-r-5',
+        let { hasUpvoted, votesLength } = this.props
+        let thumbsClass = classNames('fa m-r-5',
+        hasUpvoted ? 'fa-thumbs-up':'fa-thumbs-o-up',
         { 
-            'has-text-success': votes.length > 0 
+            'has-text-success': votesLength > 0 
         })
         return (
             <div class="suggestion-toolbar">
                 <div class="flex">
                     <i class={thumbsClass}></i>
-                    <div class="is-size-7">{votes.length.toLocaleString()}</div>
+                    <div class="is-size-7">{votesLength.toLocaleString()}</div>
                 </div>
             </div>
         )

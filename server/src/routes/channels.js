@@ -1,18 +1,22 @@
 const channelModel = require('../models/channels')
 const userUtil = require('../../../shared/user-util')
+const { STATUS_PENDING, STATUS_APPROVED } = require('../../../shared/suggestion-util')
+const _ = require('lodash')
 
 async function addSuggestion(channelId, data){
     let channel = await channelModel.getChannel(channelId)
-    
+    let status = channel.requireApproval ? STATUS_PENDING : STATUS_APPROVED
+    let suggestion = createSuggestionObj(data, status)
+
     return new Promise(async resolve=>{
-        let suggestion = {
-            createdAt: new Date(),
-            isApproved: !channel.requireApproval,
-            votes: [],
-            ...data,
-        }
  
         let result = await channelModel.addSuggestion(channelId, suggestion)
+
+        //conform to "get" endpoint response
+        suggestion.hasUpvoted = true;
+        suggestion.votesLength = 1;
+        delete suggestion.votes
+
         let response = {
             success: result.modifiedCount === 1,
             suggestion
@@ -21,7 +25,25 @@ async function addSuggestion(channelId, data){
     })
 }
 
-
+/**
+ * 
+ * @param {Object} data
+ *  -text: String
+ *  -postAnonymously: Boolean
+ *  -user: Object
+ */
+function createSuggestionObj({ text, postAnonymously, user }, status){
+    //reddit style, auto upvote own post
+    let initialVote = { id: user.id, opaqueId: user.opaqueId }
+    return {
+        text,
+        postAnonymously,
+        user,
+        status,
+        votes: [initialVote],
+        createdAt: new Date(),
+    }
+}
 
 module.exports = (app) => {
     
@@ -36,7 +58,14 @@ module.exports = (app) => {
         let channelId = req.params.id
         let offset = parseInt(req.query.offset)
         let limit = parseInt(req.query.limit)
-        let suggestions = await channelModel.getSuggestions(channelId, offset, limit)
+
+        let { user_id, opaque_user_id } = req.decoded
+        let user = {
+            id: user_id,
+            opaqueId: opaque_user_id
+        }
+
+        let suggestions = await channelModel.getSuggestions(channelId, user, offset, limit)
         res.send(suggestions)
     })
 

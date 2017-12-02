@@ -1,6 +1,7 @@
 var db = require('../db.js')
 var ObjectID = require('mongodb').ObjectID
 const userUtil = require('../../../shared/user-util')
+const { STATUS_APPROVED } = require('../../../shared/suggestion-util')
 const Chance = require('chance')
 
 
@@ -20,17 +21,29 @@ module.exports = {
                 .catch(err=>{
                     console.log(err)
                 })
-    },
-    getSuggestions(channelId, offset, limit){
+    },//send vote count, don't send votes itself
+    getSuggestions(channelId, user, offset, limit){
         var channels = db.get().collection('channels')
         return channels.aggregate([
-            { $match: { channelId } },
-            { $unwind: '$suggestions' },
-            { $match: { 'suggestions.isApproved': true } },
+            { $match:       { channelId } },
+            { $unwind:      '$suggestions' },
+            { $match:       { 'suggestions.status': STATUS_APPROVED } },
             { $replaceRoot: { newRoot: '$suggestions' } },
-            { $sort: { votesLength: -1 } },
-            { $skip: offset },
-            { $limit: limit },
+            { $addFields: { 
+                votesLength: { "$size": "$votes" } ,
+                //check if user has upvoted post with either real id or opaque id
+                hasUpvoted: { 
+                        $and: [
+                            {$in : [ user.id, "$votes.id" ]},
+                            {$in : [ user.opaqueId, "$votes.opaqueId" ]}
+                        ]
+                    }
+                }
+            },
+			{ $project :    { votes: 0 } },
+            { $sort:        { votesLength: -1 } },
+            { $skip:        offset },
+            { $limit:       limit },
         ])
         .toArray()
 
@@ -51,7 +64,7 @@ module.exports = {
     async generate(){
         var chance = new Chance();
         var channels = db.get().collection('channels')
-        let numSuggestions = chance.integer({min: 30, max: 70}) 
+        let numSuggestions = chance.integer({min: 1, max: 5}) 
     
         let suggestions = []
         for(let i=0;i<numSuggestions;i++)
@@ -71,7 +84,7 @@ function generateSuggestion(){
         "text": chance.sentence({ length: 100 }),
         "postAnonymously": chance.bool(),
         createdAt: new Date(),
-        isApproved: true,
+        status: STATUS_APPROVED,
         votes,
         "user": {
             "id": "23435553",
