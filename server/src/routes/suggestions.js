@@ -66,8 +66,10 @@ module.exports = (app) => {
 		let { channelId } = req.params
 		let user = req.user
 		let suggestions = await suggestionModel.getSuggestionsByUser(channelId, user)
+
 		if(suggestions.length === 0)
-			next()
+			return next()
+			
 		let lastSuggestDate = suggestions[0].createdAt
 		if(isAllowedToSuggest(lastSuggestDate)) 
 			next()
