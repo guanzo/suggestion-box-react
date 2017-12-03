@@ -8,7 +8,4 @@
     height: $app-height;
     max-height: $app-height;
 	overflow-y: scroll;
-	&.has-overlay{
-		overflow-y: hidden;
-	}
 }

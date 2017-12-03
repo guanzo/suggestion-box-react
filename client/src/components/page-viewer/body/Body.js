@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import SuggestionList from '@/components/suggestion-list/SuggestionList'
-import Suggest from '@/components/page-viewer/suggest/Suggest'
 
 const { LIST_APPROVED } = require('@shared/suggestion-util')
 
@@ -22,7 +21,6 @@ class Body extends Component {
         return (
         <div class="viewer-body" style={style}>
             <SuggestionsListApproved></SuggestionsListApproved>
-            <Suggest></Suggest>
         </div>
         );
     }

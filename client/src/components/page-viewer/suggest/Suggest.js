@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import Input from './Input'
 import PostSuggest from './PostSuggest'
 import { postSuggestion } from '@/store/suggestions'
-import { toggleOverlay } from '@/store/util'
-import { connect } from 'react-redux'
 import store from '@/store'
 import { delay } from '@/util'
 import './Suggest.scss'
-import { createSelector } from 'reselect'
 const { STATUS_APPROVED } = require('@shared/suggestion-util')
-const { isAllowedToSuggest } = require('@shared/user-util')
 
 class Suggest extends Component {
     constructor(props){
@@ -137,29 +133,4 @@ class Suggest extends Component {
     }
 }
 
-const isAllowedToSuggestSelector = createSelector(
-	[ state => state.suggestions.user.data ],
-	(userSuggestions)=>{
-		if(!userSuggestions.length)
-			return true;
-		let lastSuggestionDate = userSuggestions[0].createdAt;
-		return isAllowedToSuggest(lastSuggestionDate)
-	}
-)
-
-const mapStateToProps = (state, ownProps) => {
-    return {
-		currentUser: state.user,
-		hasOverlay: state.hasOverlay,
-		isAllowedToSuggest: isAllowedToSuggestSelector(state)
-    }
-}
-const mapDispatchToProps = dispatch => {
-    return {
-		toggleOverlay: ()=> dispatch(toggleOverlay()),
-    }
-}
-
-const Suggest_C = connect(mapStateToProps,mapDispatchToProps)(Suggest)
-
-export default Suggest_C;
+export default Suggest

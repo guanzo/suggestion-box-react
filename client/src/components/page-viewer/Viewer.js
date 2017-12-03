@@ -4,15 +4,16 @@ import { connect } from 'react-redux'
 import Body from './body/Body'
 import './Viewer.scss';
 import classNames from 'classnames'
+import Overlay from '@/components/page-viewer/suggest/_Overlay'
 
 class Viewer extends Component {
     render() {
 		let { hasOverlay } = this.props
-		let className = classNames('viewer',{ 'has-overlay':hasOverlay })
         return (
-        <div class={className}>
+        <div class='viewer'>
             <Header></Header>
             <Body></Body>
+            <Overlay></Overlay>
         </div>
         );
     }
