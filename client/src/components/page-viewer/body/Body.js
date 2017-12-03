@@ -13,7 +13,10 @@ const style = {
 const mapStateToProps = (state, ownProps) => {
     return {
 		suggestions: state.suggestions[LIST_APPROVED],
-        ...userTypes(state)
+		currentUser: {
+			...state.user,
+			//...userTypes(state)
+		}
     }
 }
 const SuggestionsListApproved = connect(mapStateToProps)(SuggestionList)

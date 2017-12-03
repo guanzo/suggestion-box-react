@@ -49,7 +49,8 @@ window.Twitch.ext.onAuthorized(async function(auth) {
         //console.log('user has NOT granted')
     }
     let user = { id: userId, opaqueId: opaque_user_id, name, profileImg, role }
-    store.dispatch(setUser(user))
+	store.dispatch(setUser(user))
+	console.log(store.getState())
 
     if(hasFetchedChannel)
         return;

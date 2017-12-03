@@ -54,7 +54,6 @@ export function fetchSuggestions(listType = LIST_APPROVED){
             dispatch({ type: INCREMENT_OFFSET, listType })
             if(res.data.length < PAGE_LIMIT)
 				dispatch({ type: NO_MORE_PAGES, listType })
-			console.log(getState())
         })
     }
 }

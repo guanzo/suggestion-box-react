@@ -11,8 +11,18 @@ export const initialState = {
     }
 }
 export function userReducer(state = initialState, { type, user }){
-    if(type === SET_USER)
-        return {...state, ...user}
+	
+	if(type === SET_USER){
+        return {
+			...state, 
+			...user,
+			isAnonymousUser: userUtil.isAnonymousUser(user),
+			isOpaqueUser: userUtil.isOpaqueUser(user),
+			isRealUser: userUtil.isRealUser(user),
+			isModerator: userUtil.isModerator(user),
+			isBroadcaster: userUtil.isBroadcaster(user),
+		}
+	}
     else
         return state;
 }
@@ -26,7 +36,7 @@ export function setUser(user){
     }
 }
 
-const getUser = state => state.user
+const getUser = state => state
 
 export const isAnonymousUser = createSelector(
     [getUser], userUtil.isAnonymousUser
@@ -55,12 +65,10 @@ const mapStateToProps = (state) => {
 */
 export const userTypes = (state)=>{
     return {
-        userTypes:{
-			isAnonymousUser: isAnonymousUser(state),
-			isOpaqueUser: isOpaqueUser(state),
-			isRealUser: isRealUser(state),
-			isModerator: isModerator(state),
-			isBroadcaster: isBroadcaster(state),
-		}
+		isAnonymousUser: isAnonymousUser(state),
+		isOpaqueUser: isOpaqueUser(state),
+		isRealUser: isRealUser(state),
+		isModerator: isModerator(state),
+		isBroadcaster: isBroadcaster(state),
     }
 }

@@ -41,7 +41,7 @@ class Suggest extends Component {
         )
     }
     openFormButton(){
-		let {isAnonymousUser} = this.props.userTypes
+		let {isAnonymousUser} = this.props.currentUser
         let style = {
             'border-radius': '9999px',
             position: 'fixed',
@@ -84,7 +84,7 @@ class Suggest extends Component {
         )
     }
     settings(){
-        let { isRealUser } = this.props.userTypes
+        let { isRealUser } = this.props.currentUser
         if(isRealUser){
             return (
                 <div class="field">  
@@ -128,7 +128,10 @@ class Suggest extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        ...userTypes(state)
+		currentUser: {
+			...state.user,
+			//...userTypes(state)
+		}
     }
 }
 const Suggest_C = connect(mapStateToProps)(Suggest)
