@@ -52,13 +52,12 @@ window.Twitch.ext.onAuthorized(async function(auth) {
 	hasFetchedChannel = true;
 	
     let {display_name} = await getTwitchUser(auth.channelId)
-    let channelName = display_name
-    
+	let channelName = display_name
+	
     store.dispatch(setChannel({ 
         channelId, 
         channelName
 	}))
-	
     fetchInitialData()
 });
 

@@ -92,10 +92,12 @@ export function postSuggestion(text, postAnonymously){
         .then(res=>{
             let suggestion = res.data.suggestion
 			if(suggestion.status === STATUS_APPROVED){
-				dispatch({
-					type: ADD_APPROVED_SUGGESTION,
-					suggestion,
-					listType: LIST_APPROVED
+				[LIST_APPROVED, LIST_USER].forEach(listType=>{
+					dispatch({
+						type: ADD_APPROVED_SUGGESTION,
+						suggestion,
+						listType
+					})
 				})
 			}
             return suggestion.status
@@ -118,7 +120,7 @@ export function suggestionsReducer(suggestions = {}, action){
 	}else
 		return suggestions
 }
-
+//reduces one of the 3 list types
 function listTypeReducer(list = {}, action){
 	switch(action.type) {
 		case SET_SUGGESTIONS:

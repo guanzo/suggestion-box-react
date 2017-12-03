@@ -126,7 +126,7 @@ module.exports = {
 
 function generateSuggestion(){
     var chance = new Chance();
-    let numVotes = chance.integer({min: 500, max: 2000}) 
+    let numVotes = chance.integer({min: 0, max: 50}) 
     let votes = []
     for(let i=0;i<numVotes;i++){
         let userId = chance.integer({min: 1000, max: 9999}) 

@@ -2,23 +2,25 @@ import React, { Component } from 'react';
 import Input from './Input'
 import PostSuggest from './PostSuggest'
 import { postSuggestion } from '@/store/suggestions'
+import { toggleOverlay } from '@/store/util'
 import { connect } from 'react-redux'
 import store from '@/store'
 import { delay } from '@/util'
 import './Suggest.scss'
+import { createSelector } from 'reselect'
 const { STATUS_APPROVED } = require('@shared/suggestion-util')
+const { isAllowedToSuggest } = require('@shared/user-util')
 
 class Suggest extends Component {
     constructor(props){
 		super(props)
         this.state = {
-            isOverlay: false,
             isLoading: false,
             suggestion: '',
             status: STATUS_APPROVED,
             hasSubmitted: false,
             postAnonymously: false,
-        }
+		}
 		this.checkUserType()
 	}
 	checkUserType(){
@@ -30,9 +32,11 @@ class Suggest extends Component {
 		this.checkUserType()
 	}
     render() {
-        let { isOverlay, hasSubmitted, status } = this.state
+		let { hasSubmitted, status } = this.state
+		let { hasOverlay } = this.props
+		console.log(this.props)
         let component;
-        if(!isOverlay)
+        if(!hasOverlay)
             component = this.openFormButton()
         else if(!hasSubmitted)
             component = <div class="suggest">
@@ -62,7 +66,7 @@ class Suggest extends Component {
             <button class="button is-primary is-small"
                 style={style}
                 disabled={isAnonymousUser}
-                onClick={()=>this.setState({ isOverlay: true })}
+                onClick={()=>this.props.toggleOverlay()}
             ><i class="fa fa-comment fa-lg has-text-white"></i></button>
         )
     }
@@ -112,7 +116,7 @@ class Suggest extends Component {
         }
     }
     closeForm(){
-        this.setState({ isOverlay: false })
+        this.props.toggleOverlay()
     }
     async onSubmit(e){
         e.preventDefault();
@@ -133,11 +137,29 @@ class Suggest extends Component {
     }
 }
 
+const isAllowedToSuggestSelector = createSelector(
+	[ state => state.suggestions.user.data ],
+	(userSuggestions)=>{
+		if(!userSuggestions.length)
+			return true;
+		let lastSuggestionDate = userSuggestions[0].createdAt;
+		return isAllowedToSuggest(lastSuggestionDate)
+	}
+)
+
 const mapStateToProps = (state, ownProps) => {
     return {
-		currentUser: state.user
+		currentUser: state.user,
+		hasOverlay: state.hasOverlay,
+		isAllowedToSuggest: isAllowedToSuggestSelector(state)
     }
 }
-const Suggest_C = connect(mapStateToProps)(Suggest)
+const mapDispatchToProps = dispatch => {
+    return {
+		toggleOverlay: ()=> dispatch(toggleOverlay()),
+    }
+}
+
+const Suggest_C = connect(mapStateToProps,mapDispatchToProps)(Suggest)
 
 export default Suggest_C;

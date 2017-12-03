@@ -19,12 +19,12 @@ export function setChannel(channel){
 
 export function fetchChannel(){
     return (dispatch,getState) => {
-        let { channelId, channelName } = getState().channel
+		let { channelId, channelName } = getState().channel
         axios.get(`/api/channels/${channelId}`,{
             params:{ channelName },
         })
         .then(res=>{
-            dispatch(setChannel(res.data))
+			dispatch(setChannel(res.data))
         })
     }
 }

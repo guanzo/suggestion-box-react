@@ -12,15 +12,6 @@ export const initialState = {
 export function userReducer(state = initialState, { type, user }){
 	
 	if(type === SET_USER){
-		console.log({
-			...state, 
-			...user,
-			isAnonymousUser:userUtil.isAnonymousUser(user),
-			isOpaqueUser: 	userUtil.isOpaqueUser(user),
-			isRealUser: 	userUtil.isRealUser(user),
-			isModerator: 	userUtil.isModerator(user),
-			isBroadcaster: 	userUtil.isBroadcaster(user),
-		})
         return {
 			...state, 
 			...user,

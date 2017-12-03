@@ -1,6 +1,8 @@
 const channelModel = require('../models/channels')
 const suggestionModel = require('../models/suggestions')
-const { isAllowedToSuggest, STATUS_PENDING, STATUS_APPROVED } = require('../../../shared/suggestion-util')
+const { STATUS_PENDING, STATUS_APPROVED } = require('../../../shared/suggestion-util')
+const { isAllowedToSuggest } = require('../../../shared/user-util')
+
 const ObjectID = require('mongodb').ObjectID
 
 async function addSuggestion(channelId, data){
@@ -58,7 +60,7 @@ module.exports = (app) => {
         let limit = parseInt(req.query.limit)
     
 		let user = req.user
-        let suggestions = await suggestionModel.getSuggestions(channelId, user, listType, offset, limit)
+		let suggestions = await suggestionModel.getSuggestions(channelId, user, listType, offset, limit)
         res.send(suggestions)
 	})
 
@@ -69,9 +71,9 @@ module.exports = (app) => {
 
 		if(suggestions.length === 0)
 			return next()
-			
-		let lastSuggestDate = suggestions[0].createdAt
-		if(isAllowedToSuggest(lastSuggestDate)) 
+
+		let lastSuggestionDate = suggestions[0].createdAt
+		if(isAllowedToSuggest(lastSuggestionDate)) 
 			next()
 		else 
 			res.status(403).send('You must wait 24 hours between posts')

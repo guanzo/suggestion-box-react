@@ -1,5 +1,10 @@
-var _ = require('lodash')
+//THIS FILE CANNOT CONTAIN ES6 CODE b/c of create-react-app .............
+//NO const, let, function shorthand, object property shorthand, etc.
 
+var _ = require('lodash')
+var moment = require('moment')
+// 1 day
+var MIN_MINUTES_BETWEEN_POSTS = 1440
 var self = module.exports = {
     ROLE_VIEWER:        'viewer',
     ROLE_MODERATOR:     'moderator',
@@ -23,5 +28,10 @@ var self = module.exports = {
     },
     isBroadcaster: function (user){
         return user.role === self.ROLE_BROADCASTER
-    }
+    },
+	isAllowedToSuggest: function(lastSuggestionDate){
+		var currentDate = moment();
+		var diff = currentDate.diff(lastSuggestionDate, 'minutes')
+		return diff > MIN_MINUTES_BETWEEN_POSTS
+	}
 }
