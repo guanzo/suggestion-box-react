@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config();
 const bodyParser = require('body-parser');
 const authRouter = require('./routes/auth');
 const channelsRouter = require('./routes/channels');
+const suggestionsRouter = require('./routes/suggestions');
 const fs = require('fs')
 const http = require('http');
 const https = require('https');
@@ -42,6 +43,7 @@ app.use(bodyParser.json());
 
 authRouter(app);
 channelsRouter(app);
+suggestionsRouter(app)
 
 db.connect().then(()=>{
     

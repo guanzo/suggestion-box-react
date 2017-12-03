@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SuggestionList from '@/components/suggestions/SuggestionList'
+import SuggestionList from '@/components/suggestion-list/SuggestionList'
 import Suggest from '@/components/page-viewer/suggest/Suggest'
 
 const style = {

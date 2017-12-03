@@ -31,7 +31,6 @@ function addSuggestion(suggestion){
 }
 
 export function fetchSuggestions(){
-
     return (dispatch,getState) => {
         let state = getState()
         let { offset } = state.pagination
@@ -48,6 +47,23 @@ export function fetchSuggestions(){
     }
 }
 
+export function toggleUpvote(hasUpvoted){
+    
+    return (dispatch,getState) => {
+        let state = getState()
+        let { offset } = state.pagination
+        let { channelId } = state.channel
+        axios.get(`/api/channels/${channelId}/suggestions`,{
+            params:{ offset, limit: PAGE_LIMIT },
+        })
+        .then(res=>{
+            dispatch(setSuggestions(res.data))
+            dispatch({ type: INCREMENT_OFFSET })
+            if(res.data.length < PAGE_LIMIT)
+                dispatch({ type: NO_MORE_PAGES })
+        })
+    }
+}
 
 export function postSuggestion(text, postAnonymously){
     return (dispatch,getState) => {

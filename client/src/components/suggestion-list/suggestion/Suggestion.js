@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import Actions from './Actions'
 import moment from 'moment'
-import classNames from 'classnames'
 import './Suggestion.scss'
 
 class Suggestion extends Component {
@@ -19,7 +19,7 @@ class Suggestion extends Component {
                     </div>
                 </div>
                 <p class="suggestion-text m-b-5">{text}</p>
-                {this.toolbar()}
+                <Actions {...this.props}></Actions>
             </div>
         );
     }
@@ -41,22 +41,6 @@ class Suggestion extends Component {
         if(year !== currentYear)
             fmt += ' YYYY'
         return date.format(fmt)
-    }
-    toolbar(){
-        let { hasUpvoted, votesLength } = this.props
-        let thumbsClass = classNames('fa m-r-5',
-        hasUpvoted ? 'fa-thumbs-up':'fa-thumbs-o-up',
-        { 
-            'has-text-success': votesLength > 0 
-        })
-        return (
-            <div class="suggestion-toolbar">
-                <div class="flex">
-                    <i class={thumbsClass}></i>
-                    <div class="is-size-7">{votesLength.toLocaleString()}</div>
-                </div>
-            </div>
-        )
     }
 }
 export default Suggestion;

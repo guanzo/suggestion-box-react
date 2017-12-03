@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import Suggestion from './Suggestion'
+import Suggestion from './suggestion/Suggestion'
 import LoadMore from './LoadMore'
 import './SuggestionList.scss';
 import { userRoles } from '@/store/user' 
