@@ -11,13 +11,11 @@ var self = module.exports = {
     //display name in suggestion list is always "Anonymous"
     //b/c i can't retrieve username from opaque id
     isOpaqueUser: function (user){
-		//return _.isNull(user.id) && user.opaqueId.charAt(0) === 'U'
-		return true
+		return _.isNull(user.id) && user.opaqueId.charAt(0) === 'U'
     },
     //can choose to post anonymously
     isRealUser: function (user){
-	   // return !_.isNull(user.id)
-	   return false
+	    return !_.isNull(user.id)
     },
     //can moderate suggestions if broadcaster allows
     isModerator: function (user){

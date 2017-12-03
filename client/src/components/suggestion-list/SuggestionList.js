@@ -17,16 +17,12 @@ class SuggestionList extends Component {
         );
     }
     suggestionList(){
-		let { userTypes } = this.props
 		let { listType } = this.props.suggestions
-		let props = {
-			userTypes, listType
-		}
         return (
             <div class="suggestions-list">
                 {
                     this.props.suggestions.data.map(suggestion=>{
-                        return <Suggestion {...Object.assign({},suggestion,props)}>
+                        return <Suggestion {...suggestion} listType={listType} key={suggestion.id}>
 							   </Suggestion>
                     })
                 }

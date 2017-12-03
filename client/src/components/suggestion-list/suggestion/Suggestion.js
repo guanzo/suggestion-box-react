@@ -5,7 +5,7 @@ import './Suggestion.scss'
 
 class Suggestion extends Component {
     render() {
-        let { text, user } = this.props
+		let { text, user } = this.props
         //let { id, opaqueId } = user
         return (
             <div class="suggestion m-b-10">

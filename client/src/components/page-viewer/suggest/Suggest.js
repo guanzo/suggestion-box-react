@@ -9,8 +9,8 @@ import './Suggest.scss'
 const { STATUS_APPROVED } = require('@shared/suggestion-util')
 
 class Suggest extends Component {
-    constructor(){
-        super()
+    constructor(props){
+		super(props)
         this.state = {
             isOverlay: false,
             isLoading: false,
@@ -19,7 +19,16 @@ class Suggest extends Component {
             hasSubmitted: false,
             postAnonymously: false,
         }
-    }
+		this.checkUserType()
+	}
+	checkUserType(){
+		let { isRealUser } = this.props.currentUser
+		if(!isRealUser)
+			this.setState({ postAnonymously: true })
+	}
+	componentWillReceiveProps(){
+		this.checkUserType()
+	}
     render() {
         let { isOverlay, hasSubmitted, status } = this.state
         let component;
@@ -99,7 +108,6 @@ class Suggest extends Component {
                 </div>
             )
         }else{
-            this.setState({ postAnonymously: true })
             return (<p class="help">You will post as anonymous unless you grant this extension your Twitch Id</p>)
         }
     }
