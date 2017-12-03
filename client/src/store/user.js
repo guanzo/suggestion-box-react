@@ -1,4 +1,3 @@
-import { createSelector } from 'reselect'
 const userUtil = require('@shared/user-util')
 
 export const initialState = {
@@ -16,11 +15,11 @@ export function userReducer(state = initialState, { type, user }){
         return {
 			...state, 
 			...user,
-			isAnonymousUser: userUtil.isAnonymousUser(user),
-			isOpaqueUser: userUtil.isOpaqueUser(user),
-			isRealUser: userUtil.isRealUser(user),
-			isModerator: userUtil.isModerator(user),
-			isBroadcaster: userUtil.isBroadcaster(user),
+			isAnonymousUser:userUtil.isAnonymousUser(user),
+			isOpaqueUser: 	userUtil.isOpaqueUser(user),
+			isRealUser: 	userUtil.isRealUser(user),
+			isModerator: 	userUtil.isModerator(user),
+			isBroadcaster: 	userUtil.isBroadcaster(user),
 		}
 	}
     else
@@ -36,39 +35,3 @@ export function setUser(user){
     }
 }
 
-const getUser = state => state
-
-export const isAnonymousUser = createSelector(
-    [getUser], userUtil.isAnonymousUser
-)
-export const isOpaqueUser = createSelector(
-    [getUser], userUtil.isOpaqueUser
-)
-export const isRealUser = createSelector(
-    [getUser], userUtil.isRealUser
-)
-export const isModerator = createSelector(
-    [getUser], userUtil.isModerator
-)
-export const isBroadcaster = createSelector(
-    [getUser], userUtil.isBroadcaster
-)
-
-/*
-Usage:
-
-import { userTypes } from '@/store/user' 
-
-const mapStateToProps = (state) => {
-  return userTypes(state)
-}
-*/
-export const userTypes = (state)=>{
-    return {
-		isAnonymousUser: isAnonymousUser(state),
-		isOpaqueUser: isOpaqueUser(state),
-		isRealUser: isRealUser(state),
-		isModerator: isModerator(state),
-		isBroadcaster: isBroadcaster(state),
-    }
-}

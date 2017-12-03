@@ -1,13 +1,13 @@
 import ReduxThunk from 'redux-thunk'
 import { createStore, applyMiddleware  } from 'redux'
-import { initialState as channel, setChannel, fetchChannel } from './channel'
+import { initialState as channel, fetchChannel } from './channel'
 import { initialState as user } from './user'
 import { initialState as suggestions, fetchSuggestions } from './suggestions'
 import { userReducer } from './user'
 import { channelReducer } from './channel'
 import { suggestionsReducer } from './suggestions'
 
-const { LIST_APPROVED,LIST_PENDING,LIST_USER, STATUS_APPROVED } = require('@shared/suggestion-util')
+const { LIST_APPROVED,LIST_PENDING,LIST_USER } = require('@shared/suggestion-util')
 
 const initialState = {
     token: null,

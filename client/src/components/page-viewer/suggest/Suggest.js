@@ -4,7 +4,6 @@ import PostSuggest from './PostSuggest'
 import { postSuggestion } from '@/store/suggestions'
 import { connect } from 'react-redux'
 import store from '@/store'
-import { userTypes } from '@/store/user' 
 import { delay } from '@/util'
 import './Suggest.scss'
 const { STATUS_APPROVED } = require('@shared/suggestion-util')
@@ -84,7 +83,7 @@ class Suggest extends Component {
         )
     }
     settings(){
-        let { isRealUser } = this.props.currentUser
+		let { isRealUser } = this.props.currentUser
         if(isRealUser){
             return (
                 <div class="field">  
@@ -128,10 +127,7 @@ class Suggest extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-		currentUser: {
-			...state.user,
-			//...userTypes(state)
-		}
+		currentUser: state.user
     }
 }
 const Suggest_C = connect(mapStateToProps)(Suggest)

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
 import Suggestion from './suggestion/Suggestion'
 import LoadMore from './LoadMore'
 import './SuggestionList.scss';
-import { userTypes } from '@/store/user' 
 
 
 class SuggestionList extends Component {

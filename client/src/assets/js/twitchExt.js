@@ -17,11 +17,7 @@ if(!inIframe() && process.env.NODE_ENV === 'development'){
 let hasFetchedChannel = false;
 //callback will fire when user toggles "grant permissions"
 window.Twitch.ext.onAuthorized(async function(auth) {
-    /* if(authed){
-        return;
-    }
-    authed = true; */
-
+	
     axios.defaults.headers.common['Authorization'] = auth.token;
     axios.defaults.headers.common['Client-Id'] = auth.clientId;
     axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
@@ -50,7 +46,6 @@ window.Twitch.ext.onAuthorized(async function(auth) {
     }
     let user = { id: userId, opaqueId: opaque_user_id, name, profileImg, role }
 	store.dispatch(setUser(user))
-	console.log(store.getState())
 
     if(hasFetchedChannel)
         return;

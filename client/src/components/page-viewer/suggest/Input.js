@@ -42,6 +42,7 @@ class Input extends Component {
                     <p class="help m-t-0">{this.helpText()}</p>
                     <div class="buttons">    
                         <button class="button is-danger is-outlined is-small"
+							type="button"
                             onClick={this.props.onCancel}
                         >Cancel</button>
                         <button class={btnClass}

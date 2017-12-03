@@ -6,7 +6,7 @@ import './Suggestion.scss'
 class Suggestion extends Component {
     render() {
         let { text, user } = this.props
-        let { id, opaqueId } = user
+        //let { id, opaqueId } = user
         return (
             <div class="suggestion m-b-10">
                 <div class="suggestion-header is-size-7 m-b-5">
@@ -27,7 +27,7 @@ class Suggestion extends Component {
         let { postAnonymously, user } = this.props
         return postAnonymously 
         ? <i class="fa fa-user-circle-o"></i> 
-        : <img src={user.profileImg} />
+        : <img src={user.profileImg} alt="profile" />
     }
     name(){
         let { user, postAnonymously } = this.props
