@@ -1,7 +1,6 @@
 const channelModel = require('../models/channels')
 const suggestionModel = require('../models/suggestions')
-//const userUtil = require('../../../shared/user-util')
-const { STATUS_PENDING, STATUS_APPROVED } = require('../../../shared/suggestion-util')
+const { isAllowedToSuggest, STATUS_PENDING, STATUS_APPROVED } = require('../../../shared/suggestion-util')
 const ObjectID = require('mongodb').ObjectID
 
 async function addSuggestion(channelId, data){
@@ -26,6 +25,10 @@ async function addSuggestion(channelId, data){
     })
 }
 
+function getSuggestionsByUser(channelId, user){
+	return suggestionModel.getSuggestionsByUser(channelId, user)
+}
+
 /**
  * 
  * @param {Object} data
@@ -48,33 +51,45 @@ function createSuggestionObj({ text, postAnonymously, user }, status){
 }
 
 module.exports = (app) => {
-    
-    app.get('/api/channels/:id/suggestions',async (req, res) => {
-        let channelId = req.params.id
+    app.get('/api/channels/:channelId/suggestions/',async (req, res) => {
+		let { channelId } = req.params
+		let { listType } = req.query
         let offset = parseInt(req.query.offset)
         let limit = parseInt(req.query.limit)
-        
-        //TODO status: approved or pending
-        let status = req.query.status ? req.query.status : STATUS_APPROVED
-        let { user_id, opaque_user_id } = req.decoded
-        let user = {
-            id: user_id,
-            opaqueId: opaque_user_id
-        }
-
-        let suggestions = await suggestionModel.getSuggestions(channelId, user, status, offset, limit)
+    
+		let user = req.user
+        let suggestions = await suggestionModel.getSuggestions(channelId, user, listType, offset, limit)
         res.send(suggestions)
-    })
+	})
 
-    app.post('/api/channels/:id/suggestions',async (req, res) => {
-        let channelId = req.params.id
+    app.post('/api/channels/:channelId/suggestions',async (req, res, next) => {
+		let { channelId } = req.params
+		let user = req.user
+		let suggestions = await suggestionModel.getSuggestionsByUser(channelId, user)
+		if(suggestions.length === 0)
+			next()
+		let lastSuggestDate = suggestions[0].createdAt
+		if(isAllowedToSuggest(lastSuggestDate)) 
+			next()
+		else 
+			res.status(403).send('You must wait 24 hours between posts')
+	},async (req, res) => {
+        let { channelId } = req.params
         let data = req.body
         let response = await addSuggestion(channelId, data)
         if(response.success)
             res.status(201).send(response)
         else
             res.status(400).end()
-    })
+	})
+	//voteType: 'upvote' or 'downvote'
+    app.put('/api/channels/:channelId/suggestions/:suggestionId/:voteType',async (req, res) => {
+		let { channelId, suggestionId, voteType } = req.params
+		let user = req.user
+		let response = await suggestionModel[voteType](channelId, suggestionId,user)
+		let status = response.modifiedCount === 1 ? 200 : 400
+		res.status(status).end()
+	})
     
     if(process.env.NODE_ENV === 'development'){
         app.post('/api/channels/23435553/suggestions/test',async () => {

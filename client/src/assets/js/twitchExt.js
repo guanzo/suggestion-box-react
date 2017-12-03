@@ -1,8 +1,7 @@
 
 import axios from 'axios'
-import store from '@/store'
-import { setChannel, fetchChannel } from '@/store/channel'
-import { fetchSuggestions } from '@/store/suggestions'
+import store, { fetchInitialData } from '@/store'
+import { setChannel } from '@/store/channel'
 import { setUser } from '@/store/user'
 
 //testing on localhost window, and not inside twitch iframe
@@ -34,8 +33,8 @@ window.Twitch.ext.onAuthorized(async function(auth) {
     let { user_id, opaque_user_id, role } = payload
     let { channelId } = auth;
     
-    console.log(auth)
-    console.log(payload)
+    //console.log(auth)
+    //console.log(payload)
     let userId = null, 
     name = null, 
     profileImg = null;
@@ -54,18 +53,17 @@ window.Twitch.ext.onAuthorized(async function(auth) {
 
     if(hasFetchedChannel)
         return;
-
-    hasFetchedChannel = true;
+	hasFetchedChannel = true;
+	
     let {display_name} = await getTwitchUser(auth.channelId)
     let channelName = display_name
     
     store.dispatch(setChannel({ 
         channelId, 
         channelName
-    }))
-    
-    store.dispatch(fetchChannel())
-    store.dispatch(fetchSuggestions())
+	}))
+	
+    fetchInitialData()
 });
 
 window.Twitch.ext.onError(function (err) {

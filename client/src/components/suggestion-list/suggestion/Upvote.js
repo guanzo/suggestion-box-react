@@ -5,12 +5,11 @@ import classNames from 'classnames'
 
 class Upvote extends Component {
     render() {
-        console.log(this.props)
-        let { hasUpvoted, votesLength } = this.props
+		let { hasUpvoted, votesLength } = this.props
         let thumbsClass = classNames('fa m-r-5',
         hasUpvoted ? 'fa-thumbs-up':'fa-thumbs-o-up',
         { 
-            'has-text-success': votesLength > 0 
+            'has-text-primary': votesLength > 0 
         })
 
         return (
@@ -24,7 +23,7 @@ class Upvote extends Component {
 
 const mapDispatchToProps = (dispatch,ownProps) => {
     return {
-        toggleUpvote: ()=> dispatch(toggleUpvote(ownProps.hasUpvoted))
+        toggleUpvote: ()=> dispatch(toggleUpvote(ownProps))
     }
 }
 const Upvote_C = connect(null, mapDispatchToProps)(Upvote)

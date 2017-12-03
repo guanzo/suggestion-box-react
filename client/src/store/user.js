@@ -47,18 +47,20 @@ export const isBroadcaster = createSelector(
 /*
 Usage:
 
-import { userRoles } from '@/store/user' 
+import { userTypes } from '@/store/user' 
 
 const mapStateToProps = (state) => {
-  return userRoles(state)
+  return userTypes(state)
 }
 */
-export const userRoles = (state)=>{
+export const userTypes = (state)=>{
     return {
-        isAnonymousUser: isAnonymousUser(state),
-        isOpaqueUser: isOpaqueUser(state),
-        isRealUser: isRealUser(state),
-        isModerator: isModerator(state),
-        isBroadcaster: isBroadcaster(state),
+        userTypes:{
+			isAnonymousUser: isAnonymousUser(state),
+			isOpaqueUser: isOpaqueUser(state),
+			isRealUser: isRealUser(state),
+			isModerator: isModerator(state),
+			isBroadcaster: isBroadcaster(state),
+		}
     }
 }

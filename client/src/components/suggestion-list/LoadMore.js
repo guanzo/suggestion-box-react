@@ -5,7 +5,7 @@ import { fetchSuggestions } from '@/store/suggestions'
 class LoadMore extends Component {
     render() {
         var btn = '';
-        if(!this.props.noMorePages){
+        if(this.props.suggestions.hasMorePages){
             btn = <button onClick={this.props.onLoadMore} 
                     class="button is-small"
                     >Load more</button>
@@ -18,17 +18,11 @@ class LoadMore extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        noMorePages: state.pagination.noMorePages
+        onLoadMore: ()=> dispatch(fetchSuggestions(ownProps.suggestions.listType))
     }
 }
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onLoadMore: ()=> dispatch(fetchSuggestions())
-    }
-}
-const LoadMore_C = connect(mapStateToProps, mapDispatchToProps)(LoadMore)
+const LoadMore_C = connect(null, mapDispatchToProps)(LoadMore)
 
 export default LoadMore_C;

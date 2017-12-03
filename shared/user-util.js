@@ -6,7 +6,7 @@ var self = module.exports = {
     ROLE_BROADCASTER:   'broadcaster',
     //Not logged in user, NOT ALLOWED TO POST
     isAnonymousUser: function (user){
-        return _.isNull(user.id) && user.opaqueId.charAt(0) === 'A'
+        return user.opaqueId.charAt(0) === 'A'
     },
     //display name in suggestion list is always "Anonymous"
     //b/c i can't retrieve username from opaque id

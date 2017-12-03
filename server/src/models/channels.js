@@ -13,7 +13,7 @@ module.exports = {
         channels.createIndex({ channelId: 1 })
         
         //ensure channel document exists
-        let result = await addChannel(channelId, channelName);
+        await addChannel(channelId, channelName);
         return channels
                 .findOne({ channelId }, { _id: 0, suggestions: 0 })
                 .catch(err=>{

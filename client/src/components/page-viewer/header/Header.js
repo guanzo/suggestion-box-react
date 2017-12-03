@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Header extends Component {
     render() {
         return (
-            <div class="suggestion-header">
+            <div class="viewer-header">
                 <h1 class="title has-text-centered">Suggestion Box</h1>
                 <div>{this.toolbar()}</div>
             </div>

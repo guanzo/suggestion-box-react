@@ -4,7 +4,7 @@ import PostSuggest from './PostSuggest'
 import { postSuggestion } from '@/store/suggestions'
 import { connect } from 'react-redux'
 import store from '@/store'
-import { userRoles } from '@/store/user' 
+import { userTypes } from '@/store/user' 
 import { delay } from '@/util'
 import './Suggest.scss'
 const { STATUS_APPROVED } = require('@shared/suggestion-util')
@@ -41,7 +41,7 @@ class Suggest extends Component {
         )
     }
     openFormButton(){
-        let {isAnonymousUser} = this.props
+		let {isAnonymousUser} = this.props.userTypes
         let style = {
             'border-radius': '9999px',
             position: 'fixed',
@@ -84,7 +84,7 @@ class Suggest extends Component {
         )
     }
     settings(){
-        let { isRealUser } = this.props
+        let { isRealUser } = this.props.userTypes
         if(isRealUser){
             return (
                 <div class="field">  
@@ -128,7 +128,7 @@ class Suggest extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        ...userRoles(state)
+        ...userTypes(state)
     }
 }
 const Suggest_C = connect(mapStateToProps)(Suggest)

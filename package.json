@@ -9,5 +9,7 @@
     "client": "cd client && npm run start",
     "test": "cd client && npm run test && cd ../server && mocha src/**/*.spec.js --recursive"
   },
-  "dependencies": {}
+  "dependencies": {
+    "moment": "^2.19.3"
+  }
 }

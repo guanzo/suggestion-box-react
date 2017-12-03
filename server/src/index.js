@@ -11,9 +11,8 @@ const https = require('https');
 const cors = require('cors');
 const path = require('path')
 var db = require('./db.js')
+const { isAnonymousUser } = require('../../shared/user-util')
 
-
-//console.log(process.env);
 console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
 console.log('process.env.TWITCH_EXTENSION_SECRET:', process.env.TWITCH_EXTENSION_SECRET);
 
@@ -42,6 +41,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 authRouter(app);
+
+app.post('/*',blockAnonymousUsers)
+app.put('/*',blockAnonymousUsers)
+
+//anonymous users can ONLY get info. no changing
+function blockAnonymousUsers(req,res,next){
+	if(isAnonymousUser(req.user)) 
+		res.status(403).send('You must login.')
+	else 
+		next()
+}
+
 channelsRouter(app);
 suggestionsRouter(app)
 
