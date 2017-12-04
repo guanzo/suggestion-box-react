@@ -36,49 +36,13 @@ module.exports = {
             amd: 'react-router-dom',
             umd: 'react-router-dom',
         },
-        'redux': {
-            root: 'Redux',
-            commonjs2: 'redux',
-            commonjs: 'redux',
-            amd: 'redux',
-            umd: 'redux',
-        },
-        'react-redux': {
-            root: 'ReactRedux',
-            commonjs2: 'react-redux',
-            commonjs: 'react-redux',
-            amd: 'react-redux',
-            umd: 'react-redux',
-        },
-        'redux-thunk': {
-            root: 'ReduxThunk',
-            commonjs2: 'redux-thunk',
-            commonjs: 'redux-thunk',
-            amd: 'redux-thunk',
-            umd: 'redux-thunk',
-        },
-        'reselect': {
-            root: 'Reselect',
-            commonjs2: 'reselect',
-            commonjs: 'reselect',
-            amd: 'reselect',
-            umd: 'reselect',
-        },
-        'react-transition-group': {
-            root: 'ReactTransitionGroup',
-            commonjs2: 'react-transition-group',
-            commonjs: 'react-transition-group',
-            amd: 'react-transition-group',
-            umd: 'react-transition-group',
-        },
+        'redux': 'Redux',
+        'react-redux': 'ReactRedux',
+        'redux-thunk': 'ReduxThunk',
+        'react-transition-group': 'ReactTransitionGroup',
+        'reselect': 'Reselect',
         'axios':'axios',
         'moment':'moment',
-        lodash : {
-            commonjs: "lodash",
-            commonjs2: "lodash",
-            amd: "lodash",
-            umd: 'lodash',
-            root: "_" // indicates global variable
-        }
+        'lodash' : '_'
     },
 }

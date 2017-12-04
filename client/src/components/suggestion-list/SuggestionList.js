@@ -34,7 +34,7 @@ class SuggestionList extends Component {
         return (
             <div class="no-suggestions">
                 No suggestions yet... <br/>
-                Let your voice be heard.
+				You can be the first!
             </div>
         )
     }

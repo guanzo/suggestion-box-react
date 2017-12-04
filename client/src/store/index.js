@@ -1,7 +1,7 @@
 import ReduxThunk from 'redux-thunk'
 import { createStore, applyMiddleware  } from 'redux'
 import { initialState as user, userReducer } from './user'
-import { initialState as util, utilReducer } from './util'
+//import { initialState as util, utilReducer } from './util'
 import { 
 	initialState as suggestions, fetchSuggestions, suggestionsReducer 
 } from './suggestions'
@@ -16,7 +16,7 @@ const initialState = {
     ...user,
     ...channel,
     ...suggestions,
-    ...util
+    //...util
 }
 export function fetchInitialData(){
     store.dispatch(fetchChannel())
@@ -30,7 +30,7 @@ function root(state = initialState, action){
     return {
 		//handles top level properties but now, but it will overwrite new state with old state if its the last reducer......
 		//put util properties into its own property later
-		...utilReducer(state, action),
+		//...utilReducer(state, action),
         user: userReducer(state.user, action),
         channel: channelReducer(state.channel, action),
 		suggestions: suggestionsReducer(state.suggestions, action),
