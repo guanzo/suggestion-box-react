@@ -1,7 +1,8 @@
 @import 'bulma/bulma';
 @import 'spacing-helpers';
 html{
-    overflow: hidden;
+	overflow: hidden;
+	min-width: initial !important; //bulma override
 }
 
 html, body, #root {
@@ -32,10 +33,16 @@ body {
 }
 
 .flex{
-    display: flex;
+	display: flex;
+	&.wrap{
+		flex-wrap: wrap;
+	}
     &.column{
         flex-direction: column;
-    }
+	}
+	&.justify-end{
+		justify-content: flex-end;
+	}
     &.justify-between{
         justify-content: space-between;
     }

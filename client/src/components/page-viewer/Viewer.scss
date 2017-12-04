@@ -3,13 +3,8 @@
     display: flex;
     flex-direction: column;
     padding: $app-padding;
-    width: $viewer-width;
-    max-width: $viewer-width;
     height: $app-height;
     max-height: $app-height;
 	overflow-y: scroll;
 	background: $app-bg-color;
-	&.liveconfig{
-		width: $liveconfig-width;
-	}
 }

@@ -16,7 +16,7 @@ class SuggestionList extends Component {
     suggestionList(){
 		let { channel, currentUser } = this.props
         return (
-            <div class="suggestions-list">
+            <div class="suggestions-list m-b-25">
                 {
                     this.props.suggestions.data.map(suggestion=>{
 						//console.log(suggestion)

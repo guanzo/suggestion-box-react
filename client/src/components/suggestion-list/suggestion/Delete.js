@@ -30,11 +30,13 @@ class Delete extends Component {
 	confirm(){
 		const style = { cursor: 'pointer' }
 		return (
-			<div class="help flex">
+			<div class="help flex wrap justify-end m-t-0">
 				<span class="has-text-danger">are you sure?</span>&nbsp;
-				<div onClick={this.props.deleteSuggestion} style={style}>yes</div>&nbsp;
-				<div class="has-text-danger">/</div>&nbsp;
-				<div onClick={e=>this.setState({ askToConfirm: false })} style={style}>no</div>
+				<div class="flex">
+					<div onClick={this.props.deleteSuggestion} style={style}>yes</div>&nbsp;
+					<div class="has-text-danger">/</div>&nbsp;
+					<div onClick={e=>this.setState({ askToConfirm: false })} style={style}>no</div>
+				</div>	
 			</div> 
 		)
 	}

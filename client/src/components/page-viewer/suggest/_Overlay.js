@@ -82,22 +82,10 @@ class Overlay extends Component {
 	}
 	velocityProps(){
 		let { hasOverlay } = this.state
-		let { hasSuggestions } = this.props
 		let velocityProps;
 		let ease = [0.4, 0.0, 0.2, 1]
 		let style = { 'border-radius': '50%' }
-		let initialPosition
-		if(hasSuggestions){
-			initialPosition = {
-				top:['94.5%','easeOutSine'],
-				left:['86.5%','easeInSine'],
-			}
-		}else{
-			initialPosition = {
-				top:['70%','easeOutSine'],
-				left:['50%','easeInSine'],
-			}
-		}
+		let initialPosition = this.getInitialOverlayPosition()
 		if(!hasOverlay){
 			velocityProps = {
 				duration: 250,
@@ -124,6 +112,20 @@ class Overlay extends Component {
 			}
 		}
 		return velocityProps
+	}
+	getInitialOverlayPosition(){
+		let { hasSuggestions } = this.props
+		if(hasSuggestions){
+			return {
+				top:['94.5%','easeOutSine'],
+				left:['86.5%','easeInSine'],
+			}
+		}else{
+			return {
+				top:['70%','easeOutSine'],
+				left:['50%','easeInSine'],
+			}
+		}
 	}
 	onSubmitDone(status){
 		this.setState({ 
