@@ -8,15 +8,16 @@ $scrollbar-width: 17px;
 		position: relative;
 		width: 40px;
 		height: 40px;
-		overflow: hidden;
+		overflow: visible;//show icon box shadow
 		transition: .25s;
 
 	}
 	&.is-expanded{
 		> .overlay-inner {
-			padding: 15px;
 			width: $app-width;
 			height: $app-height;
+			padding: 15px;
+			overflow: hidden;
 		}
 	}
 	.open-suggestion-form{

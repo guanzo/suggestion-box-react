@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const SET_SUGGESTIONS = 'SET_SUGGESTIONS'
-export const ADD_APPROVED_SUGGESTION = 'ADD_APPROVED_SUGGESTION'
+export const ADD_SUGGESTION = 'ADD_SUGGESTION'
 export const POST_SUGGESTION = 'POST_SUGGESTION'
 export const INCREMENT_OFFSET = 'INCREMENT_OFFSET'
 export const NO_MORE_PAGES = 'NO_MORE_PAGES'
@@ -77,7 +77,7 @@ export function toggleUpvote({ id: suggestionId, hasUpvoted, listType }){
         .catch(console.log)
     }
 }
-
+//post either comes back with status approved or pending
 export function postSuggestion(text, postAnonymously){
     return (dispatch,getState) => {
         let state = getState()
@@ -90,16 +90,19 @@ export function postSuggestion(text, postAnonymously){
             user,
         })
         .then(res=>{
-            let suggestion = res.data.suggestion
+			let suggestion = res.data.suggestion
+			let lists = [LIST_USER]
 			if(suggestion.status === STATUS_APPROVED){
-				[LIST_APPROVED, LIST_USER].forEach(listType=>{
-					dispatch({
-						type: ADD_APPROVED_SUGGESTION,
-						suggestion,
-						listType
-					})
-				})
+				lists.push(LIST_APPROVED)
 			}
+			lists.forEach(listType=>{
+				dispatch({
+					type: ADD_SUGGESTION,
+					suggestion,
+					listType
+				})
+			})
+			
             return suggestion.status
         })
         .catch(console.log)
@@ -107,7 +110,7 @@ export function postSuggestion(text, postAnonymously){
 }
 
 
-
+//any suggestion action must contain a 'listType' property
 export function suggestionsReducer(suggestions = {}, action){
 	let listType, list;
 	if(action.listType){
@@ -128,7 +131,7 @@ function listTypeReducer(list = {}, action){
 				...list,
 				data: [...list.data, ...action.suggestions]
 			}
-        case ADD_APPROVED_SUGGESTION://prepend to top, reddit style
+        case ADD_SUGGESTION://prepend to top, reddit style
 			return  {
 				...list,
 				data: [action.suggestion, ...list.data]

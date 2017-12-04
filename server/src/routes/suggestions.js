@@ -6,8 +6,8 @@ const { isAllowedToSuggest } = require('../../../shared/user-util')
 const ObjectID = require('mongodb').ObjectID
 
 async function addSuggestion(channelId, data){
-    let channel = await channelModel.getChannel(channelId)
-    let status = channel.requireApproval ? STATUS_PENDING : STATUS_APPROVED
+	let channel = await channelModel.getChannel(channelId)
+	let status = channel.requireApproval ? STATUS_PENDING : STATUS_APPROVED
     let suggestion = createSuggestionObj(data, status)
 
     return new Promise(async resolve=>{
@@ -27,9 +27,6 @@ async function addSuggestion(channelId, data){
     })
 }
 
-function getSuggestionsByUser(channelId, user){
-	return suggestionModel.getSuggestionsByUser(channelId, user)
-}
 
 /**
  * 

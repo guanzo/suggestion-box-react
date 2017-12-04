@@ -13,13 +13,14 @@ class Fab extends Component {
         let style = {
             height: 40,
 			width: 40,
+			...this.state
         }
         return (
 			<button class="button is-primary is-small is-floating open-suggestion-form"
                 style={style}
 				onClick={this.props.onClick}
             >
-				<i class="fa fa-comment fa-lg has-text-white" style={{ ...this.state}}>
+				<i class="fa fa-comment fa-lg has-text-white">
 				</i>
 			</button>
         );

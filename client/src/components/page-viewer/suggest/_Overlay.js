@@ -8,7 +8,6 @@ import PostForm from './PostForm'
 import moment from 'moment'
 import classNames from 'classnames'
 import './_Overlay.scss'
-import { Transition } from 'react-transition-group'
 import {VelocityComponent} from 'velocity-react'
 const { STATUS_APPROVED } = require('@shared/suggestion-util')
 const { isAllowedToSuggest } = require('@shared/user-util')
@@ -40,7 +39,7 @@ class Overlay extends Component {
 		}
 		switch(this.state.current) {
 			case Machine.FAB:
-				return <Fab onClick={this.onClick.bind(this)} ></Fab>
+				return <Fab onClick={this.onClick.bind(this)}></Fab>
 			case Machine.PRE_FORM:
 				return <PreForm {...close} {...this.props}>
 						</PreForm>
@@ -52,6 +51,8 @@ class Overlay extends Component {
 						</Form>
 			case Machine.POST_FORM:
 				return <PostForm {...close} {...this.props} status={status} ></PostForm>
+			default:
+				return <Fab onClick={this.onClick.bind(this)}></Fab>
 		}
 	}
 	onClick(){
@@ -66,20 +67,7 @@ class Overlay extends Component {
     render() {
 		let { hasOverlay } = this.state
 		let velocityProps = this.velocityProps()
-		
 		let className = classNames('overlay flex-center',{ 'is-expanded': hasOverlay }) 
-		
-		const duration = 300;
-
-		const defaultStyle = {
-			transition: `opacity ${duration}ms ease-in-out`,
-			opacity: 0,
-		}
-
-		const transitionStyles = {
-			entering: { opacity: 0 },
-			entered:  { opacity: 1 },
-		};
 
         return (
 			<VelocityComponent {...velocityProps}>
@@ -93,18 +81,28 @@ class Overlay extends Component {
 	}
 	velocityProps(){
 		let { hasOverlay } = this.state
+		let { hasSuggestions } = this.props
 		let velocityProps;
 		let ease = [0.4, 0.0, 0.2, 1]
-		let style = {
-			'border-radius': '50%'
+		let style = { 'border-radius': '50%' }
+		let initialPosition
+		if(hasSuggestions){
+			initialPosition = {
+				top:['95%','easeOutSine'],
+				left:['86%','easeInSine'],
+			}
+		}else{
+			initialPosition = {
+				top:['70%','easeOutSine'],
+				left:['50%','easeInSine'],
+			}
 		}
 		if(!hasOverlay){
 			velocityProps = {
 				duration: 250,
 				runOnMount: true,
 				animation: {
-					top:['95%','easeOutSine'],
-					left:['86%','easeInSine'],
+					...initialPosition,
 					backgroundColor: ['#F57C00',ease],
 					width: ['40px',ease],
 					height: ['40px',ease],
@@ -158,7 +156,8 @@ const mapStateToProps = (state, ownProps) => {
 		currentUser: state.user,
 		lastSuggestionDate: lastSuggestionDate(state),
 		isAllowedToSuggest: isAllowedToSuggestSelector(state),
-		channel: state.channel
+		channel: state.channel,
+		hasSuggestions: state.suggestions.approved.data.length > 0
     }
 }
 const Overlay_C = connect(mapStateToProps)(Overlay)

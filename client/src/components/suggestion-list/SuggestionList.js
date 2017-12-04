@@ -3,7 +3,6 @@ import Suggestion from './suggestion/Suggestion'
 import LoadMore from './LoadMore'
 import './SuggestionList.scss';
 
-
 class SuggestionList extends Component {
     render() {
 		let { props } = this
@@ -30,14 +29,16 @@ class SuggestionList extends Component {
     }
     noSuggestions(){
 		const style = {
-			color: 'dimgrey',
 			'text-align': 'center',
-			width: '100%'
+			width: '100%',
+			color: 'grey'
 		}
         return (
             <div class="no-suggestions absolute-center" style={style}>
-                No suggestions yet... <br/>
-				You can be the first!
+                <div class="m-b-15">
+					No suggestions yet...<br/>
+					Must be the perfect stream
+				</div>
             </div>
         )
     }

@@ -5,8 +5,7 @@ import './Suggestion.scss'
 
 class Suggestion extends Component {
     render() {
-		let { text, user } = this.props
-        //let { id, opaqueId } = user
+		let { text } = this.props
         return (
             <div class="suggestion m-b-10">
                 <div class="suggestion-header is-size-7 m-b-5">
