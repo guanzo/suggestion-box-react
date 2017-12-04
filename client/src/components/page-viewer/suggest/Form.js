@@ -40,7 +40,7 @@ class Form extends Component {
                 <ol class="p-l-15">
                     <li>Leave a helpful suggestion or constructive criticism.</li>
                     <li>Check existing posts to see if your idea has already been posted.</li>
-                    <li>Don't be rude.</li>
+                    <li>Be respectful.</li>
                 </ol>
             </div>
         )
