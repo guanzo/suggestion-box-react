@@ -57,16 +57,16 @@ module.exports = (app) => {
 		let { listType } = req.query
         let offset = parseInt(req.query.offset)
         let limit = parseInt(req.query.limit)
-    
+		let sortBy = req.query.sortBy
 		let user = req.user
-		let suggestions = await suggestionModel.getSuggestions(channelId, user, listType, offset, limit)
+		let suggestions = await suggestionModel.getSuggestions(channelId, user, listType, offset, limit,sortBy)
         res.send(suggestions)
 	})
 
     app.post('/api/channels/:channelId/suggestions',async (req, res, next) => {
 		let { channelId } = req.params
 		let user = req.user
-		let suggestions = await suggestionModel.getSuggestionsByUser(channelId, user)
+		let suggestions = await suggestionModel.getSuggestions(channelId, user, LIST_USER, 0, 1,'createdAt')
 
 		if(suggestions.length === 0)
 			return next()

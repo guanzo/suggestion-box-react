@@ -21,9 +21,11 @@ const initialState = {
 export function fetchInitialData(){
     store.dispatch(fetchChannel())
 	store.dispatch(fetchSuggestions(LIST_APPROVED))
+	//need these to check for isAllowedToSuggest
 	store.dispatch(fetchSuggestions(LIST_USER))
+	
 	//for now fetch pending regardless of user type
-	store.dispatch(fetchSuggestions(LIST_PENDING))
+	//store.dispatch(fetchSuggestions(LIST_PENDING))
 }
 
 function root(state = initialState, action){

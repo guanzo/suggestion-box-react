@@ -18,9 +18,9 @@ class LoadMore extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onLoadMore: ()=> dispatch(fetchSuggestions(ownProps.suggestions.listType))
+        onLoadMore: ()=> dispatch(fetchSuggestions())
     }
 }
 const LoadMore_C = connect(null, mapDispatchToProps)(LoadMore)

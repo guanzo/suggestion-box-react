@@ -7,6 +7,8 @@ module.exports = {
 	LIST_APPROVED:	'approved',
 	LIST_PENDING:	'pending',
 	LIST_USER:		'user',
+	SORT_VOTES:		'votesLength',
+	SORT_NEW:		'createdAt',
 	STATUS_PENDING:	'PENDING',
 	STATUS_APPROVED:'APPROVED',
 	STATUS_DELETED:	'DELETED',

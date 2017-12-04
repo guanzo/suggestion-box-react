@@ -21,11 +21,19 @@ class Countdown extends Component {
 	}
     render() {
 		let t = this.state.time
-		let string = [t.hours(),t.minutes(),t.seconds()].filter(d=>d>0).join(':')
+		let language = 'You may post '
+		let times = [t.hours(),t.minutes(),t.seconds()].filter(d=>d>0)
+		if(times.length === 0){
+			clearInterval(this.intervalId)
+			language += 'now'
+		}else
+			language += 'again in...'
+		
+
         return (
         <div class="has-text-centered m-b-15">
-            <p class="m-b-15">You may post again in...</p>
-			<p class="is-size-1">{string}</p>
+			<p class="m-b-15">{language}</p> 
+			{ times.length ? <p class="is-size-1">{times.join(':')}</p> : '' }
         </div>
         );
 	}

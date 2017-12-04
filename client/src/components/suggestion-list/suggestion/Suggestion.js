@@ -13,7 +13,7 @@ class Suggestion extends Component {
         return (
             <div class={className}>
                 <div class="suggestion-header is-size-7 m-b-5">
-                    <div class="profile-img m-r-5 flex-center">
+                    <div class="profile-img m-r-10 flex-center">
                         {this.img()}
                     </div>
                     <div>

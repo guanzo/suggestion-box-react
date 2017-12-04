@@ -15,14 +15,12 @@ class SuggestionList extends Component {
     }
     suggestionList(){
 		let { channel, currentUser } = this.props
-		let { listType } = this.props.suggestions
         return (
             <div class="suggestions-list">
                 {
                     this.props.suggestions.data.map(suggestion=>{
 						//console.log(suggestion)
                         return <Suggestion {...suggestion} 
-											listType={listType} 
 											channel={channel}  
 											currentUser={currentUser}
 											key={suggestion.id}

@@ -57,8 +57,9 @@ class Overlay extends Component {
 	}
 	onClick(){
 		let { isAnonymousUser } = this.props.currentUser
-		let { isAllowedToSuggest } = this.props
-		let nextComponent = (isAnonymousUser || !isAllowedToSuggest)
+		let { isAllowedToSuggest: isAllowedToSuggest_Prop } = this.props
+		console.log(isAllowedToSuggest_Prop)
+		let nextComponent = (isAnonymousUser || !isAllowedToSuggest_Prop)
 							?	Machine.PRE_FORM
 							:	Machine.FORM
 		this.transition(nextComponent)
@@ -136,7 +137,7 @@ class Overlay extends Component {
     }
 }
 
-const lastSuggestionDate = createSelector(
+const getLastSuggestionDate = createSelector(
 	[state => state.suggestions.user.data],
 	userSuggestions => {
 		if(!userSuggestions.length)
@@ -147,14 +148,14 @@ const lastSuggestionDate = createSelector(
 )
 
 const isAllowedToSuggestSelector = createSelector(
-	[lastSuggestionDate],
+	[getLastSuggestionDate],
 	lastSuggestionDate => isAllowedToSuggest(lastSuggestionDate)
 )
 
 const mapStateToProps = (state, ownProps) => {
     return {
 		currentUser: state.user,
-		lastSuggestionDate: lastSuggestionDate(state),
+		lastSuggestionDate: getLastSuggestionDate(state),
 		isAllowedToSuggest: isAllowedToSuggestSelector(state),
 		channel: state.channel,
 		hasSuggestions: state.suggestions.approved.data.length > 0

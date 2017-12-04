@@ -1,30 +1,14 @@
 import React, { Component } from 'react';
+import Toolbar from './Toolbar'
 
 class Header extends Component {
     render() {
         return (
-            <div class="viewer-header">
+            <div class="viewer-header m-b-10">
                 <h1 class="title has-text-centered">Suggestion Box</h1>
-                <div>{this.toolbar()}</div>
+				<Toolbar></Toolbar>
             </div>
         );
-    }
-    toolbar(){
-        let test = '';
-        if(process.env.NODE_ENV === 'development')
-            test = this.testBtn()
-        return test
-    }
-    testBtn(){
-        let style = {
-            position: 'absolute',
-            top: 0,
-            right: 0
-        }
-        let generate = ()=> require('axios').post(`/api/channels/${23435553}/suggestions/test`)
-        return (
-            <button style={style} onClick={generate}>g</button>
-        )
     }
 }
 export default Header;

@@ -6,13 +6,14 @@ const { LIST_APPROVED } = require('@shared/suggestion-util')
 
 
 const mapStateToProps = (state, ownProps) => {
+	let { currentListType } = state.suggestions
     return {
-		suggestions: state.suggestions[LIST_APPROVED],
+		suggestions: state.suggestions[currentListType],
 		currentUser: state.user,
 		channel: state.channel
     }
 }
-const SuggestionsListApproved = connect(mapStateToProps)(SuggestionList)
+const SuggestionsList_C = connect(mapStateToProps)(SuggestionList)
 
 class Body extends Component {
     render() {
@@ -22,7 +23,7 @@ class Body extends Component {
 		}
         return (
         <div class="viewer-body" style={style}>
-            <SuggestionsListApproved></SuggestionsListApproved>
+            <SuggestionsList_C></SuggestionsList_C>
         </div>
         );
     }

@@ -6,10 +6,11 @@ const { LIST_APPROVED,LIST_PENDING, LIST_USER,
 } = require('../../../shared/suggestion-util')
 const Chance = require('chance')
 const _ = require('lodash')
+const moment = require('moment')
 
 module.exports = {
     //send vote count, don't send votes itself
-    getSuggestions(channelId, user, listType, offset, limit){
+    getSuggestions(channelId, user, listType, offset, limit, sortBy = 'votesLength'){
 		var channels = db.get().collection('channels')
 		let match;
 		if(listType === LIST_APPROVED)
@@ -49,7 +50,7 @@ module.exports = {
 			},
 			//client doesn't need vote data
 			{ $project :    { votes: 0 } },
-            { $sort:        { votesLength: -1, createdAt: -1 } },
+            { $sort:        { [sortBy]: -1 } },
             { $skip:        offset },
             { $limit:       limit },
         ])
@@ -120,6 +121,13 @@ module.exports = {
 				}
 			})
 	},
+	getSuggestionsCount(channelId){
+		var channels = db.get().collection('channels')
+		return channels.aggregate([
+			{ $match:{ channelId } },
+			{ $project: { count: { $size: '$sugestions' } } }
+		])
+	},
     //test only
     generate(){
         var chance = new Chance();
@@ -146,7 +154,7 @@ function generateSuggestion(){
         id: new ObjectID(),
         "text": chance.sentence({ length: 100 }),
         "postAnonymously": chance.bool(),
-        createdAt: new Date(),
+        createdAt: moment().subtract(chance.integer({min:0,max:500}),'days').toDate(),
         status: Math.random() > .5 ? STATUS_APPROVED: STATUS_PENDING,
         votes,
         "user": {
