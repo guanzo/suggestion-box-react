@@ -192,7 +192,7 @@ const devWebpackConfig = merge(baseWebpackConfig,{
                 {
                     loader: 'sass-resources-loader',
                     options: {
-                        resources: path.resolve(__dirname, '../src/style/variables.scss'),
+                        resources: path.resolve(__dirname, '../src/style/variables.scss')
                     },
                 },
             ]

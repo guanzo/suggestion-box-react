@@ -1,7 +1,9 @@
 $avatar-size: 30px;
 
 .suggestion {
+	position: relative;
 	padding: 10px;
+	transition: .35s;
     .suggestion-header{
         display: flex;
         align-items: center;
@@ -23,6 +25,19 @@ $avatar-size: 30px;
     .suggestion-actions{
         .fa {
             cursor: pointer;
-        }
-    }
+		}
+		.fa-trash-o {
+			transition: .35s;
+			&:hover{
+				color: darkred;
+			}
+		}
+	}
+	&.is-deleted{
+		background-color: #f4eaea;
+		pointer-events: none;//don't allow any interaction such as upvoting etc.
+		.fa-trash-o {
+			color: darkred;
+		}
+	}
 }

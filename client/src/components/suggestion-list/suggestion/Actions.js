@@ -8,7 +8,7 @@ class Actions extends Component {
             <div class="suggestion-actions">
                 <div class="flex">
                     <Upvote {...this.props}></Upvote>
-					{ this.userIsAdmin() ? <Delete id={this.props.id}></Delete> : '' }
+					{ this.userIsAdmin() ? <Delete {...this.props}></Delete> : '' }
 				</div>
             </div>
         )

@@ -4,12 +4,13 @@ export const SET_SUGGESTIONS = 'SET_SUGGESTIONS'
 export const ADD_SUGGESTIONS = 'ADD_SUGGESTIONS'
 export const ADD_POSTED_SUGGESTION = 'ADD_POSTED_SUGGESTION'
 export const POST_SUGGESTION = 'POST_SUGGESTION'
+export const DELETE_SUGGESTION = 'DELETE_SUGGESTION'
 export const INCREMENT_OFFSET = 'INCREMENT_OFFSET'
 export const NO_MORE_PAGES = 'NO_MORE_PAGES'
 export const TOGGLE_UPVOTE = 'TOGGLE_UPVOTE'
 export const SET_USER_SUGGESTIONS = 'SET_USER_SUGGESTIONS'
 
-const { LIST_APPROVED,LIST_PENDING,LIST_USER, STATUS_APPROVED } = require('@shared/suggestion-util')
+const { LIST_APPROVED,LIST_PENDING,LIST_USER, STATUS_APPROVED, STATUS_DELETED } = require('@shared/suggestion-util')
 
 const PAGE_LIMIT = 5;
 
@@ -110,13 +111,21 @@ export function postSuggestion(text, postAnonymously){
     }
 }
 
-export function deleteSuggestion(suggestionId){
+export function deleteSuggestion({ id: suggestionId, listType }){
     return (dispatch,getState) => {
         let state = getState()
         let channelId = state.channel.channelId;
 
 		//delete component handles client update.
-        return axios.delete(`/api/channels/${channelId}/suggestions/${suggestionId}`)
+		return axios.delete(`/api/channels/${channelId}/suggestions/${suggestionId}`)
+		.then(res=>{
+			dispatch({
+				type: DELETE_SUGGESTION,
+				suggestionId,
+				listType
+			})
+			return res;//delete component is waiting for response
+		})
         .catch(console.log)
     }
 }
@@ -148,6 +157,15 @@ function listTypeReducer(list = {}, action){
 			return  {
 				...list,
 				data: [action.suggestion, ...list.data]
+			}
+		case DELETE_SUGGESTION:
+			return {
+				...list,
+				data: list.data.map(suggestion=>{
+					if(suggestion.id !== action.suggestionId)
+						return suggestion
+					return { ...suggestion, status: STATUS_DELETED }
+				})
 			}
 		case TOGGLE_UPVOTE:
 			return {

@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import Actions from './Actions'
 import moment from 'moment'
+import classNames from 'classnames'
 import './Suggestion.scss'
+const { STATUS_DELETED } = require('@shared/suggestion-util')
 
 class Suggestion extends Component {
     render() {
-		let { text } = this.props
+		let { text, status } = this.props
+		let isDeleted = status === STATUS_DELETED
+		let className = classNames('suggestion box m-b-10', { 'is-deleted': isDeleted })
         return (
-            <div class="suggestion box m-b-10">
+            <div class={className}>
                 <div class="suggestion-header is-size-7 m-b-5">
                     <div class="profile-img m-r-5 flex-center">
                         {this.img()}
@@ -40,6 +44,6 @@ class Suggestion extends Component {
         if(year !== currentYear)
             fmt += ' YYYY'
         return date.format(fmt)
-    }
+	}
 }
 export default Suggestion;

@@ -1,35 +1,48 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { deleteSuggestion } from '@/store/suggestions'
+const { STATUS_DELETED } = require('@shared/suggestion-util')
 
 class Delete extends Component {
 	constructor(){
 		super()
 		this.state = {
-			wasDeleted: false
+			askToConfirm: false
 		}
 	}
     render() {
-		let { broadcasterUpvoted, channel } = this.props
+		let { askToConfirm } = this.state
+		let { status } = this.props
+		let component;
+		if(status === STATUS_DELETED)
+			component = <div class="has-text-danger help">deleted</div>
+		else if(askToConfirm)
+			component = this.confirm()
+		else
+			component = <i class='fa fa-trash-o' onClick={e=>this.setState({ askToConfirm: true })}></i>
+
         return (
-            <div class="delete-suggestion m-l-a">
-                <i onClick={this.onClick.bind(this)} class='fa fa-trash-o'></i>
+            <div class="m-l-a">
+                { component }
             </div>
         )
 	}
-	onClick(){
-		this.props.deleteSuggestion()
-		.then(res=>{
-			let status = res.status
-			if(status === 200)
-				this.setState({ wasDeleted: true })
-		})
+	confirm(){
+		const style = { cursor: 'pointer' }
+		return (
+			<div class="help flex">
+				<span class="has-text-danger">are you sure?</span>&nbsp;
+				<div onClick={this.props.deleteSuggestion} style={style}>yes</div>&nbsp;
+				<div class="has-text-danger">/</div>&nbsp;
+				<div onClick={e=>this.setState({ askToConfirm: false })} style={style}>no</div>
+			</div> 
+		)
 	}
 }
 
 const mapDispatchToProps = (dispatch,ownProps) => {
     return {
-        deleteSuggestion: ()=> dispatch(deleteSuggestion(ownProps.id))
+        deleteSuggestion: ()=> dispatch(deleteSuggestion(ownProps))
     }
 }
 const Delete_C = connect(null, mapDispatchToProps)(Delete)
