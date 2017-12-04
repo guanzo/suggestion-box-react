@@ -4,9 +4,6 @@ import SuggestionList from '@/components/suggestion-list/SuggestionList'
 
 const { LIST_APPROVED } = require('@shared/suggestion-util')
 
-const style = {
-    position: 'relative'
-}
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -18,6 +15,10 @@ const SuggestionsListApproved = connect(mapStateToProps)(SuggestionList)
 
 class Body extends Component {
     render() {
+		const style = {
+			position: 'relative',
+			flex: 1
+		}
         return (
         <div class="viewer-body" style={style}>
             <SuggestionsListApproved></SuggestionsListApproved>

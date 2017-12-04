@@ -35,12 +35,12 @@ class Form extends Component {
     }
     rules(){
         return (
-            <div>
+            <div class="m-b-15">
                 <h5 class="subtitle is-5 has-text-centered">Rules</h5>
-                <ol class="is-size-7 m-b-15 p-l-15">
-                    <li>Write a helpful suggestion.<br/>Refrain from arbitrary comments.</li>
-                    <li>Check existing suggestions to see if your idea has already been posted.</li>
-                    <li>You can provide constructive criticism but don't be rude.</li>
+                <ol class="p-l-15">
+                    <li>Leave a helpful suggestion or constructive criticism.</li>
+                    <li>Check existing posts to see if your idea has already been posted.</li>
+                    <li>Don't be rude.</li>
                 </ol>
             </div>
         )
@@ -83,12 +83,12 @@ class Form extends Component {
     input() {
         let { minLength, maxLength, suggestion, isLoading } = this.state
         let btnClass = classNames("button is-primary is-small", { 'is-loading': isLoading })
-        
+        let { channelName } = this.props.channel
         return (
             <form class="field">
                 <div class="control">
                     <textarea class="textarea is-primary" rows="4" 
-                            placeholder="A brilliant suggestion..." 
+                            placeholder={`A brilliant suggestion for ${channelName}`} 
                             style={{resize: 'none', overflow:'hidden'}}
                             minlength={minLength}
                             maxlength={maxLength}

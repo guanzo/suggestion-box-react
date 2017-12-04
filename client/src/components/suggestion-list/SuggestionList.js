@@ -11,9 +11,7 @@ class SuggestionList extends Component {
 						? this.suggestionList() 
 						: this.noSuggestions()
         return (
-            <div class="suggestions">
-                {component}
-            </div>
+            component
         );
     }
     suggestionList(){
@@ -31,8 +29,13 @@ class SuggestionList extends Component {
         )
     }
     noSuggestions(){
+		const style = {
+			color: 'dimgrey',
+			'text-align': 'center',
+			width: '100%'
+		}
         return (
-            <div class="no-suggestions">
+            <div class="no-suggestions absolute-center" style={style}>
                 No suggestions yet... <br/>
 				You can be the first!
             </div>
