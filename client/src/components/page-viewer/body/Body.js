@@ -8,7 +8,8 @@ const { LIST_APPROVED } = require('@shared/suggestion-util')
 const mapStateToProps = (state, ownProps) => {
     return {
 		suggestions: state.suggestions[LIST_APPROVED],
-		currentUser: state.user
+		currentUser: state.user,
+		channel: state.channel
     }
 }
 const SuggestionsListApproved = connect(mapStateToProps)(SuggestionList)

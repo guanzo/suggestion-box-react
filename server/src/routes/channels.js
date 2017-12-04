@@ -1,5 +1,5 @@
 const channelModel = require('../models/channels')
-
+const { ROLE_BROADCASTER } = require('../../../shared/user-util')
 
 module.exports = (app) => {
     app.get('/api/channels/:id',async (req, res) => {
@@ -13,13 +13,11 @@ module.exports = (app) => {
 		let { channelId } = req.params
 		let { requireApproval, allowModAdmin } = req.body
 		let user = req.user
-		if(user.id !== channelId || user.role !== 'broadcaster')
+		if(user.id !== channelId || user.role !== ROLE_BROADCASTER)
 			return res.sendStatus(403)
 		
 		let result = await channelModel.updateSettings(channelId, requireApproval, allowModAdmin)
-		if(result.modifiedCount === 1)
-			res.sendStatus(201)
-		else
-			res.sendStatus(400)
+		let status = result.modifiedCount === 1 ? 201 : 400
+		res.sendStatus(status)
 	})
 }

@@ -5,8 +5,8 @@ import classNames from 'classnames'
 
 class Upvote extends Component {
     render() {
-		let { hasUpvoted, votesLength } = this.props
-        let thumbsClass = classNames('fa m-r-5',
+		let { hasUpvoted, votesLength, broadcasterUpvoted, channel } = this.props
+        let iconClass = classNames('fa m-r-5',
         hasUpvoted ? 'fa-thumbs-up':'fa-thumbs-o-up',
         { 
             'has-text-primary': votesLength > 0 
@@ -14,8 +14,9 @@ class Upvote extends Component {
 
         return (
         <div class="flex">
-            <i onClick={this.props.toggleUpvote} class={thumbsClass}></i>
+            <i onClick={this.props.toggleUpvote} class={iconClass}></i>
             <div class="is-size-7">{votesLength.toLocaleString()}</div>
+			<p class="m-l-10 is-size-7">{ broadcasterUpvoted ? `${channel.channelName} likes this` : '' }</p>
         </div>
         );
     }

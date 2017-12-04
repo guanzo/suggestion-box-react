@@ -2,7 +2,8 @@ var db = require('../db.js')
 var ObjectID = require('mongodb').ObjectID
 //const userUtil = require('../../../shared/user-util')
 const { LIST_APPROVED,LIST_PENDING, LIST_USER, 
-		STATUS_APPROVED, STATUS_PENDING } = require('../../../shared/suggestion-util')
+		STATUS_APPROVED, STATUS_PENDING, STATUS_DELETED 
+} = require('../../../shared/suggestion-util')
 const Chance = require('chance')
 const _ = require('lodash')
 
@@ -35,15 +36,16 @@ module.exports = {
 			{ $replaceRoot: { newRoot: '$suggestions' } },
 			//add computed fields
             { $addFields: { 
-                votesLength: { "$size": "$votes" } ,
-                //check if user has upvoted post with either real id or opaque id
-                hasUpvoted: { 
-                        $and: [
-                            {$in : [ user.id, "$votes.id" ]},
-                            {$in : [ user.opaqueId, "$votes.opaqueId" ]}
-                        ]
-                    }
-                }
+					votesLength: { $size: "$votes" } ,
+					//check if user has upvoted post with either real id or opaque id
+					hasUpvoted: { 
+						$and: [
+							{$in : [ user.id, "$votes.id" ]},
+							{$in : [ user.opaqueId, "$votes.opaqueId" ]}
+						]
+					},
+					broadcasterUpvoted: { $in : [ channelId, "$votes.id" ] }
+				},
 			},
 			//client doesn't need vote data
 			{ $project :    { votes: 0 } },
@@ -81,6 +83,13 @@ module.exports = {
                     suggestions: suggestion
                 }
             }
+        )
+	},
+    deleteSuggestion(channelId, suggestionId){
+        var channels = db.get().collection('channels')
+        return channels.updateOne(
+			{ channelId, "suggestions.id": new ObjectID(suggestionId) },
+			{ $set: { "suggestions.$.status": STATUS_DELETED } }
         )
 	},
 	upvote(channelId,suggestionId,user){

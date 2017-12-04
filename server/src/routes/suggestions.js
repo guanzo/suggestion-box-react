@@ -1,7 +1,9 @@
 const channelModel = require('../models/channels')
 const suggestionModel = require('../models/suggestions')
-const { STATUS_PENDING, STATUS_APPROVED } = require('../../../shared/suggestion-util')
-const { isAllowedToSuggest } = require('../../../shared/user-util')
+const { 
+	STATUS_PENDING, STATUS_APPROVED, LIST_PENDING, LIST_USER 
+} = require('../../../shared/suggestion-util')
+const { isAllowedToSuggest, ROLE_MODERATOR, ROLE_BROADCASTER } = require('../../../shared/user-util')
 
 const ObjectID = require('mongodb').ObjectID
 
@@ -91,7 +93,26 @@ module.exports = (app) => {
 		let status = response.modifiedCount === 1 ? 200 : 400
 		res.status(status).end()
 	})
-    
+	
+	app.delete('/api/channels/:channelId/suggestions/:suggestionId',async (req, res, next) => {
+		let { channelId } = req.params
+		let user = req.user
+		if( ![ROLE_BROADCASTER,ROLE_MODERATOR].includes(user.role) )
+			return res.sendStatus(403)
+
+		if(user.role === ROLE_MODERATOR){
+			let channel = await channelModel.getChannel(channelId)
+			if( !channel.allowModAdmin )
+				return res.sendStatus(403)
+		}
+		next()
+	},async (req, res) => {
+        let { channelId, suggestionId } = req.params
+		let response = await suggestionModel.deleteSuggestion(channelId, suggestionId)
+		let status = response.modifiedCount === 1 ? 200 : 400
+        res.sendStatus(status)
+	})
+
     if(process.env.NODE_ENV === 'development'){
         app.post('/api/channels/23435553/suggestions/test',async () => {
             suggestionModel.generate()

@@ -44,6 +44,7 @@ authRouter(app);
 
 app.post('/*',blockAnonymousUsers)
 app.put('/*',blockAnonymousUsers)
+app.delete('/*',blockAnonymousUsers)
 
 //anonymous users can ONLY get info. no changing
 function blockAnonymousUsers(req,res,next){

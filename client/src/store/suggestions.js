@@ -110,6 +110,16 @@ export function postSuggestion(text, postAnonymously){
     }
 }
 
+export function deleteSuggestion(suggestionId){
+    return (dispatch,getState) => {
+        let state = getState()
+        let channelId = state.channel.channelId;
+
+		//delete component handles client update.
+        return axios.delete(`/api/channels/${channelId}/suggestions/${suggestionId}`)
+        .catch(console.log)
+    }
+}
 
 //any suggestion action must contain a 'listType' property
 export function suggestionsReducer(suggestions = {}, action){
