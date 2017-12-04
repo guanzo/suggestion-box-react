@@ -9,8 +9,7 @@ class PreForm extends Component {
 		if(isAnonymousUser)
 			component = <p class="m-b-15">You must login to post</p>
 		else if(!isAllowedToSuggest)
-			component = <Countdown lastSuggestionDate={lastSuggestionDate}>
-						</Countdown>
+			component = <Countdown lastSuggestionDate={lastSuggestionDate}></Countdown>
         return (
             <div class="flex-center flex-column">
                 {component}

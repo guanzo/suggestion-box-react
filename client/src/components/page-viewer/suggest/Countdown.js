@@ -21,10 +21,11 @@ class Countdown extends Component {
 	}
     render() {
 		let t = this.state.time
+		let string = [t.hours(),t.minutes(),t.seconds()].filter(d=>d>0).join(':')
         return (
-        <div class="m-b-15">
-            <p class="has-text-centered m-b-15">You may post again in...</p>
-			<p class="is-size-1">{t.hours()+':'+t.minutes()+':'+t.seconds()}</p>
+        <div class="has-text-centered m-b-15">
+            <p class="m-b-15">You may post again in...</p>
+			<p class="is-size-1">{string}</p>
         </div>
         );
 	}

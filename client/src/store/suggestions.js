@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 export const SET_SUGGESTIONS = 'SET_SUGGESTIONS'
-export const ADD_SUGGESTION = 'ADD_SUGGESTION'
+export const ADD_SUGGESTIONS = 'ADD_SUGGESTIONS'
+export const ADD_POSTED_SUGGESTION = 'ADD_POSTED_SUGGESTION'
 export const POST_SUGGESTION = 'POST_SUGGESTION'
 export const INCREMENT_OFFSET = 'INCREMENT_OFFSET'
 export const NO_MORE_PAGES = 'NO_MORE_PAGES'
@@ -35,7 +36,7 @@ export const initialState = generateInitialState()
 
 export function setSuggestions(suggestions, listType){
     return {
-        type: SET_SUGGESTIONS,
+        type: ADD_SUGGESTIONS,
 		suggestions,
 		listType
     }
@@ -97,7 +98,7 @@ export function postSuggestion(text, postAnonymously){
 			}
 			lists.forEach(listType=>{
 				dispatch({
-					type: ADD_SUGGESTION,
+					type: ADD_POSTED_SUGGESTION,
 					suggestion,
 					listType
 				})
@@ -126,12 +127,14 @@ export function suggestionsReducer(suggestions = {}, action){
 //reduces one of the 3 list types
 function listTypeReducer(list = {}, action){
 	switch(action.type) {
-		case SET_SUGGESTIONS:
+		case SET_SUGGESTIONS://new sort order, reset suggestions
+			//TODO: 
+		case ADD_SUGGESTIONS://paginated suggestions
 			return {
 				...list,
 				data: [...list.data, ...action.suggestions]
 			}
-        case ADD_SUGGESTION://prepend to top, reddit style
+        case ADD_POSTED_SUGGESTION://prepend to top, reddit style
 			return  {
 				...list,
 				data: [action.suggestion, ...list.data]
