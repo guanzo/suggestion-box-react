@@ -88,8 +88,8 @@ class Overlay extends Component {
 		let initialPosition
 		if(hasSuggestions){
 			initialPosition = {
-				top:['95%','easeOutSine'],
-				left:['86%','easeInSine'],
+				top:['94.5%','easeOutSine'],
+				left:['86.5%','easeInSine'],
 			}
 		}else{
 			initialPosition = {

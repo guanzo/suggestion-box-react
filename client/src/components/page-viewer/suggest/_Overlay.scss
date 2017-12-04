@@ -14,7 +14,7 @@ $scrollbar-width: 17px;
 	}
 	&.is-expanded{
 		> .overlay-inner {
-			width: $app-width;
+			width: $viewer-width;
 			height: $app-height;
 			padding: 15px;
 			overflow: hidden;

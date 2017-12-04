@@ -36,7 +36,7 @@ class Form extends Component {
     rules(){
         return (
             <div class="m-b-15">
-                <h5 class="subtitle is-5 has-text-centered">Rules</h5>
+                <h5 class="subtitle is-4 has-text-centered">Rules</h5>
                 <ol class="p-l-15">
                     <li>Leave a helpful suggestion or constructive criticism.</li>
                     <li>Check existing posts to see if your idea has already been posted.</li>

@@ -11,7 +11,7 @@ class LoadMore extends Component {
                     >Load more</button>
         }
         return (
-            <div class="flex-center">
+            <div class="flex-center p-a-5">
                 {btn}
             </div>
         );

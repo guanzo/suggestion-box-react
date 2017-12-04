@@ -7,7 +7,7 @@ class Suggestion extends Component {
     render() {
 		let { text } = this.props
         return (
-            <div class="suggestion m-b-10">
+            <div class="suggestion box m-b-10">
                 <div class="suggestion-header is-size-7 m-b-5">
                     <div class="profile-img m-r-5 flex-center">
                         {this.img()}
