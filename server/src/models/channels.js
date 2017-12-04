@@ -19,7 +19,15 @@ module.exports = {
                 .catch(err=>{
                     console.log(err)
                 })
-    },
+	},
+	async updateSettings(channelId, requireApproval, allowModAdmin ){
+        var channels = db.get().collection('channels')
+		return channels
+			.updateOne({ channelId },  { $set: { requireApproval, allowModAdmin } } )
+			.catch(err=>{
+				console.log(err)
+			})
+	}
 }
 
 
@@ -28,7 +36,7 @@ function addChannel(channelId,channelName){
         channelId,
         suggestions:[],
         requireApproval: false,
-        allowModAdmin: false
+        allowModAdmin: true
     }
     //keep updating channelName in case it gets changed
     var channels = db.get().collection('channels')

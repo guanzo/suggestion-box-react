@@ -50,7 +50,7 @@ function createSuggestionObj({ text, postAnonymously, user }, status){
 }
 
 module.exports = (app) => {
-    app.get('/api/channels/:channelId/suggestions/',async (req, res) => {
+    app.get('/api/channels/:channelId/suggestions',async (req, res) => {
 		let { channelId } = req.params
 		let { listType } = req.query
         let offset = parseInt(req.query.offset)
@@ -81,7 +81,7 @@ module.exports = (app) => {
         if(response.success)
             res.status(201).send(response)
         else
-            res.status(400).end()
+            res.sendStatus(400)
 	})
 	//voteType: 'upvote' or 'downvote'
     app.put('/api/channels/:channelId/suggestions/:suggestionId/:voteType',async (req, res) => {

@@ -28,7 +28,8 @@ module.exports = app => {
 			let realId = _.isUndefined(decoded.user_id) ? null : decoded.user_id
 			req.user = {
 				id: realId,
-				opaqueId: decoded.opaque_user_id
+				opaqueId: decoded.opaque_user_id,
+				role: decoded.role,
 			}
 			const tokenObj = {
 				exp: Math.floor(new Date().getTime() / 1000) + 60,

@@ -6,7 +6,7 @@ export const initialState = {
         channelId: -1,
         channelName: 'The broadcaster',
         requireApproval: false,
-        allowModAdmin: false
+        allowModAdmin: true
     },
 }
 
