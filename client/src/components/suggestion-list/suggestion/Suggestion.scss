@@ -35,7 +35,7 @@ $avatar-size: 30px;
 	}
 	&.is-deleted{
 		background-color: #f4eaea;
-		pointer-events: none;//don't allow any interaction such as upvoting etc.
+		pointer-events: none;
 		.fa-trash-o {
 			color: darkred;
 		}

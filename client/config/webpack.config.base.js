@@ -42,7 +42,9 @@ module.exports = {
         'react-transition-group': 'ReactTransitionGroup',
         'reselect': 'Reselect',
         'axios':'axios',
-        'moment':'moment',
-        'lodash' : '_'
+		'moment':'moment',
+		'runtime-module':'regeneratorRuntime',
+		'velocity-animate':'Velocity',
+		'lodash' : '_',
     },
 }

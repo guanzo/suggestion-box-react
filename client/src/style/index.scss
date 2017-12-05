@@ -2,7 +2,7 @@
 @import 'spacing-helpers';
 html{
 	overflow: hidden;
-	min-width: initial !important; //bulma override
+	min-width: initial !important; /**bulma override**/
 }
 
 html, body, #root {

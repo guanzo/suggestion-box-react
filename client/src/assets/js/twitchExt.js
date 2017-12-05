@@ -44,7 +44,7 @@ window.Twitch.ext.onAuthorized(async function(auth) {
     } else {
         //console.log('user has NOT granted')
     }
-    let user = { id: userId, opaqueId: opaque_user_id, name, profileImg, role }
+	let user = { id: userId, opaqueId: opaque_user_id, name, profileImg, role }
 	store.dispatch(setUser(user))
 
     if(hasFetchedInitialData)

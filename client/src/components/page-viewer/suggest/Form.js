@@ -7,22 +7,15 @@ import classNames from 'classnames'
 class Form extends Component {
     constructor(props){
 		super(props)
+
+		let { isRealUser } = this.props.currentUser
         this.state = {
             minLength: 15,
             maxLength: 100,
             suggestion: '',
-            postAnonymously: false,
+            postAnonymously: isRealUser ? false : true,
 			isLoading: false,
 		}
-		this.checkUserType()
-	}
-	checkUserType(){
-		let { isRealUser } = this.props.currentUser
-		if(!isRealUser)
-			this.setState({ postAnonymously: true })
-	}
-	componentWillReceiveProps(){
-		this.checkUserType()
 	}
     render(){
         return (
@@ -114,7 +107,7 @@ class Form extends Component {
             </form>
         )
     }
-    async onSubmit(e){
+    onSubmit(e){
         e.preventDefault();
 
         this.setState({ isLoading: true })

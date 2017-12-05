@@ -3,7 +3,7 @@ import { UPDATE_SORTBY, fetchSuggestions } from './suggestions'
 export const UPDATE_SUGGESTION_STATUS = 'UPDATE_SUGGESTION_STATUS'
 export const CHANGE_CURRENT_LIST_TYPE = 'CHANGE_CURRENT_LIST_TYPE'
 
-const { STATUS_APPROVED, STATUS_DELETED } = require('@shared/suggestion-util')
+//const { STATUS_APPROVED, STATUS_DELETED } = require('@shared/suggestion-util')
 
 export function changeCurrentListType(listType){
 	return (dispatch,getState) => {

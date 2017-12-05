@@ -4,12 +4,12 @@ import moment from 'moment'
 import classNames from 'classnames'
 import './Suggestion.scss'
 const { 
-	LIST_APPROVED, LIST_PENDING, STATUS_APPROVED, STATUS_DELETED 
+	LIST_PENDING, STATUS_APPROVED, STATUS_DELETED 
 } = require('@shared/suggestion-util')
 
 class Suggestion extends Component {
     render() {
-		let { text, status } = this.props
+		let { text } = this.props
 		let statusClassNames = this.getStatusClassnames()
 		let className = classNames('suggestion box m-b-10', statusClassNames)
         return (
