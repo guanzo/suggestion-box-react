@@ -57,7 +57,7 @@ class Form extends Component {
         }else{
             return (
 			<p class="help">
-				You will post as anonymous unless you grant this extension your Twitch Id
+				You will post as anonymous unless you grant this extension your Twitch User ID
 			</p>
 			)
 		}

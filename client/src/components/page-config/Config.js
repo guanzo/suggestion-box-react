@@ -57,7 +57,8 @@ class Config extends Component {
 						Allow moderators to administer suggestions
 					</label>
 					<p class="help">Chat moderators will have the same admin control as you. 
-						They will be able to approve and delete suggestions.
+						They will be able to approve and delete suggestions.<br />
+						Moderators must grant this extension their Twitch User ID in order to become admins.
 					</p>
 				</div>
 			</div>

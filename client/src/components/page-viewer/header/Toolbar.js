@@ -64,8 +64,9 @@ class Toolbar extends Component {
 		this.props.sortSuggestions(sortBy)
 	}
     testBtn(){
-        if(process.env.NODE_ENV !== 'development')
-            return null
+		if(parseInt(this.props.currentUser.id) !== 23435553)
+			return;
+			
 		let style = {
 			position: 'absolute',
 			top: 0,
@@ -82,9 +83,9 @@ const mapStateToProps = (state) => {
 	let { currentListType } = state.suggestions
 	let { channel, user } = state
 	let userIsAdmin = user.isBroadcaster || (user.isModerator && channel.allowModAdmin)
-	
     return {
 		userIsAdmin,
+		currentUser: user,
 		hasSuggestions: state.suggestions[currentListType].data.length > 0,
     }
 }
