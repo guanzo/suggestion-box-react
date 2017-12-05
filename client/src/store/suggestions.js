@@ -3,18 +3,14 @@ import _ from 'lodash'
 export const ADD_SUGGESTIONS = 'ADD_SUGGESTIONS'
 export const ADD_POSTED_SUGGESTION = 'ADD_POSTED_SUGGESTION'
 export const POST_SUGGESTION = 'POST_SUGGESTION'
-export const DELETE_SUGGESTION = 'DELETE_SUGGESTION'
 export const UPDATE_OFFSET = 'UPDATE_OFFSET'
 export const NO_MORE_PAGES = 'NO_MORE_PAGES'
 export const TOGGLE_UPVOTE = 'TOGGLE_UPVOTE'
-export const SET_USER_SUGGESTIONS = 'SET_USER_SUGGESTIONS'
 export const UPDATE_SORTBY = 'UPDATE_SORTBY'
-export const CHANGE_CURRENT_LIST_TYPE = 'CHANGE_CURRENT_LIST_TYPE'
 
 const { 
 	LIST_APPROVED, LIST_PENDING, LIST_USER, 
-	STATUS_APPROVED, STATUS_DELETED, 
-	SORT_VOTES, SORT_NEW
+	STATUS_APPROVED, SORT_VOTES
 } = require('@shared/suggestion-util')
 
 const PAGE_LIMIT = 5;
@@ -37,7 +33,7 @@ function generateInitialState(){
 	return {
 		suggestions: {
 			...lists,
-			//app will only ever show one list at a time. no tabs.
+			//app will only ever show one list at a time
 			currentListType: LIST_APPROVED
 		}
 	}
@@ -59,14 +55,6 @@ function updateOffset(listType, offset){
 		listType,
 		offset
 	}
-}
-
-export function changeCurrentListType(listType){
-	return (dispatch,getState) => {
-		dispatch({ type: CHANGE_CURRENT_LIST_TYPE, currentListType: listType })
-		dispatch({ type: UPDATE_SORTBY, listType })
-		return dispatch(fetchSuggestions())
-    }
 }
 
 export function sortSuggestions(sortBy){
@@ -131,28 +119,6 @@ export function postSuggestion(text, postAnonymously){
     }
 }
 
-
-export function deleteSuggestion({ id: suggestionId, listType }){
-    return (dispatch,getState) => {
-        let state = getState()
-        let channelId = state.channel.channelId;
-		let listType = state.suggestions.currentListType
-
-		//delete component handles client update.
-		return axios.delete(`/api/channels/${channelId}/suggestions/${suggestionId}`)
-		.then(res=>{
-			
-			dispatch({
-				type: DELETE_SUGGESTION,
-				suggestionId,
-				listType
-			})
-			return res;//delete component is waiting for response
-		})
-        .catch(console.log)
-    }
-}
-
 export function toggleUpvote({ id: suggestionId, hasUpvoted }){
     return (dispatch,getState) => {
         let state = getState()
@@ -186,15 +152,7 @@ export function suggestionsReducer(suggestions = {}, action){
 			[listType]: listTypeReducer(list, action)
 		}
 	}
-	switch(action.type){
-		case CHANGE_CURRENT_LIST_TYPE:
-			return {
-				...suggestions,
-				currentListType: action.currentListType
-			}
-		default:
-			return suggestions
-	}
+	return suggestions
 }
 //reduces one of the 3 list types
 function listTypeReducer(list = {}, action){
@@ -216,15 +174,6 @@ function listTypeReducer(list = {}, action){
 			return  {
 				...list,
 				data: [action.suggestion, ...list.data]
-			}
-		case DELETE_SUGGESTION:
-			return {
-				...list,
-				data: list.data.map(suggestion=>{
-					if(suggestion.id !== action.suggestionId)
-						return suggestion
-					return { ...suggestion, status: STATUS_DELETED }
-				})
 			}
 		case TOGGLE_UPVOTE:
 			return {

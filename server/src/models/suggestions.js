@@ -4,12 +4,9 @@ var ObjectID = require('mongodb').ObjectID
 const { LIST_APPROVED,LIST_PENDING, LIST_USER, 
 		STATUS_APPROVED, STATUS_PENDING, STATUS_DELETED 
 } = require('../../../shared/suggestion-util')
-const Chance = require('chance')
 const _ = require('lodash')
-const moment = require('moment')
 
 module.exports = {
-    //send vote count, don't send votes itself
     getSuggestions(channelId, user, listType, offset, limit, sortBy = 'votesLength'){
 		var channels = db.get().collection('channels')
 		let match;
@@ -88,7 +85,7 @@ module.exports = {
                 }
             }
         )
-	},
+	},//soft delete
     deleteSuggestion(channelId, suggestionId){
         var channels = db.get().collection('channels')
         return channels.updateOne(
@@ -131,42 +128,4 @@ module.exports = {
 			{ $project: { count: { $size: '$sugestions' } } }
 		])
 	},
-    //test only
-    generate(){
-        var chance = new Chance();
-        var channels = db.get().collection('channels')
-        let numSuggestions = chance.integer({min: 30, max: 50}) 
-    
-        let suggestions = []
-        for(let i=0;i<numSuggestions;i++)
-            suggestions.push(generateSuggestion())
-        channels.updateOne({ channelId: '23435553' }, { $set: { suggestions } })
-    }
-}
-
-function generateSuggestion(){
-    var chance = new Chance();
-    let numVotes = chance.integer({min: 1, max: 50}) 
-    let votes = []
-    for(let i=0;i<numVotes;i++){
-        let userId = chance.integer({min: 1000, max: 9999}) 
-        votes.push({ userId })
-    }
-	let userId = chance.integer({min: 1000000, max: 5000000})
-    return {
-        id: new ObjectID(),
-        "text": chance.sentence({ length: 100 }),
-        "postAnonymously": chance.bool(),
-        createdAt: moment().subtract(chance.integer({min:0,max:500}),'days').toDate(),
-        status: Math.random() > .5 ? STATUS_APPROVED: STATUS_PENDING,
-        votes,
-        "user": {
-            "id":  userId,
-            "opaqueId": 'U'+userId,
-            "name": chance.name(),
-            "profileImg": chance.avatar(),
-            "role": "viewer"
-        }
-    }
-    
 }

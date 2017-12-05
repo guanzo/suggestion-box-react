@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { deleteSuggestion } from '@/store/suggestions'
+import { deleteSuggestion } from '@/store/suggestions-admin'
 const { STATUS_DELETED } = require('@shared/suggestion-util')
 
 class Delete extends Component {
@@ -19,7 +19,9 @@ class Delete extends Component {
 		else if(askToConfirm)
 			component = this.confirm()
 		else
-			component = <i class='fa fa-trash-o' onClick={e=>this.setState({ askToConfirm: true })}></i>
+			component = <i class='fa fa-trash-o' 
+							onClick={e=>this.setState({ askToConfirm: true })}
+							></i>
 
         return (
             <div class="m-l-a">

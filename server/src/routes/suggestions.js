@@ -1,5 +1,6 @@
 const channelModel = require('../models/channels')
 const suggestionModel = require('../models/suggestions')
+const suggestionGenerator = require('../models/suggestions-generate')
 const { 
 	STATUS_PENDING, STATUS_APPROVED, LIST_PENDING, LIST_USER 
 } = require('../../../shared/suggestion-util')
@@ -94,7 +95,7 @@ module.exports = (app) => {
 		res.status(status).end()
 	})
 	
-	app.delete('/api/channels/:channelId/suggestions/:suggestionId',async (req, res, next) => {
+	app.put('/api/channels/:channelId/suggestions/:suggestionId/status',async (req, res, next) => {
 		let { channelId } = req.params
 		let user = req.user
 		if( ![ROLE_BROADCASTER,ROLE_MODERATOR].includes(user.role) )
@@ -115,7 +116,7 @@ module.exports = (app) => {
 
     if(process.env.NODE_ENV === 'development'){
         app.post('/api/channels/23435553/suggestions/test',async () => {
-            suggestionModel.generate()
+            suggestionGenerator.generate()
         })
     }
 }

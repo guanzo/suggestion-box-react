@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { sortSuggestions, changeCurrentListType } from '@/store/suggestions'
+import { sortSuggestions } from '@/store/suggestions'
+import { changeCurrentListType } from '@/store/suggestions-admin'
 const { 
 	SORT_VOTES, SORT_NEW, LIST_APPROVED, LIST_PENDING
 } = require('@shared/suggestion-util')
@@ -15,7 +16,7 @@ class Toolbar extends Component {
 	}
     render() {
         return (
-            <div class="toolbar flex justify-between is-size-7">
+            <div class="toolbar flex is-size-7">
 				{ this.props.hasSuggestions ? this.sortBy() : '' }
 				{ this.props.userIsAdmin ? this.listType() : '' }
                 {this.testBtn()}
@@ -39,7 +40,7 @@ class Toolbar extends Component {
 	}
 	listType(){
 		return (
-			<div class="flex-center">
+			<div class="flex-center m-l-a">
 				<span class="m-r-5">Admin</span>
 				<div class="select is-small">
 					<select value={this.state.listType} 
@@ -81,7 +82,7 @@ const mapStateToProps = (state) => {
 	let { currentListType } = state.suggestions
 	let { channel, user } = state
 	let userIsAdmin = user.isBroadcaster || (user.isModerator && channel.allowModAdmin)
-
+	
     return {
 		userIsAdmin,
 		hasSuggestions: state.suggestions[currentListType].data.length > 0,

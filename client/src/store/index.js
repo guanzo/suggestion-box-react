@@ -5,11 +5,12 @@ import { initialState as user, userReducer } from './user'
 import { 
 	initialState as suggestions, fetchSuggestions, suggestionsReducer 
 } from './suggestions'
+import { suggestionsAdminReducer } from './suggestions-admin'
 import { 
 	initialState as channel, fetchChannel, channelReducer 
 } from './channel'
 
-const { LIST_APPROVED,LIST_PENDING,LIST_USER } = require('@shared/suggestion-util')
+const { LIST_APPROVED,LIST_USER } = require('@shared/suggestion-util')
 
 const initialState = {
     token: null,
@@ -28,7 +29,10 @@ function root(state = initialState, action){
     return {
         user: userReducer(state.user, action),
         channel: channelReducer(state.channel, action),
-		suggestions: suggestionsReducer(state.suggestions, action),
+		suggestions: {
+			...suggestionsReducer(state.suggestions, action),
+			...suggestionsAdminReducer(state.suggestions, action),
+		}
     }
 }
 
