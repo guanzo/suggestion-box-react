@@ -1,14 +1,15 @@
 import axios from 'axios'
-import { UPDATE_SORTBY, fetchSuggestions } from './suggestions'
+import { RESET_LIST, fetchSuggestions } from './suggestions'
 export const UPDATE_SUGGESTION_STATUS = 'UPDATE_SUGGESTION_STATUS'
 export const CHANGE_CURRENT_LIST_TYPE = 'CHANGE_CURRENT_LIST_TYPE'
 
+const { SORT_VOTES } = require('@shared/suggestion-util')
 //const { STATUS_APPROVED, STATUS_DELETED } = require('@shared/suggestion-util')
 
 export function changeCurrentListType(listType){
 	return (dispatch,getState) => {
 		dispatch({ type: CHANGE_CURRENT_LIST_TYPE, currentListType: listType })
-		dispatch({ type: UPDATE_SORTBY, listType })
+		dispatch({ type: RESET_LIST, listType })
 		return dispatch(fetchSuggestions())
     }
 }

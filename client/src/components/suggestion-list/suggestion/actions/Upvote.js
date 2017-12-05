@@ -4,8 +4,16 @@ import { toggleUpvote } from '@/store/suggestions'
 import classNames from 'classnames'
 
 class Upvote extends Component {
+	constructor(props){
+		super(props)
+		//get initial upvote state from props, then toggle local state
+		this.state = {
+			hasUpvoted: props.hasUpvoted
+		}
+	}
     render() {
-		let { hasUpvoted, votesLength, broadcasterUpvoted, channel } = this.props
+		let { hasUpvoted } = this.state
+		let { votesLength, broadcasterUpvoted, channel } = this.props
         let iconClass = classNames('fa m-r-5',
         hasUpvoted ? 'fa-thumbs-up':'fa-thumbs-o-up',
         { 
@@ -14,17 +22,22 @@ class Upvote extends Component {
 
         return (
         <div class="flex align-center justify-start">
-            <i onClick={this.props.toggleUpvote} class={iconClass}></i>
+            <i onClick={this.onClick.bind(this)} class={iconClass}></i>
             <div class="is-size-7">{votesLength.toLocaleString()}</div>
 			<p class="m-l-10 is-size-7">{ broadcasterUpvoted ? `${channel.channelName} likes this` : '' }</p>
         </div>
         );
-    }
+	}
+	onClick(){
+		let hasUpvoted = !this.state.hasUpvoted
+		this.setState({ hasUpvoted })
+		this.props.toggleUpvote(hasUpvoted)
+	}
 }
 
 const mapDispatchToProps = (dispatch,ownProps) => {
     return {
-        toggleUpvote: ()=> dispatch(toggleUpvote(ownProps))
+        toggleUpvote: (hasUpvoted)=> dispatch(toggleUpvote(ownProps.id, hasUpvoted))
     }
 }
 const Upvote_C = connect(null, mapDispatchToProps)(Upvote)

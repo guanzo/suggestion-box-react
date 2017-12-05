@@ -7,18 +7,20 @@ const {
 } = require('@shared/suggestion-util')
 
 class Toolbar extends Component {
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
 		this.state = {
 			sortBy: SORT_VOTES,
 			listType: LIST_APPROVED
 		}
+		console.log(props)
 	}
     render() {
+		let { hasSuggestions, listType, userIsAdmin } = this.props
         return (
             <div class="toolbar flex is-size-7">
-				{ this.props.hasSuggestions ? this.sortBy() : '' }
-				{ this.props.userIsAdmin ? this.listType() : '' }
+				{ hasSuggestions && listType === LIST_APPROVED ? this.sortBy() : '' }
+				{ userIsAdmin ? this.listType() : '' }
                 {this.testBtn()}
             </div>
         );
@@ -64,9 +66,9 @@ class Toolbar extends Component {
 		this.props.sortSuggestions(sortBy)
 	}
     testBtn(){
-		if(parseInt(this.props.currentUser.id) !== 23435553)
+		if(parseInt(this.props.currentUser.id,10) !== 23435553)
 			return;
-			
+
 		let style = {
 			position: 'absolute',
 			top: 0,
@@ -86,6 +88,7 @@ const mapStateToProps = (state) => {
     return {
 		userIsAdmin,
 		currentUser: user,
+		listType: currentListType,
 		hasSuggestions: state.suggestions[currentListType].data.length > 0,
     }
 }

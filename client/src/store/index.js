@@ -1,7 +1,6 @@
 import ReduxThunk from 'redux-thunk'
 import { createStore, applyMiddleware  } from 'redux'
 import { initialState as user, userReducer } from './user'
-//import { initialState as util, utilReducer } from './util'
 import { 
 	initialState as suggestions, fetchSuggestions, suggestionsReducer 
 } from './suggestions'

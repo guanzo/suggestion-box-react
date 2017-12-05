@@ -112,7 +112,8 @@ module.exports = (app) => {
 		let { channelId, suggestionId } = req.params
 		let { updateFields } = req.body
 		let response = await suggestionModel.updateSuggestion(channelId, suggestionId, updateFields)
-		let status = response.modifiedCount === 1 ? 200 : 400
+		let { modifiedCount, matchedCount } = response
+		let status = (modifiedCount === 1 || matchedCount === 1 ) ? 200 : 400
         res.sendStatus(status)
 	})
 

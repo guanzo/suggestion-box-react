@@ -7,10 +7,10 @@ export const UPDATE_OFFSET = 'UPDATE_OFFSET'
 export const NO_MORE_PAGES = 'NO_MORE_PAGES'
 export const TOGGLE_UPVOTE = 'TOGGLE_UPVOTE'
 export const UPDATE_SORTBY = 'UPDATE_SORTBY'
-
+export const RESET_LIST = 'RESET_LIST'
 const { 
 	LIST_APPROVED, LIST_PENDING, LIST_USER, 
-	STATUS_APPROVED, SORT_VOTES
+	STATUS_APPROVED, SORT_VOTES, SORT_NEW
 } = require('@shared/suggestion-util')
 
 const PAGE_LIMIT = 5;
@@ -23,7 +23,7 @@ function generateInitialState(){
 			...lists,
 			[type]:{
 				data: [],
-				sortBy: SORT_VOTES,
+				sortBy: type == LIST_APPROVED ? SORT_VOTES : SORT_NEW,
 				offset: 0,
 				hasMorePages: true,
 				listType: type,
@@ -61,6 +61,7 @@ export function sortSuggestions(sortBy){
 	return (dispatch,getState) => {
 		let state = getState()
 		let listType = state.suggestions.currentListType
+		dispatch({ type: RESET_LIST, listType })
 		dispatch({ type: UPDATE_SORTBY, listType, sortBy })
 		return dispatch(fetchSuggestions())
     }
@@ -119,25 +120,23 @@ export function postSuggestion(text, postAnonymously){
     }
 }
 
-export function toggleUpvote({ id: suggestionId, hasUpvoted }){
+export function toggleUpvote( suggestionId, hasUpvoted ){
     return (dispatch,getState) => {
         let state = getState()
 		let channelId = state.channel.channelId;
 		let listType = state.suggestions.currentListType
-		hasUpvoted = !hasUpvoted
-
 		let voteType = hasUpvoted ? 'upvote' : 'downvote'
 
         return axios.put(`/api/channels/${channelId}/suggestions/${suggestionId}/votes`,{
 			voteType
 		})
         .then(res=>{
-			dispatch({ 
+			/* dispatch({ 
 				type: TOGGLE_UPVOTE,
 				suggestionId,
 				hasUpvoted,
 				listType
-			 })
+			 }) */
         })
         .catch(console.log)
     }
@@ -164,13 +163,18 @@ function listTypeReducer(list = {}, action){
 				...list,
 				data: [...list.data, ...action.suggestions]
 			}
-		case UPDATE_SORTBY:
+		case RESET_LIST:
 			return {
 				...list,
 				data: [],
 				offset: 0,
-				sortBy: action.sortBy,
 				hasMorePages: true
+
+			}
+		case UPDATE_SORTBY:
+			return {
+				...list,
+				sortBy: action.sortBy,
 			}
         case ADD_POSTED_SUGGESTION://prepend to top, reddit style
 			return  {

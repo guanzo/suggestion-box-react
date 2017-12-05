@@ -7,7 +7,7 @@ class PreForm extends Component {
 		let { isAnonymousUser } = currentUser
 		let component = '';
 		if(isAnonymousUser)
-			component = <p class="m-b-15">You must login to post</p>
+			component = <p class="m-b-15">You must login to suggest</p>
 		else if(!isAllowedToSuggest)
 			component = <Countdown lastSuggestionDate={lastSuggestionDate}></Countdown>
         return (
@@ -16,10 +16,6 @@ class PreForm extends Component {
                 <button class="button is-primary" onClick={onClose}>Okay</button>
             </div>
         )
-	}
-	notAllowedToVoteText(){
-		console.log(this.props)
-		return 'Not allowed to vote'
 	}
 }
 export default PreForm;
