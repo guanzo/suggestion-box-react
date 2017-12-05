@@ -3,7 +3,9 @@ import Actions from './actions/Actions'
 import moment from 'moment'
 import classNames from 'classnames'
 import './Suggestion.scss'
-const { LIST_APPROVED, STATUS_APPROVED, STATUS_DELETED } = require('@shared/suggestion-util')
+const { 
+	LIST_APPROVED, LIST_PENDING, STATUS_APPROVED, STATUS_DELETED 
+} = require('@shared/suggestion-util')
 
 class Suggestion extends Component {
     render() {
@@ -25,13 +27,14 @@ class Suggestion extends Component {
                 <Actions {...this.props}></Actions>
             </div>
         );
-	}//only seen in pending list
+	}//suggestion can be deleted anywhere
+	 //approval can only happen in pending list
 	getStatusClassnames(){
 		let { status, listType } = this.props
-		if(listType === LIST_APPROVED)
-			return ''
+		let isApproved = status === STATUS_APPROVED && listType === LIST_PENDING
+
 		return classNames(
-			{ 'is-approved': status === STATUS_APPROVED },
+			{ 'is-approved': isApproved },
 			{ 'is-deleted': status === STATUS_DELETED }
 		)
 	}

@@ -14,7 +14,10 @@ class PostForm extends Component {
 				<Countdown lastSuggestionDate={lastSuggestionDate}>
 				</Countdown>
                 <button class="button is-primary" onClick={onClose}>Okay</button>
-            </div>
+				<p class="has-text-centered help m-t-20">
+					Your suggestion is subject to moderation at any time
+				</p>
+			</div>
         )
     }
 }

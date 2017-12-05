@@ -12,7 +12,6 @@ export const initialState = {
     }
 }
 export function userReducer(state = initialState, { type, user }){
-	
 	if(type === SET_USER){
         return {
 			...state, 
@@ -30,9 +29,12 @@ export function userReducer(state = initialState, { type, user }){
 
 
 export function setUser(user){
-    return {
-        type: SET_USER,
-        user
-    }
+    return (dispatch, getState)=>{
+		let { allowModAdmin } = getState().channel
+		dispatch({
+			type: SET_USER,
+			user
+		})
+	}
 }
 

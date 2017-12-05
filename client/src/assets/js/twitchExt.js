@@ -14,7 +14,7 @@ if(!inIframe() && process.env.NODE_ENV === 'development'){
     //store.dispatch(SET_CHANNEL, { channelId: -1, userId: -1, token, role, channelName: 'guanzo' })
 }
 
-let hasFetchedChannel = false;
+let hasFetchedInitialData = false;
 //callback will fire when user toggles "grant permissions"
 window.Twitch.ext.onAuthorized(async function(auth) {
 	
@@ -47,9 +47,9 @@ window.Twitch.ext.onAuthorized(async function(auth) {
     let user = { id: userId, opaqueId: opaque_user_id, name, profileImg, role }
 	store.dispatch(setUser(user))
 
-    if(hasFetchedChannel)
+    if(hasFetchedInitialData)
         return;
-	hasFetchedChannel = true;
+	hasFetchedInitialData = true;
 	
     let {display_name} = await getTwitchUser(auth.channelId)
 	let channelName = display_name

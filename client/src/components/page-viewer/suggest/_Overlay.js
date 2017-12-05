@@ -58,7 +58,7 @@ class Overlay extends Component {
 	onClick(){
 		let { isAnonymousUser } = this.props.currentUser
 		let { isAllowedToSuggest: isAllowedToSuggest_Prop } = this.props
-		console.log(isAllowedToSuggest_Prop)
+		
 		let nextComponent = (isAnonymousUser || !isAllowedToSuggest_Prop)
 							?	Machine.PRE_FORM
 							:	Machine.FORM

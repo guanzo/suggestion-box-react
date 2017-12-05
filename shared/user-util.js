@@ -32,6 +32,6 @@ var self = module.exports = {
 	isAllowedToSuggest: function(lastSuggestionDate){
 		var currentDate = moment();
 		var diff = currentDate.diff(lastSuggestionDate, 'minutes')
-		return diff > self.MIN_MINUTES_BETWEEN_POSTS
+		return diff >= self.MIN_MINUTES_BETWEEN_POSTS
 	}
 }

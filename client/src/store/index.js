@@ -13,13 +13,12 @@ import {
 const { LIST_APPROVED,LIST_USER } = require('@shared/suggestion-util')
 
 const initialState = {
-    token: null,
     ...user,
     ...channel,
     ...suggestions
 }
 export function fetchInitialData(){
-    store.dispatch(fetchChannel())
+	store.dispatch(fetchChannel())
 	store.dispatch(fetchSuggestions(LIST_APPROVED))
 	//need these to check for isAllowedToSuggest
 	store.dispatch(fetchSuggestions(LIST_USER))

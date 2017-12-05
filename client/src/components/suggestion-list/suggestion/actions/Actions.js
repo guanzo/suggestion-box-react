@@ -4,6 +4,7 @@ import Approve from './Approve'
 import Delete from './Delete'
 
 class Actions extends Component {
+	
     render() {
         return (
             <div class="suggestion-actions flex">
