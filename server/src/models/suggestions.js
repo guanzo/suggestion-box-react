@@ -76,7 +76,10 @@ module.exports = {
         .toArray()
 	},
     addSuggestion(channelId, suggestion){
-        var channels = db.get().collection('channels')
+		var channels = db.get().collection('channels')
+		let maxLength = 100;
+		suggestion.text = suggestion.text.substring(0,maxLength)
+
         return channels.updateOne(
             { channelId },
             { 

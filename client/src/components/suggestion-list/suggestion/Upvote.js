@@ -13,7 +13,7 @@ class Upvote extends Component {
         })
 
         return (
-        <div class="flex">
+        <div class="flex align-center justify-start">
             <i onClick={this.props.toggleUpvote} class={iconClass}></i>
             <div class="is-size-7">{votesLength.toLocaleString()}</div>
 			<p class="m-l-10 is-size-7">{ broadcasterUpvoted ? `${channel.channelName} likes this` : '' }</p>

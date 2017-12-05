@@ -1,5 +1,7 @@
 const userUtil = require('@shared/user-util')
 
+export const SET_USER = 'SET_USER'
+
 export const initialState = {
     user:{
         id: null,//never set if anonymous or opaque user
@@ -26,7 +28,6 @@ export function userReducer(state = initialState, { type, user }){
         return state;
 }
 
-export const SET_USER = 'SET_USER'
 
 export function setUser(user){
     return {

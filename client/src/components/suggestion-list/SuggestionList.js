@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Suggestion from './suggestion/Suggestion'
 import LoadMore from './LoadMore'
 import './SuggestionList.scss';
+const { LIST_APPROVED } = require('@shared/suggestion-util')
 
 class SuggestionList extends Component {
     render() {
@@ -31,8 +32,9 @@ class SuggestionList extends Component {
                 <LoadMore {...this.props}></LoadMore>
             </div>
         )
-    }
-    noSuggestions(){
+	}
+	noSuggestions(){
+		let listType = this.props.suggestions.listType
 		const style = {
 			'text-align': 'center',
 			width: '100%',
@@ -40,13 +42,21 @@ class SuggestionList extends Component {
 		}
         return (
             <div class="no-suggestions absolute-center" style={style}>
-                <div class="m-b-15">
-					No suggestions yet...<br/>
-					Must be the perfect stream
-				</div>
+                { listType === LIST_APPROVED ? this.noApproved() : this.noPending() }
             </div>
         )
-    }
+	}
+    noApproved(){
+        return (
+			<div>
+				No suggestions yet...<br/>
+				Must be the perfect stream
+			</div>
+        )
+	}
+	noPending(){
+        return <div>No pending suggestions</div>
+	}
 }
 
 export default SuggestionList

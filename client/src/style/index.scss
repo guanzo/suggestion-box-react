@@ -37,8 +37,14 @@ body {
 	&.wrap{
 		flex-wrap: wrap;
 	}
+	&.align-center{
+		align-items: center
+	}
     &.column{
         flex-direction: column;
+	}
+	&.justify-start{
+		justify-content: flex-start;
 	}
 	&.justify-end{
 		justify-content: flex-end;

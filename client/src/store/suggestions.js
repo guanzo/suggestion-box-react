@@ -9,6 +9,7 @@ export const NO_MORE_PAGES = 'NO_MORE_PAGES'
 export const TOGGLE_UPVOTE = 'TOGGLE_UPVOTE'
 export const SET_USER_SUGGESTIONS = 'SET_USER_SUGGESTIONS'
 export const UPDATE_SORTBY = 'UPDATE_SORTBY'
+export const CHANGE_CURRENT_LIST_TYPE = 'CHANGE_CURRENT_LIST_TYPE'
 
 const { 
 	LIST_APPROVED, LIST_PENDING, LIST_USER, 
@@ -36,6 +37,7 @@ function generateInitialState(){
 	return {
 		suggestions: {
 			...lists,
+			//app will only ever show one list at a time. no tabs.
 			currentListType: LIST_APPROVED
 		}
 	}
@@ -57,6 +59,14 @@ function updateOffset(listType, offset){
 		listType,
 		offset
 	}
+}
+
+export function changeCurrentListType(listType){
+	return (dispatch,getState) => {
+		dispatch({ type: CHANGE_CURRENT_LIST_TYPE, currentListType: listType })
+		dispatch({ type: UPDATE_SORTBY, listType })
+		return dispatch(fetchSuggestions())
+    }
 }
 
 export function sortSuggestions(sortBy){
@@ -126,10 +136,12 @@ export function deleteSuggestion({ id: suggestionId, listType }){
     return (dispatch,getState) => {
         let state = getState()
         let channelId = state.channel.channelId;
+		let listType = state.suggestions.currentListType
 
 		//delete component handles client update.
 		return axios.delete(`/api/channels/${channelId}/suggestions/${suggestionId}`)
 		.then(res=>{
+			
 			dispatch({
 				type: DELETE_SUGGESTION,
 				suggestionId,
@@ -141,10 +153,11 @@ export function deleteSuggestion({ id: suggestionId, listType }){
     }
 }
 
-export function toggleUpvote({ id: suggestionId, hasUpvoted, listType }){
+export function toggleUpvote({ id: suggestionId, hasUpvoted }){
     return (dispatch,getState) => {
         let state = getState()
 		let channelId = state.channel.channelId;
+		let listType = state.suggestions.currentListType
 		hasUpvoted = !hasUpvoted
 
 		let voteType = hasUpvoted ? 'upvote' : 'downvote'
@@ -172,8 +185,16 @@ export function suggestionsReducer(suggestions = {}, action){
 			...suggestions,
 			[listType]: listTypeReducer(list, action)
 		}
-	}else
-		return suggestions
+	}
+	switch(action.type){
+		case CHANGE_CURRENT_LIST_TYPE:
+			return {
+				...suggestions,
+				currentListType: action.currentListType
+			}
+		default:
+			return suggestions
+	}
 }
 //reduces one of the 3 list types
 function listTypeReducer(list = {}, action){
