@@ -23,7 +23,7 @@ function generateInitialState(){
 			...lists,
 			[type]:{
 				data: [],
-				sortBy: type == LIST_APPROVED ? SORT_VOTES : SORT_NEW,
+				sortBy: type === LIST_APPROVED ? SORT_VOTES : SORT_NEW,
 				offset: 0,
 				hasMorePages: true,
 				listType: type,
@@ -124,7 +124,7 @@ export function toggleUpvote( suggestionId, hasUpvoted ){
     return (dispatch,getState) => {
         let state = getState()
 		let channelId = state.channel.channelId;
-		let listType = state.suggestions.currentListType
+		//let listType = state.suggestions.currentListType
 		let voteType = hasUpvoted ? 'upvote' : 'downvote'
 
         return axios.put(`/api/channels/${channelId}/suggestions/${suggestionId}/votes`,{
@@ -169,7 +169,6 @@ function listTypeReducer(list = {}, action){
 				data: [],
 				offset: 0,
 				hasMorePages: true
-
 			}
 		case UPDATE_SORTBY:
 			return {
