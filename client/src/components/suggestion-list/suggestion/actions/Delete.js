@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { deleteSuggestion } from '@/store/suggestions-admin'
+import { updateSuggestionStatus } from '@/store/suggestions-admin'
 const { STATUS_DELETED } = require('@shared/suggestion-util')
 
+//admins can delete a suggestion in any list
 class Delete extends Component {
 	constructor(){
 		super()
@@ -15,7 +16,7 @@ class Delete extends Component {
 		let { status } = this.props
 		let component;
 		if(status === STATUS_DELETED)
-			component = <div class="has-text-danger help">deleted</div>
+			component = <div class="has-text-danger is-size-7">deleted</div>
 		else if(askToConfirm)
 			component = this.confirm()
 		else
@@ -23,16 +24,12 @@ class Delete extends Component {
 							onClick={e=>this.setState({ askToConfirm: true })}
 							></i>
 
-        return (
-            <div class="m-l-a">
-                { component }
-            </div>
-        )
+        return component
 	}
 	confirm(){
 		const style = { cursor: 'pointer' }
 		return (
-			<div class="help flex wrap justify-end m-t-0">
+			<div class="flex wrap justify-end is-size-7">
 				<span class="has-text-danger">are you sure?</span>&nbsp;
 				<div class="flex">
 					<div onClick={this.props.deleteSuggestion} style={style}>yes</div>&nbsp;
@@ -46,7 +43,13 @@ class Delete extends Component {
 
 const mapDispatchToProps = (dispatch,ownProps) => {
     return {
-        deleteSuggestion: ()=> dispatch(deleteSuggestion(ownProps))
+        deleteSuggestion: ()=> {
+			let data = {
+				...ownProps,
+				status: STATUS_DELETED
+			}
+			dispatch(updateSuggestionStatus(data))
+		}
     }
 }
 const Delete_C = connect(null, mapDispatchToProps)(Delete)

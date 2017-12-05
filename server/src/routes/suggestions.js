@@ -87,15 +87,16 @@ module.exports = (app) => {
             res.sendStatus(400)
 	})
 	//voteType: 'upvote' or 'downvote'
-    app.put('/api/channels/:channelId/suggestions/:suggestionId/:voteType',async (req, res) => {
-		let { channelId, suggestionId, voteType } = req.params
+    app.put('/api/channels/:channelId/suggestions/:suggestionId/votes',async (req, res) => {
+		let { channelId, suggestionId } = req.params
+		let { voteType } = req.body
 		let user = req.user
 		let response = await suggestionModel[voteType](channelId, suggestionId,user)
 		let status = response.modifiedCount === 1 ? 200 : 400
 		res.status(status).end()
 	})
 	
-	app.put('/api/channels/:channelId/suggestions/:suggestionId/status',async (req, res, next) => {
+	app.put('/api/channels/:channelId/suggestions/:suggestionId',async (req, res, next) => {
 		let { channelId } = req.params
 		let user = req.user
 		if( ![ROLE_BROADCASTER,ROLE_MODERATOR].includes(user.role) )
@@ -108,8 +109,9 @@ module.exports = (app) => {
 		}
 		next()
 	},async (req, res) => {
-        let { channelId, suggestionId } = req.params
-		let response = await suggestionModel.deleteSuggestion(channelId, suggestionId)
+		let { channelId, suggestionId } = req.params
+		let { updateFields } = req.body
+		let response = await suggestionModel.updateSuggestion(channelId, suggestionId, updateFields)
 		let status = response.modifiedCount === 1 ? 200 : 400
         res.sendStatus(status)
 	})

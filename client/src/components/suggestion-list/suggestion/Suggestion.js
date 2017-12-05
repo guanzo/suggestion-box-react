@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import Actions from './Actions'
+import Actions from './actions/Actions'
 import moment from 'moment'
 import classNames from 'classnames'
 import './Suggestion.scss'
-const { STATUS_DELETED } = require('@shared/suggestion-util')
+const { LIST_APPROVED, STATUS_APPROVED, STATUS_DELETED } = require('@shared/suggestion-util')
 
 class Suggestion extends Component {
     render() {
 		let { text, status } = this.props
-		let isDeleted = status === STATUS_DELETED
-		let className = classNames('suggestion box m-b-10', { 'is-deleted': isDeleted })
+		let statusClassNames = this.getStatusClassnames()
+		let className = classNames('suggestion box m-b-10', statusClassNames)
         return (
             <div class={className}>
                 <div class="suggestion-header is-size-7 m-b-5">
@@ -25,7 +25,16 @@ class Suggestion extends Component {
                 <Actions {...this.props}></Actions>
             </div>
         );
-    }
+	}//only seen in pending list
+	getStatusClassnames(){
+		let { status, listType } = this.props
+		if(listType === LIST_APPROVED)
+			return ''
+		return classNames(
+			{ 'is-approved': status === STATUS_APPROVED },
+			{ 'is-deleted': status === STATUS_DELETED }
+		)
+	}
     img(){
         let { postAnonymously, user } = this.props
         return postAnonymously 

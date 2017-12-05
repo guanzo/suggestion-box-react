@@ -5,16 +5,20 @@ import Delete from './Delete'
 
 class Actions extends Component {
     render() {
-		
         return (
-            <div class="suggestion-actions">
-                <div class="flex">
-                    <Upvote {...this.props}></Upvote>
-					{ this.userIsAdmin() ? <Delete {...this.props}></Delete> : '' }
-					{ this.userIsAdmin() ? <Approve {...this.props}></Approve> : '' }
-				</div>
+            <div class="suggestion-actions flex">
+				<Upvote {...this.props}></Upvote>
+				{ this.userIsAdmin() ? this.adminActions() : '' }
             </div>
         )
+	}
+	adminActions(){
+		return (
+			<div class="flex m-l-a">
+				<Approve {...this.props}></Approve>
+				<Delete {...this.props}></Delete> 
+			</div>
+		)
 	}
 	userIsAdmin(){
 		let { currentUser, channel } = this.props

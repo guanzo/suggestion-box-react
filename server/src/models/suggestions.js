@@ -85,12 +85,21 @@ module.exports = {
                 }
             }
         )
-	},//soft delete
-    deleteSuggestion(channelId, suggestionId){
-        var channels = db.get().collection('channels')
+	},
+	/**
+	 * 
+	 * @param {*} updateFields - object will be assigned into suggestion object
+	 */
+	updateSuggestion(channelId, suggestionId, updateFields){
+		var channels = db.get().collection('channels')
+
+		var setFields = _.mapKeys(updateFields,(val,key)=>{
+			return 'suggestions.$.' + key;
+		})
+
         return channels.updateOne(
 			{ channelId, "suggestions.id": new ObjectID(suggestionId) },
-			{ $set: { "suggestions.$.status": STATUS_DELETED } }
+			{ $set: setFields }
         )
 	},
 	upvote(channelId,suggestionId,user){
