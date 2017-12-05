@@ -114,8 +114,8 @@ class Overlay extends Component {
 		return velocityProps
 	}
 	getInitialOverlayPosition(){
-		let { hasSuggestions } = this.props
-		if(hasSuggestions){
+		let { hasSuggestions, isLoading } = this.props
+		if(hasSuggestions || isLoading){
 			return {
 				top:['94.5%','easeOutSine'],
 				left:['86.5%','easeInSine'],
@@ -160,7 +160,8 @@ const mapStateToProps = (state, ownProps) => {
 		lastSuggestionDate: getLastSuggestionDate(state),
 		isAllowedToSuggest: isAllowedToSuggestSelector(state),
 		channel: state.channel,
-		hasSuggestions: state.suggestions.approved.data.length > 0
+		hasSuggestions: state.suggestions.approved.data.length > 0,
+		isLoading: state.isLoading
     }
 }
 const Overlay_C = connect(mapStateToProps)(Overlay)

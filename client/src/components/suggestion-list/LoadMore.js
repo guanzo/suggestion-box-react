@@ -4,8 +4,9 @@ import { fetchSuggestions } from '@/store/suggestions'
 
 class LoadMore extends Component {
     render() {
+		let { data, hasMorePages } = this.props.suggestions
         var btn = '';
-        if(this.props.suggestions.hasMorePages){
+        if(data.length && hasMorePages){
             btn = <button onClick={this.props.onLoadMore} 
                     class="button is-small"
                     >Load more</button>

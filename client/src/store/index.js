@@ -8,20 +8,28 @@ import { suggestionsAdminReducer } from './suggestions-admin'
 import { 
 	initialState as channel, fetchChannel, channelReducer 
 } from './channel'
+import { toggleLoading, loadingReducer } from './loading'
 
 const { LIST_APPROVED,LIST_USER } = require('@shared/suggestion-util')
+
 
 const initialState = {
     ...user,
     ...channel,
-    ...suggestions
+	...suggestions,
+	isLoading: true
 }
-export function fetchInitialData(){
-	store.dispatch(fetchChannel())
-	store.dispatch(fetchSuggestions(LIST_APPROVED))
-	//need these to check for isAllowedToSuggest
-	store.dispatch(fetchSuggestions(LIST_USER))
+export async function fetchInitialData(){
+	store.dispatch(toggleLoading(true))
+	await Promise.all([
+		store.dispatch(fetchChannel()),
+		store.dispatch(fetchSuggestions(LIST_APPROVED)),
+		//need these to check for isAllowedToSuggest
+		store.dispatch(fetchSuggestions(LIST_USER))
+	])
+	store.dispatch(toggleLoading(false))
 }
+
 
 function root(state = initialState, action){
     return {
@@ -30,7 +38,8 @@ function root(state = initialState, action){
 		suggestions: {
 			...suggestionsReducer(state.suggestions, action),
 			...suggestionsAdminReducer(state.suggestions, action),
-		}
+		},
+		isLoading: loadingReducer(state.isLoading, action),
     }
 }
 

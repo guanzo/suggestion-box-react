@@ -13,7 +13,6 @@ class Toolbar extends Component {
 			sortBy: SORT_VOTES,
 			listType: LIST_APPROVED
 		}
-		console.log(props)
 	}
     render() {
 		let { hasSuggestions, listType, userIsAdmin } = this.props
@@ -85,7 +84,8 @@ const mapStateToProps = (state) => {
 	let { currentListType } = state.suggestions
 	let { channel, user } = state
 	let userIsAdmin = user.isBroadcaster || (user.isModerator && channel.allowModAdmin)
-    return {
+
+	return {
 		userIsAdmin,
 		currentUser: user,
 		listType: currentListType,

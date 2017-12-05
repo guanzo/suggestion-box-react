@@ -1,5 +1,6 @@
 import axios from 'axios'
 import _ from 'lodash'
+import { toggleLoading } from './loading'
 export const ADD_SUGGESTIONS = 'ADD_SUGGESTIONS'
 export const ADD_POSTED_SUGGESTION = 'ADD_POSTED_SUGGESTION'
 export const POST_SUGGESTION = 'POST_SUGGESTION'
@@ -69,6 +70,7 @@ export function sortSuggestions(sortBy){
 export function fetchSuggestions(listType){
 
     return (dispatch,getState) => {
+		dispatch(toggleLoading(true))
 		let state = getState()
 		
 		if( _.isUndefined(listType) ){
@@ -76,15 +78,19 @@ export function fetchSuggestions(listType){
 		}
 
         let { offset, sortBy } = state.suggestions[listType]
-        let { channelId } = state.channel
-        axios.get(`/api/channels/${channelId}/suggestions`,{
-            params:{ offset, listType, limit: PAGE_LIMIT, sortBy },
-        })
+		let { channelId } = state.channel
+
+		return axios.get(`/api/channels/${channelId}/suggestions`,{
+			params:{ offset, listType, limit: PAGE_LIMIT, sortBy },
+		})
         .then(res=>{
-            dispatch(addSuggestions(res.data, listType))
+			let { data } = res
+            dispatch(addSuggestions(data, listType))
 			dispatch(updateOffset(listType, offset += PAGE_LIMIT))
-            if(res.data.length < PAGE_LIMIT)
+            if(data.length < PAGE_LIMIT)
 				dispatch({ type: NO_MORE_PAGES, listType })
+
+			dispatch(toggleLoading(false))
         })
     }
 }

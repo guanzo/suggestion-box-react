@@ -57,3 +57,22 @@ body {
     }
 }
 
+.element {
+    &.is-loading {
+        position: relative;
+        pointer-events: none;
+        opacity: 0.5;
+        &:after {
+            @include loader;
+            position: absolute;
+            top: calc(50% - 1.5em);
+            left: calc(50% - 1.5em);
+            width: 3em;
+            height: 3em;
+			border-width: 0.25em;
+			border: 2px solid $primary;
+			border-right-color: transparent;
+			border-top-color: transparent;
+        }
+    }
+}
