@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchCurrentListSuggestions } from '@/store/suggestions'
+import { fetchCurrentListPaginatedSuggestions } from '@/store/suggestions'
 
 class LoadMore extends Component {
     render() {
@@ -21,7 +21,7 @@ class LoadMore extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLoadMore: ()=> dispatch(fetchCurrentListSuggestions())
+        onLoadMore: ()=> dispatch(fetchCurrentListPaginatedSuggestions())
     }
 }
 const LoadMore_C = connect(null, mapDispatchToProps)(LoadMore)

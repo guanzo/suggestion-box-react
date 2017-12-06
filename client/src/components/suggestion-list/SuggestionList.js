@@ -23,7 +23,7 @@ class SuggestionList extends Component {
 		let { listType } = suggestions
         return (
             <TransitionGroup class="suggestions-list m-b-25">
-                {this.props.suggestions.data.map((suggestion,i)=>(
+                {suggestions.data.map((suggestion,i)=>(
 					<Fade key={suggestion.id}>
 						<Suggestion 
 							{...suggestion} 

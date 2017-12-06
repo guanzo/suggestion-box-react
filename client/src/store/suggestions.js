@@ -2,13 +2,14 @@ import axios from 'axios'
 import _ from 'lodash'
 import { toggleLoading } from './loading'
 export const ADD_SUGGESTIONS = 'ADD_SUGGESTIONS'
+export const SET_SUGGESTIONS = 'SET_SUGGESTIONS'
 export const ADD_POSTED_SUGGESTION = 'ADD_POSTED_SUGGESTION'
 export const POST_SUGGESTION = 'POST_SUGGESTION'
 export const UPDATE_OFFSET = 'UPDATE_OFFSET'
 export const NO_MORE_PAGES = 'NO_MORE_PAGES'
 export const TOGGLE_UPVOTE = 'TOGGLE_UPVOTE'
 export const UPDATE_SORTBY = 'UPDATE_SORTBY'
-export const RESET_LIST = 'RESET_LIST'
+export const RESET_PAGINATION = 'RESET_PAGINATION'
 const { 
 	LIST_APPROVED, LIST_PENDING, LIST_USER, 
 	STATUS_APPROVED, SORT_VOTES, SORT_NEW
@@ -42,14 +43,6 @@ function generateInitialState(){
 
 export const initialState = generateInitialState()
 
-export function addSuggestions(suggestions, listType){
-    return {
-        type: ADD_SUGGESTIONS,
-		suggestions,
-		listType
-    }
-}
-
 function updateOffset(listType, offset){
 	return {
 		type: UPDATE_OFFSET,
@@ -62,7 +55,6 @@ export function sortSuggestions(sortBy){
 	return (dispatch,getState) => {
 		let state = getState()
 		let listType = state.suggestions.currentListType
-		dispatch({ type: RESET_LIST, listType })
 		dispatch({ type: UPDATE_SORTBY, listType, sortBy })
 		return dispatch(fetchCurrentListSuggestions())
     }
@@ -70,31 +62,45 @@ export function sortSuggestions(sortBy){
 
 export function fetchCurrentListSuggestions(){
 	return (dispatch,getState)=>{
-		let state = getState()
-		let listType = state.suggestions.currentListType
+		let listType = getState().suggestions.currentListType
 		return dispatch(fetchSuggestions(listType))
 	}
 }
 
-export function fetchSuggestions(listType){
+export function fetchCurrentListPaginatedSuggestions(){
+	return (dispatch,getState)=>{
+		let listType = getState().suggestions.currentListType
+		return dispatch(fetchSuggestions(listType, ADD_SUGGESTIONS))
+	}
+}
+
+/**
+ * The only place where suggestions are fetched
+ * @param {*} listType - approved, pending, user
+ * @param {*} actionType - SET or ADD (paginated)
+ */
+export function fetchSuggestions(listType, actionType = SET_SUGGESTIONS){
 
     return (dispatch,getState) => {
 		dispatch(toggleLoading(true))
 		let state = getState()
 		
-		if( _.isUndefined(listType) ){
-			listType = state.suggestions.currentListType
+		if(actionType === SET_SUGGESTIONS){
+			dispatch({ type: RESET_PAGINATION, listType })
 		}
 
         let { offset, sortBy } = state.suggestions[listType]
 		let { channelId } = state.channel
-
 		return axios.get(`/api/channels/${channelId}/suggestions`,{
 			params:{ offset, listType, limit: PAGE_LIMIT, sortBy },
 		})
         .then(res=>{
 			let { data } = res
-            dispatch(addSuggestions(data, listType))
+			dispatch({
+				type: actionType,
+				suggestions: data,
+				listType
+			})
 			dispatch(updateOffset(listType, offset += PAGE_LIMIT))
             if(data.length < PAGE_LIMIT)
 				dispatch({ type: NO_MORE_PAGES, listType })
@@ -180,10 +186,14 @@ function listTypeReducer(list = {}, action){
 				...list,
 				data: [...list.data, ...action.suggestions]
 			}
-		case RESET_LIST:
+		case SET_SUGGESTIONS://new suggestions
 			return {
 				...list,
-				data: [],
+				data: [...action.suggestions]
+			}
+		case RESET_PAGINATION:
+			return {
+				...list,
 				offset: 0,
 				hasMorePages: true
 			}
