@@ -35,15 +35,14 @@ window.Twitch.ext.onAuthorized(async function(auth) {
     name = null, 
     profileImg = null;
 
-    if (user_id) {
+	//user has granted permission
+    if(user_id){
         userId = user_id
         let user = await getTwitchUser(userId)
         name = user.display_name
         profileImg = user.profile_image_url
-        //console.log('user has granted permission')
-    } else {
-        //console.log('user has NOT granted')
-    }
+	}
+	
 	let user = { id: userId, opaqueId: opaque_user_id, name, profileImg, role }
 	store.dispatch(setUser(user))
 

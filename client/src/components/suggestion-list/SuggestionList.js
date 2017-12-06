@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { isAdminSelector } from '@/store/user'
 import Suggestion from './suggestion/Suggestion'
 import LoadMore from './LoadMore'
-import './SuggestionList.scss';
 
 class SuggestionList extends Component {
     render(){
@@ -28,11 +28,15 @@ class SuggestionList extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-	let { currentListType } = state.suggestions
+	let { suggestions, channel, user } = state
+	let { currentListType } = suggestions
     return {
-		suggestions: state.suggestions[currentListType],
-		currentUser: state.user,
-		channel: state.channel
+		suggestions: suggestions[currentListType],
+		channel: channel,
+		currentUser: {
+			...user,
+			isAdmin: isAdminSelector(state)
+		},
     }
 }
 const SuggestionsList_C = connect(mapStateToProps)(SuggestionList)

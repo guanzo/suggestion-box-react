@@ -4,12 +4,13 @@ import Approve from './Approve'
 import Delete from './Delete'
 
 class Actions extends Component {
-	
+
     render() {
+		let { currentUser } = this.props
         return (
             <div class="suggestion-actions flex">
 				<Upvote {...this.props}></Upvote>
-				{ this.userIsAdmin() ? this.adminActions() : '' }
+				{ currentUser.isAdmin ? this.adminActions() : '' }
             </div>
         )
 	}
@@ -20,11 +21,6 @@ class Actions extends Component {
 				<Delete {...this.props}></Delete> 
 			</div>
 		)
-	}
-	userIsAdmin(){
-		let { currentUser, channel } = this.props
-		let { allowModAdmin } = channel
-		return currentUser.isBroadcaster || (currentUser.isModerator && allowModAdmin)
 	}
 }
 

@@ -1,3 +1,5 @@
+
+import { createSelector } from 'reselect'
 const userUtil = require('@shared/user-util')
 
 export const SET_USER = 'SET_USER'
@@ -27,6 +29,15 @@ export function userReducer(state = initialState, { type, user }){
         return state;
 }
 
+
+export const isAdminSelector = createSelector(
+	[state=>state],
+	state => {
+		let { allowModAdmin } = state.channel
+		let { isBroadcaster, isModerator } = state.user
+		return isBroadcaster || (isModerator && allowModAdmin)
+	}
+)
 
 export function setUser(user){
     return {

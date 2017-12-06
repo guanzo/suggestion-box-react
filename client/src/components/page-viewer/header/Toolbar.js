@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { isAdminSelector } from '@/store/user'
 import { sortSuggestions } from '@/store/suggestions'
 import { changeCurrentListType } from '@/store/suggestions-admin'
 const { 
@@ -15,11 +16,11 @@ class Toolbar extends Component {
 		}
 	}
     render() {
-		let { hasSuggestions, listType, userIsAdmin } = this.props
+		let { hasSuggestions, listType, currentUser } = this.props
         return (
             <div class="toolbar flex is-size-7">
 				{ hasSuggestions && listType === LIST_APPROVED ? this.sortBy() : '' }
-				{ userIsAdmin ? this.listType() : '' }
+				{ currentUser.isAdmin ? this.listType() : '' }
                 {this.testBtn()}
             </div>
         );
@@ -82,12 +83,13 @@ class Toolbar extends Component {
 
 const mapStateToProps = (state) => {
 	let { currentListType } = state.suggestions
-	let { channel, user } = state
-	let userIsAdmin = user.isBroadcaster || (user.isModerator && channel.allowModAdmin)
+	let { user } = state
 
 	return {
-		userIsAdmin,
-		currentUser: user,
+		currentUser: {
+			...user,
+			isAdmin: isAdminSelector(state)
+		},
 		listType: currentListType,
 		hasSuggestions: state.suggestions[currentListType].data.length > 0,
     }

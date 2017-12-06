@@ -6,7 +6,7 @@ export function toggleLoading(isLoading){
 		isLoading
 	}
 }
-export function loadingReducer(state = {}, action){
+export function loadingReducer(state = false, action){
 	if(action.type === TOGGLE_LOADING){
 		return action.isLoading
 	}else
