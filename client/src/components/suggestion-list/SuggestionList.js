@@ -15,6 +15,7 @@ const Fade = ({ children, ...props }) => (
 		addEndListener={(el, done) => {
 			el.addEventListener('transitionend',()=>el.style.transitionDelay = null, false);
 		}}	
+		exit={false}
 	>
 	  {children}
 	</CSSTransition>

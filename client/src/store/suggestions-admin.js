@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { RESET_LIST, fetchSuggestions } from './suggestions'
+import { RESET_LIST, fetchCurrentListSuggestions } from './suggestions'
 export const UPDATE_SUGGESTION_STATUS = 'UPDATE_SUGGESTION_STATUS'
 export const CHANGE_CURRENT_LIST_TYPE = 'CHANGE_CURRENT_LIST_TYPE'
 
@@ -8,7 +8,7 @@ export function changeCurrentListType(listType){
 	return (dispatch,getState) => {
 		dispatch({ type: CHANGE_CURRENT_LIST_TYPE, currentListType: listType })
 		dispatch({ type: RESET_LIST, listType })
-		return dispatch(fetchSuggestions())
+		return dispatch(fetchCurrentListSuggestions())
     }
 }
 

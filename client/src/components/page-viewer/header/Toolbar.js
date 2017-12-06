@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { Transition } from 'react-transition-group'
 import { isAdminSelector } from '@/store/user'
 import { sortSuggestions } from '@/store/suggestions'
 import { changeCurrentListType } from '@/store/suggestions-admin'
 const { 
 	SORT_VOTES, SORT_NEW, LIST_APPROVED, LIST_PENDING
 } = require('@shared/suggestion-util')
+
+
+
 
 class Toolbar extends Component {
 	constructor(props){
@@ -16,18 +20,37 @@ class Toolbar extends Component {
 		}
 	}
     render() {
-		let { hasSuggestions, listType, currentUser } = this.props
+		let { hasSuggestions, listType, currentUser, isLoading } = this.props
+		let showSortBy = (hasSuggestions || isLoading) && listType === LIST_APPROVED
+		const duration = 250;
         return (
             <div class="toolbar flex is-size-7">
-				{ hasSuggestions && listType === LIST_APPROVED ? this.sortBy() : '' }
+				<Transition in={showSortBy} timeout={duration}>
+				{(state) => (
+					this.sortBy(state, duration)
+				)}
+				</Transition>
 				{ currentUser.isAdmin ? this.listType() : '' }
                 {this.testBtn()}
             </div>
         );
 	}
-	sortBy(){
+	sortBy(transitionState, duration){
+		const defaultStyle = {
+			transition: `${duration}ms`,
+			opacity: 0,
+		}
+		const transitionStyles = {
+			entering: { opacity: 0 },
+			entered:  { opacity: 1 },
+		};
 		return (
-			<div class="flex-center">
+			<div class="flex-center"
+				style={{
+					...defaultStyle,
+					...transitionStyles[transitionState]
+				}}
+			>
 				<span class="m-r-5">Sort by</span>
 				<div class="select is-small">
 					<select value={this.state.sortBy} 
@@ -82,16 +105,17 @@ class Toolbar extends Component {
 }
 
 const mapStateToProps = (state) => {
-	let { currentListType } = state.suggestions
-	let { user } = state
+	let { user, isLoading, suggestions } = state
+	let { currentListType } = suggestions
 
 	return {
 		currentUser: {
 			...user,
 			isAdmin: isAdminSelector(state)
 		},
+		isLoading: isLoading,
 		listType: currentListType,
-		hasSuggestions: state.suggestions[currentListType].data.length > 0,
+		hasSuggestions: suggestions[currentListType].data.length > 0,
     }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {

@@ -64,9 +64,18 @@ export function sortSuggestions(sortBy){
 		let listType = state.suggestions.currentListType
 		dispatch({ type: RESET_LIST, listType })
 		dispatch({ type: UPDATE_SORTBY, listType, sortBy })
-		return dispatch(fetchSuggestions())
+		return dispatch(fetchCurrentListSuggestions())
     }
 }
+
+export function fetchCurrentListSuggestions(){
+	return (dispatch,getState)=>{
+		let state = getState()
+		let listType = state.suggestions.currentListType
+		return dispatch(fetchSuggestions(listType))
+	}
+}
+
 export function fetchSuggestions(listType){
 
     return (dispatch,getState) => {
