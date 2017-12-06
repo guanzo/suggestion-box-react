@@ -18,11 +18,14 @@ class Form extends Component {
 		}
 	}
     render(){
+		let style = { height: '100%' }
         return (
-            <div class="suggestion-form">
-                {this.rules()}
+            <div class="suggestion-form flex column justify-between" style={style}>
+                <div>{this.rules()}</div>
+				<div>
 				{this.settings()}
 				{this.input()}
+				</div>
             </div>
         )
     }
@@ -42,17 +45,20 @@ class Form extends Component {
 		let { isRealUser } = this.props.currentUser
         if(isRealUser){
             return (
-                <div class="field">  
-                    <div class="control">
-                        <label class="checkbox is-size-7"> 
-                        <input type="checkbox" class="m-r-5" style={{'vertical-align': 'middle'}} 
-                        checked={this.state.postAnonymously}
-                        onChange={e=>this.setState({ postAnonymously: e.target.checked })}
-                        />
-                         Post anonymously
-                        </label>
-                    </div>
-                </div>
+			<div class="field">  
+				<p class="control">
+					<div class="b-checkbox is-primary">
+						<input id="post-anon" type="checkbox"
+							class="m-r-5"
+							checked={this.state.postAnonymously}
+							onChange={e=>this.setState({ postAnonymously: e.target.checked })}
+						/>
+						<label for="post-anon" class="is-size-7"> 
+							Post anonymously
+						</label>
+					</div>
+				</p>
+			</div>
             )
         }else{
             return (

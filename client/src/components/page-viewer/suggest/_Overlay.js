@@ -41,8 +41,7 @@ class Overlay extends Component {
 			case Machine.FAB:
 				return <Fab onClick={this.onClick.bind(this)}></Fab>
 			case Machine.PRE_FORM:
-				return <PreForm {...close} {...this.props}>
-						</PreForm>
+				return <PreForm {...close} {...this.props}></PreForm>
 			case Machine.FORM:
 				return <Form {...close}
 							{...this.props} 
@@ -50,7 +49,7 @@ class Overlay extends Component {
 							transition={this.transition.bind(this)}>
 						</Form>
 			case Machine.POST_FORM:
-				return <PostForm {...close} {...this.props} status={status} ></PostForm>
+				return <PostForm {...close} {...this.props} status={status}></PostForm>
 			default:
 				return <Fab onClick={this.onClick.bind(this)}></Fab>
 		}
@@ -85,13 +84,13 @@ class Overlay extends Component {
 		let velocityProps;
 		let ease = [0.4, 0.0, 0.2, 1]
 		let style = { 'border-radius': '50%' }
-		let initialPosition = this.getInitialOverlayPosition()
+		let defaultPosition = this.getDefaultOverlayPosition()
 		if(!hasOverlay){
 			velocityProps = {
 				duration: 250,
 				runOnMount: true,
 				animation: {
-					...initialPosition,
+					...defaultPosition,
 					backgroundColor: ['#F57C00',ease],
 					width: ['40px',ease],
 					height: ['40px',ease],
@@ -113,7 +112,7 @@ class Overlay extends Component {
 		}
 		return velocityProps
 	}
-	getInitialOverlayPosition(){
+	getDefaultOverlayPosition(){
 		let { hasSuggestions, isLoading } = this.props
 		if(hasSuggestions || isLoading){
 			return {
@@ -126,6 +125,7 @@ class Overlay extends Component {
 				left:['50%','easeInSine'],
 			}
 		}
+		
 	}
 	onSubmitDone(status){
 		this.setState({ 

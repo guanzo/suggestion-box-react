@@ -76,3 +76,8 @@ body {
         }
     }
 }
+
+.is-primary input[type=checkbox]:checked+label:before {
+    background-color: $primary;
+    border-color: $primary;
+}
