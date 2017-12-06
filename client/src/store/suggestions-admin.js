@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { fetchCurrentListSuggestions,RESET_PAGINATION } from './suggestions'
+import { fetchCurrentListSuggestions } from './suggestions'
 export const UPDATE_SUGGESTION_STATUS = 'UPDATE_SUGGESTION_STATUS'
 export const CHANGE_CURRENT_LIST_TYPE = 'CHANGE_CURRENT_LIST_TYPE'
 

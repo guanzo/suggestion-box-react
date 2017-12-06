@@ -4,18 +4,16 @@ import { toggleLoading } from './loading'
 export const ADD_SUGGESTIONS = 'ADD_SUGGESTIONS'
 export const SET_SUGGESTIONS = 'SET_SUGGESTIONS'
 export const ADD_POSTED_SUGGESTION = 'ADD_POSTED_SUGGESTION'
-export const POST_SUGGESTION = 'POST_SUGGESTION'
 export const UPDATE_OFFSET = 'UPDATE_OFFSET'
-export const NO_MORE_PAGES = 'NO_MORE_PAGES'
-export const TOGGLE_UPVOTE = 'TOGGLE_UPVOTE'
 export const UPDATE_SORTBY = 'UPDATE_SORTBY'
 export const RESET_PAGINATION = 'RESET_PAGINATION'
+export const NO_MORE_PAGES = 'NO_MORE_PAGES'
+export const TOGGLE_UPVOTE = 'TOGGLE_UPVOTE'
 const { 
 	LIST_APPROVED, LIST_PENDING, LIST_USER, 
 	STATUS_APPROVED, SORT_VOTES, SORT_NEW
 } = require('@shared/suggestion-util')
 
-const PAGE_LIMIT = 5;
 
 function generateInitialState(){
 	var lists = {}
@@ -79,6 +77,7 @@ export function fetchCurrentListPaginatedSuggestions(){
  * @param {*} listType - approved, pending, user
  * @param {*} actionType - SET or ADD (paginated)
  */
+const PAGE_LIMIT = 5;
 export function fetchSuggestions(listType, actionType = SET_SUGGESTIONS){
 
     return (dispatch,getState) => {
@@ -166,59 +165,54 @@ export function toggleUpvote({ id: suggestionId, hasUpvoted }){
 
 //any suggestion action must contain a 'listType' property
 export function suggestionsReducer(suggestions = {}, action){
-	let listType, list;
-	if(action.listType){
-		listType = action.listType
-		list = suggestions[listType]
-		return {
-			...suggestions,
-			[listType]: listTypeReducer(list, action)
+	if(!action.listType)
+		return suggestions;
+
+	let listType = action.listType
+	let list = suggestions[listType]
+	return {
+		...suggestions,
+		[listType]: {
+			...list,
+			...listPartialReducer(list, action)
 		}
 	}
-	return suggestions
 }
-//reduces one of the 3 list types
-function listTypeReducer(list = {}, action){
+//returns the updated properties of the list,
+//to be merged with the existing list
+function listPartialReducer(list = {}, action){
 	switch(action.type) {
 		case ADD_SUGGESTIONS://paginated suggestions
 			return {
-				...list,
 				data: [...list.data, ...action.suggestions]
 			}
 		case SET_SUGGESTIONS://new suggestions
 			return {
-				...list,
 				data: [...action.suggestions]
 			}
 		case RESET_PAGINATION:
 			return {
-				...list,
 				offset: 0,
 				hasMorePages: true
 			}
 		case UPDATE_SORTBY:
 			return {
-				...list,
 				sortBy: action.sortBy,
 			}
         case ADD_POSTED_SUGGESTION://prepend to top, reddit style
 			return  {
-				...list,
 				data: [action.suggestion, ...list.data]
 			}
 		case TOGGLE_UPVOTE:
 			return {
-				...list,
 				data: list.data.map(d=>toggleVote(d,action))
 			}
 		case UPDATE_OFFSET:
 			return {
-				...list,
 				offset: action.offset
 			}
 		case NO_MORE_PAGES:
 			return {
-				...list,
 				hasMorePages: false
 			}
         default:

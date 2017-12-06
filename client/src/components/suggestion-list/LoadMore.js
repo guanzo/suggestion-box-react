@@ -7,7 +7,7 @@ class LoadMore extends Component {
 		let { data, hasMorePages } = this.props.suggestions
         var btn = '';
         if(data.length && hasMorePages){
-            btn = <button onClick={this.props.onLoadMore} 
+            btn = <button onClick={this.onClick.bind(this)} 
                     class="button is-small"
                     >Load more</button>
         }
@@ -16,7 +16,11 @@ class LoadMore extends Component {
                 {btn}
             </div>
         );
-    }
+	}
+	onClick(){
+		this.props.onClick()
+		this.props.onLoadMore()
+	}
 }
 
 const mapDispatchToProps = (dispatch) => {
