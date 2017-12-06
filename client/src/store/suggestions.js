@@ -135,23 +135,25 @@ export function postSuggestion(text, postAnonymously){
     }
 }
 
-export function toggleUpvote( suggestionId, hasUpvoted ){
+export function toggleUpvote({ id: suggestionId, hasUpvoted }){
     return (dispatch,getState) => {
         let state = getState()
 		let channelId = state.channel.channelId;
-		//let listType = state.suggestions.currentListType
+		let listType = state.suggestions.currentListType
+		hasUpvoted = !hasUpvoted
+
 		let voteType = hasUpvoted ? 'upvote' : 'downvote'
 
         return axios.put(`/api/channels/${channelId}/suggestions/${suggestionId}/votes`,{
 			voteType
 		})
         .then(res=>{
-			/* dispatch({ 
+			dispatch({ 
 				type: TOGGLE_UPVOTE,
 				suggestionId,
 				hasUpvoted,
 				listType
-			 }) */
+			 })
         })
         .catch(console.log)
     }

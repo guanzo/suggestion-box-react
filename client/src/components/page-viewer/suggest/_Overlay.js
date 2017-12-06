@@ -155,12 +155,13 @@ const isAllowedToSuggestSelector = createSelector(
 )
 
 const mapStateToProps = (state, ownProps) => {
+	let { currentListType } = state.suggestions
     return {
 		currentUser: state.user,
 		lastSuggestionDate: getLastSuggestionDate(state),
 		isAllowedToSuggest: isAllowedToSuggestSelector(state),
 		channel: state.channel,
-		hasSuggestions: state.suggestions.approved.data.length > 0,
+		hasSuggestions: state.suggestions[currentListType].data.length > 0,
 		isLoading: state.isLoading
     }
 }

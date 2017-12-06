@@ -11,10 +11,6 @@ const Fade = ({ children, ...props }) => (
 		{...props}
 		timeout={250}
 		classNames="fade"
-		onEnter={el=>el.style.transitionDelay = `${props.index*.05}s`}
-		addEndListener={(el, done) => {
-			el.addEventListener('transitionend',()=>el.style.transitionDelay = null, false);
-		}}	
 		exit={false}
 	>
 	  {children}
@@ -28,7 +24,7 @@ class SuggestionList extends Component {
         return (
             <TransitionGroup class="suggestions-list m-b-25">
                 {this.props.suggestions.data.map((suggestion,i)=>(
-					<Fade index={i} key={suggestion.id}>
+					<Fade key={suggestion.id}>
 						<Suggestion 
 							{...suggestion} 
 							channel={channel}  
