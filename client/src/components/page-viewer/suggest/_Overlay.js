@@ -9,7 +9,7 @@ import moment from 'moment'
 import classNames from 'classnames'
 import './_Overlay.scss'
 import {VelocityComponent} from 'velocity-react'
-const { STATUS_APPROVED } = require('@shared/suggestion-util')
+const { STATUS_APPROVED, LIST_PENDING } = require('@shared/suggestion-util')
 const { isAllowedToSuggest } = require('@shared/user-util')
 
 //state machine
@@ -113,19 +113,19 @@ class Overlay extends Component {
 		return velocityProps
 	}
 	getDefaultOverlayPosition(){
-		let { hasSuggestions, isLoading } = this.props
-		if(hasSuggestions || isLoading){
+		let { hasSuggestions, isLoading, listType } = this.props
+		if( (hasSuggestions || isLoading) || listType === LIST_PENDING ){
 			return {
 				top:['94.5%','easeOutSine'],
 				left:['86.5%','easeInSine'],
 			}
-		}else{
+		}else{  
 			return {
-				top:['70%','easeOutSine'],
-				left:['50%','easeInSine'],
+				top:['70%','easeInSine'],
+				left:['50%','easeOutSine'],
 			}
 		}
-		
+		console.log(" ")
 	}
 	onSubmitDone(status){
 		this.setState({ 
@@ -143,7 +143,7 @@ const getLastSuggestionDate = createSelector(
 	[state => state.suggestions.user.data],
 	userSuggestions => {
 		if(!userSuggestions.length)
-			return moment('1970-01-01')
+			return moment('1970-01-01').toDate()
 		else
 			return userSuggestions[0].createdAt
 	}
@@ -161,6 +161,7 @@ const mapStateToProps = (state, ownProps) => {
 		lastSuggestionDate: getLastSuggestionDate(state),
 		isAllowedToSuggest: isAllowedToSuggestSelector(state),
 		channel: state.channel,
+		listType: currentListType,
 		hasSuggestions: state.suggestions[currentListType].data.length > 0,
 		isLoading: state.isLoading
     }

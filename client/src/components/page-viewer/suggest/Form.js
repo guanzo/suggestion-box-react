@@ -120,7 +120,7 @@ class Form extends Component {
         let { suggestion, postAnonymously } = this.state
         Promise.all([
             store.dispatch(postSuggestion(suggestion, postAnonymously)), 
-            delay()
+            delay()//if ajax is too fast it looks weird
         ])
         .then(([status])=>{
             this.setState({ isLoading: false })

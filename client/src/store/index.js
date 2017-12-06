@@ -21,8 +21,8 @@ const initialState = {
 }
 export async function fetchInitialData(){
 	store.dispatch(toggleLoading(true))
+	store.dispatch(fetchChannel())//this is much faster than the other 2 calls, no need to wait
 	await Promise.all([
-		store.dispatch(fetchChannel()),
 		store.dispatch(fetchSuggestions(LIST_APPROVED)),
 		//need these to check for isAllowedToSuggest
 		store.dispatch(fetchSuggestions(LIST_USER))

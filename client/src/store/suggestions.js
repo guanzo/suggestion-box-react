@@ -1,13 +1,14 @@
 import axios from 'axios'
 import _ from 'lodash'
+import { delay } from '@/util'
 import { toggleLoading } from './loading'
 export const ADD_SUGGESTIONS = 'ADD_SUGGESTIONS'
 export const SET_SUGGESTIONS = 'SET_SUGGESTIONS'
 export const ADD_POSTED_SUGGESTION = 'ADD_POSTED_SUGGESTION'
-export const UPDATE_OFFSET = 'UPDATE_OFFSET'
-export const UPDATE_SORTBY = 'UPDATE_SORTBY'
+export const SET_OFFSET = 'SET_OFFSET'
+export const SET_SORTBY = 'SET_SORTBY'
 export const RESET_PAGINATION = 'RESET_PAGINATION'
-export const NO_MORE_PAGES = 'NO_MORE_PAGES'
+export const SET_HAS_MORE_PAGES = 'SET_HAS_MORE_PAGES'
 export const TOGGLE_UPVOTE = 'TOGGLE_UPVOTE'
 const { 
 	LIST_APPROVED, LIST_PENDING, LIST_USER, 
@@ -25,7 +26,7 @@ function generateInitialState(){
 				data: [],
 				sortBy: type === LIST_APPROVED ? SORT_VOTES : SORT_NEW,
 				offset: 0,
-				hasMorePages: true,
+				hasMorePages: false,//avoids unnecessary render of load more button.
 				listType: type,
 			}
 		}
@@ -43,7 +44,7 @@ export const initialState = generateInitialState()
 
 function updateOffset(listType, offset){
 	return {
-		type: UPDATE_OFFSET,
+		type: SET_OFFSET,
 		listType,
 		offset
 	}
@@ -53,7 +54,7 @@ export function sortSuggestions(sortBy){
 	return (dispatch,getState) => {
 		let state = getState()
 		let listType = state.suggestions.currentListType
-		dispatch({ type: UPDATE_SORTBY, listType, sortBy })
+		dispatch({ type: SET_SORTBY, listType, sortBy })
 		return dispatch(fetchCurrentListSuggestions())
     }
 }
@@ -101,8 +102,8 @@ export function fetchSuggestions(listType, actionType = SET_SUGGESTIONS){
 				listType
 			})
 			dispatch(updateOffset(listType, offset += PAGE_LIMIT))
-            if(data.length < PAGE_LIMIT)
-				dispatch({ type: NO_MORE_PAGES, listType })
+			let hasMorePages = data.length == PAGE_LIMIT
+			dispatch({ type: SET_HAS_MORE_PAGES, listType, hasMorePages })
 			dispatch(toggleLoading(false))
         })
     }
@@ -132,10 +133,9 @@ export function postSuggestion(text, postAnonymously){
 					listType
 				})
 			})
-			
             return suggestion.status
         })
-        .catch(console.log)
+		.catch(console.log)
     }
 }
 
@@ -193,9 +193,9 @@ function listPartialReducer(list = {}, action){
 		case RESET_PAGINATION:
 			return {
 				offset: 0,
-				hasMorePages: true
+				hasMorePages: false
 			}
-		case UPDATE_SORTBY:
+		case SET_SORTBY:
 			return {
 				sortBy: action.sortBy,
 			}
@@ -207,13 +207,13 @@ function listPartialReducer(list = {}, action){
 			return {
 				data: list.data.map(d=>toggleVote(d,action))
 			}
-		case UPDATE_OFFSET:
+		case SET_OFFSET:
 			return {
 				offset: action.offset
 			}
-		case NO_MORE_PAGES:
+		case SET_HAS_MORE_PAGES:
 			return {
-				hasMorePages: false
+				hasMorePages: action.hasMorePages
 			}
         default:
             return list

@@ -36,7 +36,7 @@ class SuggestionList extends Component {
 		let { channel, currentUser, suggestions } = this.props
 		let { listType } = suggestions
         return (
-            <TransitionGroup class="suggestions-list m-b-25">
+            <TransitionGroup class="suggestions-list">
                 {suggestions.data.map((suggestion,i)=>(
 					<Fade index={hasPaginated ? 0 : i}
 					key={suggestion.id}

@@ -7,17 +7,17 @@ import './App.scss';
 
 
 class App extends Component {
-    render() {
-        return (
-        <Router>
-            <div className="app">
-                <Route path="*/viewer.html" component={Viewer}/>
-                <Route path="*/liveconfig.html" component={LiveConfig}/>
-                <Route path="*/config.html" component={Config}/>
-            </div>
-        </Router>
-        );
-    }
+	render(){
+		return (
+			<Router>
+				<div className="app">
+					<Route path="*/viewer.html" component={Viewer}/>
+					<Route path="*/liveconfig.html" component={LiveConfig}/>
+					<Route path="*/config.html" component={Config}/>
+				</div>
+			</Router>
+		)
+	}
 }
 
 export default App;
