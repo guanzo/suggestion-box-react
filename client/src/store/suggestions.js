@@ -83,13 +83,13 @@ export function fetchSuggestions(listType, actionType = SET_SUGGESTIONS){
 
     return (dispatch,getState) => {
 		dispatch(toggleLoading(true))
-		let state = getState()
 		
 		if(actionType === SET_SUGGESTIONS){
 			dispatch({ type: RESET_PAGINATION, listType })
 		}
-
-        let { offset, sortBy } = state.suggestions[listType]
+		
+		let state = getState()
+		let { offset, sortBy } = state.suggestions[listType]
 		let { channelId } = state.channel
 		return axios.get(`/api/channels/${channelId}/suggestions`,{
 			params:{ offset, listType, limit: PAGE_LIMIT, sortBy },
@@ -104,7 +104,6 @@ export function fetchSuggestions(listType, actionType = SET_SUGGESTIONS){
 			dispatch(updateOffset(listType, offset += PAGE_LIMIT))
             if(data.length < PAGE_LIMIT)
 				dispatch({ type: NO_MORE_PAGES, listType })
-
 			dispatch(toggleLoading(false))
         })
     }

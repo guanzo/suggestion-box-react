@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { fetchCurrentListSuggestions } from './suggestions'
+import { fetchCurrentListSuggestions,RESET_PAGINATION } from './suggestions'
 export const UPDATE_SUGGESTION_STATUS = 'UPDATE_SUGGESTION_STATUS'
 export const CHANGE_CURRENT_LIST_TYPE = 'CHANGE_CURRENT_LIST_TYPE'
 
@@ -57,6 +57,6 @@ export function suggestionsAdminReducer(suggestions = {}, action){
 				}
 			}
         default:
-            return list
+			return suggestions
     }
 }

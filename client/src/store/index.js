@@ -32,13 +32,14 @@ export async function fetchInitialData(){
 
 
 function root(state = initialState, action){
+
+	let suggestions = suggestionsReducer(state.suggestions, action)
+	suggestions = suggestionsAdminReducer(suggestions, action)
+
     return {
         user: userReducer(state.user, action),
         channel: channelReducer(state.channel, action),
-		suggestions: {
-			...suggestionsReducer(state.suggestions, action),
-			...suggestionsAdminReducer(state.suggestions, action),
-		},
+		suggestions,
 		isLoading: loadingReducer(state.isLoading, action),
     }
 }
