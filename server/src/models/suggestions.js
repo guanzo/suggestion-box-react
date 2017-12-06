@@ -7,14 +7,23 @@ const { LIST_APPROVED,LIST_PENDING, LIST_USER,
 const _ = require('lodash')
 
 module.exports = {
+	/**
+	 * 
+	 * @param {*} sortBy 
+	 * - approved list: can be sorted in any way
+	 * - pending list: oldest first, to keep things fair
+	 * - user list:    newest first, to check isAllowedToSuggest
+	 */
     getSuggestions(channelId, user, listType, offset, limit, sortBy = 'votesLength'){
 		var channels = db.get().collection('channels')
-		let match;
-		if(listType === LIST_APPROVED)
+		let match, sort;
+		if(listType === LIST_APPROVED){
 			match = { $match: { 'suggestions.status': STATUS_APPROVED } }
-		else if(listType === LIST_PENDING)
+            sort = { $sort: { [sortBy]: -1 } }
+		}else if(listType === LIST_PENDING){
 			match = { $match: { 'suggestions.status': STATUS_PENDING } }
-		else if(listType === LIST_USER){
+            sort = { $sort: { 'createdAt' : 1 } }//oldest first
+		}else if(listType === LIST_USER){
 			match = { $match: { 
 							$or: [
 								{ 'suggestions.user.id': user.id }, 
@@ -22,6 +31,7 @@ module.exports = {
 							] 
 						} 
 					}
+			sort = { $sort: { 'createdAt' : -1 } }
 		}
 		
         return channels.aggregate([
@@ -47,7 +57,7 @@ module.exports = {
 			},
 			//client doesn't need vote data
 			{ $project :    { votes: 0 } },
-            { $sort:        { [sortBy]: -1 } },
+            sort,
             { $skip:        offset },
             { $limit:       limit },
         ])
