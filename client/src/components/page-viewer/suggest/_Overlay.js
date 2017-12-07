@@ -29,32 +29,32 @@ class Overlay extends Component {
 			hasOverlay: false,
 		}
 	}
-	transition(to){
+	transition = (to)=>{
 		this.setState({ current: to })
 	}
 	getCurrentComponent(){
 		let { status } = this.state
 		const close = {
-			onClose: this.onClose.bind(this)
+			onClose: this.onClose
 		}
 		switch(this.state.current) {
 			case Machine.FAB:
-				return <Fab onClick={this.onClick.bind(this)}></Fab>
+				return <Fab onClick={this.onFabClick}></Fab>
 			case Machine.PRE_FORM:
 				return <PreForm {...close} {...this.props}></PreForm>
 			case Machine.FORM:
 				return <Form {...close}
 							{...this.props} 
-							onSubmitDone={this.onSubmitDone.bind(this)}
-							transition={this.transition.bind(this)}>
+							onSubmitDone={this.onSubmitDone}
+							transition={this.transition}>
 						</Form>
 			case Machine.POST_FORM:
 				return <PostForm {...close} {...this.props} status={status}></PostForm>
 			default:
-				return <Fab onClick={this.onClick.bind(this)}></Fab>
+				return <Fab onClick={this.onFabClick}></Fab>
 		}
 	}
-	onClick(){
+	onFabClick = ()=>{
 		let { isAnonymousUser } = this.props.currentUser
 		let { isAllowedToSuggest: isAllowedToSuggest_Prop } = this.props
 		
@@ -71,8 +71,8 @@ class Overlay extends Component {
 
         return (
 			<VelocityComponent {...velocityProps}>
-				<div class={className}>
-					<div class="overlay-inner flex-center">
+				<div className={className}>
+					<div className="overlay-inner flex-center">
 						{this.getCurrentComponent()}
 					</div>
 				</div>
@@ -125,18 +125,21 @@ class Overlay extends Component {
 				left:['50%','easeOutSine'],
 			}
 		}
-		console.log(" ")
 	}
-	onSubmitDone(status){
+	onSubmitDone = (status)=>{
 		this.setState({ 
 			status
 		})
 		this.transition(Machine.POST_FORM)
 	}
-    onClose(){
+    onClose = ()=>{
 		this.setState({ hasOverlay: false })
 		this.transition(Machine.FAB)
-    }
+	}//stupid firefox...
+	componentDidCatch(error,info){
+		//console.log(error)
+		//console.log(info)
+	}
 }
 
 const getLastSuggestionDate = createSelector(
@@ -166,6 +169,5 @@ const mapStateToProps = (state, ownProps) => {
 		isLoading: state.isLoading
     }
 }
-const Overlay_C = connect(mapStateToProps)(Overlay)
+export default connect(mapStateToProps)(Overlay)
 
-export default Overlay_C;

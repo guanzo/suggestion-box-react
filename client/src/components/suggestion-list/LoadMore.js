@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
 import { fetchCurrentListPaginatedSuggestions } from '@/store/suggestions'
 
-class LoadMore extends Component {
+class LoadMore extends PureComponent {
     render() {
 		let { data, hasMorePages } = this.props.suggestions
         const style = {
 			visibility: data.length && hasMorePages ? 'visible':'hidden'
 		}
         return (
-            <div class="flex-center p-a-5" style={style}>
-                <button onClick={this.onClick.bind(this)} 
-                    class="button is-small"
+            <div className="flex-center p-a-5" style={style}>
+                <button onClick={this.onClick} 
+                    className="button is-small"
                     >Load more</button>
             </div>
         );
 	}
-	onClick(){
+	onClick = ()=>{
 		this.props.onClick()
 		this.props.onLoadMore()
 	}
@@ -27,6 +27,5 @@ const mapDispatchToProps = (dispatch) => {
         onLoadMore: ()=> dispatch(fetchCurrentListPaginatedSuggestions())
     }
 }
-const LoadMore_C = connect(null, mapDispatchToProps)(LoadMore)
+export default connect(null, mapDispatchToProps)(LoadMore)
 
-export default LoadMore_C;

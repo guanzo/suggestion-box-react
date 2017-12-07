@@ -1,6 +1,6 @@
 import axios from 'axios'
 import _ from 'lodash'
-import { delay } from '@/util'
+//import { delay } from '@/util'
 import { toggleLoading } from './loading'
 export const ADD_SUGGESTIONS = 'ADD_SUGGESTIONS'
 export const SET_SUGGESTIONS = 'SET_SUGGESTIONS'
@@ -17,7 +17,7 @@ const {
 
 
 function generateInitialState(){
-	var lists = {}
+	let lists = {}
 	const listTypes = [LIST_APPROVED,LIST_PENDING,LIST_USER]
 	listTypes.forEach(type=>{
 		lists = {
@@ -102,7 +102,7 @@ export function fetchSuggestions(listType, actionType = SET_SUGGESTIONS){
 				listType
 			})
 			dispatch(updateOffset(listType, offset += PAGE_LIMIT))
-			let hasMorePages = data.length == PAGE_LIMIT
+			let hasMorePages = data.length === PAGE_LIMIT
 			dispatch({ type: SET_HAS_MORE_PAGES, listType, hasMorePages })
 			dispatch(toggleLoading(false))
         })

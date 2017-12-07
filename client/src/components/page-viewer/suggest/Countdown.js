@@ -9,6 +9,8 @@ class Countdown extends Component {
 		this.state = { 
 			time: this.getTime(this.props.lastSuggestionDate) 
 		}
+	}
+	componentWillMount(){
 		this.startCountdown()
 	}
 	componentWillUnmount(){
@@ -24,9 +26,9 @@ class Countdown extends Component {
 			language += 'again in...'
 		
         return (
-        <div class="has-text-centered m-b-15">
-			<p class="m-b-15">{language}</p> 
-			{ times.length ? <p class="is-size-1">{times.join(':')}</p> : '' }
+        <div className="has-text-centered m-b-15">
+			<p className="m-b-15">{language}</p> 
+			{ times.length ? <p className="is-size-1">{times.join(':')}</p> : null }
         </div>
         );
 	}

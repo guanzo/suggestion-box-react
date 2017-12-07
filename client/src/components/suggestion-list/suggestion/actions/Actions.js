@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Upvote from './Upvote'
 import Approve from './Approve'
 import Delete from './Delete'
 
-class Actions extends Component {
+class Actions extends PureComponent {
 
     render() {
 		let { currentUser } = this.props
         return (
-            <div class="suggestion-actions flex">
+            <div className="suggestion-actions flex">
 				<Upvote {...this.props}></Upvote>
-				{ currentUser.isAdmin ? this.adminActions() : '' }
+				{ currentUser.isAdmin ? this.adminActions() : null }
             </div>
         )
 	}
 	adminActions(){
 		return (
-			<div class="flex m-l-a">
+			<div className="flex m-l-a">
 				<Approve {...this.props}></Approve>
 				<Delete {...this.props}></Delete> 
 			</div>

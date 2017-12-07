@@ -7,13 +7,13 @@ class PreForm extends Component {
 		let { isAnonymousUser } = currentUser
 		let component = '';
 		if(isAnonymousUser)
-			component = <p class="m-b-15">You must login to suggest</p>
+			component = <p className="m-b-15">You must login to suggest</p>
 		else if(!isAllowedToSuggest)
 			component = <Countdown lastSuggestionDate={lastSuggestionDate}></Countdown>
         return (
-            <div class="flex-center flex-column">
+            <div className="flex-center flex-column">
                 {component}
-                <button class="button is-primary" onClick={onClose}>Okay</button>
+                <button className="button is-primary" onClick={onClose}>Okay</button>
             </div>
         )
 	}

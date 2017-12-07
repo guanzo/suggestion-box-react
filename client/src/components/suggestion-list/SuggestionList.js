@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { isAdminSelector } from '@/store/user'
 import Suggestion from './suggestion/Suggestion'
 import LoadMore from './LoadMore'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import './SuggestionList.scss'
 
-const Fade = ({ children, ...props }) => (
+const end = el => el.addEventListener('transitionend',()=>el.style.transitionDelay = null, false)
+const Fade = ({ children, index, ...props }) => (
 	<CSSTransition
 		{...props}
 		timeout={250}
 		classNames="fade"
-		onEnter={el=>el.style.transitionDelay = `${props.index*.05}s`}
-		addEndListener={el => {
-			el.addEventListener('transitionend',()=>el.style.transitionDelay = null, false);
-		}}	
+		// eslint-disable-next-line react/jsx-no-bind
+		onEnter={el=>el.style.transitionDelay = `${index*.05}s`}
+		addEndListener={end}	
+		appear
 		exit={false}
 	>
 	  {children}
@@ -33,24 +32,22 @@ class SuggestionList extends Component {
 	//and it's fine b/c there's not enough height to see the new page
     render(){
 		let { hasPaginated } = this.state
-		let { channel, currentUser, suggestions } = this.props
+		let { suggestions } = this.props
 		let { listType } = suggestions
         return (
-            <TransitionGroup class="suggestions-list">
+            <TransitionGroup className="suggestions-list">
                 {suggestions.data.map((suggestion,i)=>(
 					<Fade index={hasPaginated ? 0 : i}
-					key={suggestion.id}
+						  key={suggestion.id}
 					>
 						<Suggestion 
 							{...suggestion} 
-							channel={channel}  
 							listType={listType}
-							currentUser={currentUser}
 						>
 						</Suggestion>
 					</Fade>
                 ))}
-                <LoadMore onClick={this.onPaginate.bind(this)}{...this.props}></LoadMore>
+                <LoadMore onClick={this.onPaginate}{...this.props}></LoadMore>
             </TransitionGroup>
         )
 	}
@@ -61,23 +58,9 @@ class SuggestionList extends Component {
 			this.setState({ hasPaginated: false })
 
 	}
-	onPaginate(){
+	onPaginate = ()=>{
 		this.setState({ hasPaginated: true })
 	}
 }
 
-const mapStateToProps = (state, ownProps) => {
-	let { suggestions, channel, user } = state
-	let { currentListType } = suggestions
-    return {
-		suggestions: suggestions[currentListType],
-		channel: channel,
-		currentUser: {
-			...user,
-			isAdmin: isAdminSelector(state)
-		},
-    }
-}
-const SuggestionsList_C = connect(mapStateToProps)(SuggestionList)
-
-export default SuggestionsList_C
+export default SuggestionList

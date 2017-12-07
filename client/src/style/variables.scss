@@ -1,7 +1,24 @@
 //variables are injected into every scss file by sass-resources-loader
 
+
+//material design colors
+
+//orange
+$primary: #F57C00;//700
+$primary-dark: #E65100;//900
+$primary-light: #FFB74D;//300
+$primary-lightest: #FFF3E0;//50
+
+$secondary: #0288d1;
+$secondary-lightest: #e1f5fe;
+
+
 //enforced by twitch
-$viewer-width: 318px;
 $app-height: 500px;
 $app-padding: 10px;
-$app-bg-color: #faf9fa;
+$app-bg-color: linear-gradient(to left,#F0FAFE 10%, $secondary-lightest 90%);
+
+$offwhite: #F6F9FC;
+$blue-grey:#CFD8DC;
+
+//linear-gradient(to left, 	#F0FAFE 10%, #e1f5fe 90%);

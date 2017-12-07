@@ -12,17 +12,17 @@ class Body extends Component {
 		}
 
 		let { suggestions, isLoading } = this.props
-		var component;
+		let component;
 		/* if(isLoading)
-			component = <div class="element is-loading absolute-center"></div>
+			component = <div className="element is-loading absolute-center"></div>
 		else  */
 		if(suggestions.data.length || isLoading)
-			component = <SuggestionList></SuggestionList>
+			component = <SuggestionList {...this.props}></SuggestionList>
 		else
 			component = this.noSuggestions()
 
         return (
-			<div class="viewer-body" style={style}>
+			<div className="viewer-body" style={style}>
 				{component}
 			</div>
         );
@@ -30,12 +30,10 @@ class Body extends Component {
 	noSuggestions(){
 		let listType = this.props.suggestions.listType
 		const style = {
-			'text-align': 'center',
-			width: '100%',
 			color: 'grey'
 		}
         return (
-            <div class="no-suggestions absolute-center" style={style}>
+            <div className="no-suggestions absolute-center width-100 has-text-centered" style={style}>
                 { listType === LIST_APPROVED ? this.noApproved() : this.noPending() }
             </div>
         )
@@ -58,12 +56,8 @@ const mapStateToProps = (state, ownProps) => {
 	let { currentListType } = state.suggestions
     return {
 		suggestions: state.suggestions[currentListType],
-		currentUser: state.user,
-		channel: state.channel,
 		isLoading: state.isLoading
     }
 }
-const Body_C = connect(mapStateToProps)(Body)
+export default connect(mapStateToProps)(Body)
 
-
-export default Body_C;

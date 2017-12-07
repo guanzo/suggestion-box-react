@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import Actions from './actions/Actions'
+import { isAdminSelector } from '@/store/user'
 import moment from 'moment'
 import classNames from 'classnames'
 import './Suggestion.scss'
@@ -13,17 +15,17 @@ class Suggestion extends Component {
 		let statusClassNames = this.getStatusClassnames()
 		let className = classNames('suggestion box m-b-10', statusClassNames)
         return (
-            <div class={className}>
-                <div class="suggestion-header is-size-7 m-b-5">
-                    <div class="profile-img m-r-10 flex-center">
+            <div className={className}>
+                <div className="suggestion-header is-size-7 m-b-5">
+                    <div className="profile-img m-r-10 flex-center">
                         {this.img()}
                     </div>
                     <div>
                         <div>{this.name()}</div>
-                        <div class="suggestion-date">{this.date()}</div>
+                        <div className="suggestion-date">{this.date()}</div>
                     </div>
                 </div>
-                <p class="suggestion-text m-b-5">{text}</p>
+                <p className="suggestion-text m-b-5">{text}</p>
                 <Actions {...this.props}></Actions>
             </div>
         );
@@ -41,7 +43,7 @@ class Suggestion extends Component {
     img(){
         let { postAnonymously, user } = this.props
         return postAnonymously 
-        ? <i class="fa fa-user-circle-o"></i> 
+        ? <i className="fa fa-user-circle-o"></i> 
         : <img src={user.profileImg} alt="profile" />
     }
     name(){
@@ -58,4 +60,15 @@ class Suggestion extends Component {
         return date.format(fmt)
 	}
 }
-export default Suggestion;
+
+const mapStateToProps = (state, ownProps) => {
+	let { channel, user } = state
+    return {
+		channel: channel,
+		currentUser: {
+			...user,
+			isAdmin: isAdminSelector(state)
+		},
+    }
+}
+export default connect(mapStateToProps)(Suggestion)

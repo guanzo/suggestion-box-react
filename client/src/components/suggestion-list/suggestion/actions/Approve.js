@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
 import { updateSuggestionStatus } from '@/store/suggestions-admin'
 const { STATUS_APPROVED, LIST_APPROVED } = require('@shared/suggestion-util')
 
 //admins can only approve suggestions in the pending list
-class Approve extends Component {
+class Approve extends PureComponent {
     render() {
 		let { status, listType } = this.props
 		if(listType === LIST_APPROVED)
@@ -12,10 +12,10 @@ class Approve extends Component {
 
 		let component;
 		if(status === STATUS_APPROVED)
-			component = <div class="has-text-success is-size-7 m-r-5">approved</div>
+			component = <div className="has-text-success is-size-7 m-r-5">approved</div>
 		else
-			component = <i class='fa fa-check-square-o m-r-5' 
-							style={{ 'vertical-align':'middle' }}
+			component = <i className='fa fa-check-square-o m-r-5' 
+							style={{ verticalAlign:'middle' }}
 							onClick={this.props.approveSuggestion}
 						></i>
 
@@ -34,7 +34,6 @@ const mapDispatchToProps = (dispatch,ownProps) => {
 		}
     }
 }
-const Approve_C = connect(null, mapDispatchToProps)(Approve)
+export default connect(null, mapDispatchToProps)(Approve)
 
-export default Approve_C;
 

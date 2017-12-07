@@ -16,11 +16,11 @@ class Fab extends Component {
 			...this.state
         }
         return (
-			<button class="button is-primary is-small is-floating open-suggestion-form"
+			<button className="button is-primary is-small is-floating open-suggestion-form"
                 style={style}
 				onClick={this.props.onClick}
             >
-				<i class="fa fa-comment fa-lg has-text-white">
+				<i className="fa fa-comment fa-lg has-text-white">
 				</i>
 			</button>
         );

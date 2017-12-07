@@ -18,19 +18,21 @@ class Toolbar extends Component {
 			sortBy: SORT_VOTES,
 			listType: LIST_APPROVED
 		}
+		this.onSortByChanged = this.onSortByChanged.bind(this)
+		this.onListTypeChanged = this.onListTypeChanged.bind(this)
 	}
     render() {
 		let { hasSuggestions, listType, currentUser, isLoading } = this.props
 		let showSortBy = (hasSuggestions || isLoading) && listType === LIST_APPROVED
 		const duration = 250;
         return (
-            <div class="toolbar flex is-size-7">
-				<Transition in={showSortBy} timeout={duration}>
+            <div className="toolbar flex is-size-7">
+				<Transition in={showSortBy} timeout={duration} unmountOnExit>
 				{(state) => (
 					this.sortBy(state, duration)
 				)}
 				</Transition>
-				{ currentUser.isAdmin ? this.listType() : '' }
+				{ currentUser.isAdmin ? this.listType() : null }
                 {this.testBtn()}
             </div>
         );
@@ -45,16 +47,16 @@ class Toolbar extends Component {
 			entered:  { opacity: 1 },
 		};
 		return (
-			<div class="flex-center"
+			<div className="flex-center"
 				style={{
 					...defaultStyle,
 					...transitionStyles[transitionState]
 				}}
 			>
-				<span class="m-r-5">Sort by</span>
-				<div class="select is-small">
+				<span className="m-r-5">Sort by</span>
+				<div className="select is-small">
 					<select value={this.state.sortBy} 
-							onChange={this.onSortByChanged.bind(this)}
+							onChange={this.onSortByChanged}
 					>
 						<option value={SORT_VOTES}>Top</option>
 						<option value={SORT_NEW}>New</option>
@@ -65,11 +67,11 @@ class Toolbar extends Component {
 	}
 	listType(){
 		return (
-			<div class="flex-center m-l-a">
-				<span class="m-r-5">Admin</span>
-				<div class="select is-small">
+			<div className="flex-center m-l-a">
+				<span className="m-r-5">Admin</span>
+				<div className="select is-small">
 					<select value={this.state.listType} 
-							onChange={this.onListTypeChanged.bind(this)}
+							onChange={this.onListTypeChanged}
 					>
 						<option value={LIST_APPROVED}>Approved</option>
 						<option value={LIST_PENDING}>Pending</option>
@@ -124,7 +126,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 		sortSuggestions: (sortBy)=>dispatch(sortSuggestions(sortBy))
     }
 }
-const Toolbar_C = connect(mapStateToProps, mapDispatchToProps)(Toolbar)
-
-
-export default Toolbar_C;
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar)
