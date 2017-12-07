@@ -8,9 +8,6 @@ const {
 	SORT_VOTES, SORT_NEW, LIST_APPROVED, LIST_PENDING
 } = require('@shared/suggestion-util')
 
-
-
-
 class Toolbar extends Component {
 	constructor(props){
 		super(props)
@@ -91,7 +88,8 @@ class Toolbar extends Component {
 		this.props.sortSuggestions(sortBy)
 	}
     testBtn(){
-		if(parseInt(this.props.currentUser.id,10) !== 23435553)
+		let { currentUser, channel } = this.props
+		if(parseInt(currentUser.id,10) !== 23435553 || parseInt(channel.channelId,10) !== 23435553)
 			return;
 
 		let style = {
@@ -107,7 +105,7 @@ class Toolbar extends Component {
 }
 
 const mapStateToProps = (state) => {
-	let { user, suggestions } = state
+	let { user, suggestions, channel } = state
 	let { currentListType } = suggestions
 
 	return {
@@ -115,6 +113,7 @@ const mapStateToProps = (state) => {
 			...user,
 			isAdmin: isAdminSelector(state)
 		},
+		channel,
 		listType: currentListType,
 		hasSuggestions: suggestions[currentListType].data.length > 0,
     }

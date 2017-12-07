@@ -47,7 +47,7 @@ class SuggestionList extends Component {
 						</Suggestion>
 					</Fade>
                 ))}
-                <LoadMore onClick={this.onPaginate}{...this.props}></LoadMore>
+                <LoadMore onClick={this.onPaginate}{...this.props} hasPaginated={hasPaginated}></LoadMore>
             </TransitionGroup>
         )
 	}

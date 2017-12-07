@@ -4,7 +4,7 @@ import { fetchCurrentListPaginatedSuggestions } from '@/store/suggestions'
 
 class LoadMore extends PureComponent {
     render() {
-		let { suggestions, isLoading } = this.props
+		let { suggestions, isLoading, hasPaginated } = this.props
 		let { data, hasMorePages } = suggestions
 		
 		let component;
@@ -12,7 +12,7 @@ class LoadMore extends PureComponent {
 			component = <button onClick={this.onClick} 
 							className="button is-small is-info is-inverted"
 						>Load more</button>
-		}else if(!isLoading)
+		}else if(!isLoading && hasPaginated)//don't show unless user has paginated at least once
 			component = <div className="has-text-info">All suggestions loaded</div>
 
         return (

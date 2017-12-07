@@ -102,11 +102,11 @@
     ]
   },
   "eslintConfig": {
-	"extends": "react-app",
-	"rules": {
-		"no-var": 1,
-		"react/jsx-no-bind": 1
-	  }
+    "extends": "react-app",
+    "rules": {
+      "no-var": 1,
+      "react/jsx-no-bind": 1
+    }
   },
   "devDependencies": {
     "copy-webpack-plugin": "^4.2.3",

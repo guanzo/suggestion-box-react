@@ -7,7 +7,6 @@ const { LIST_APPROVED } = require('@shared/suggestion-util')
 class Body extends Component {
     render() {
 		const style = {
-			position: 'relative',
 			flex: 1
 		}
 
