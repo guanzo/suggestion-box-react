@@ -1,2 +1,2 @@
 # Suggestion Box
-A twitch extension that allows viewers leave suggestions about the stream.
+A twitch panel extension that allows viewers post suggestions about the stream.
