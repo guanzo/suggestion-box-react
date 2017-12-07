@@ -12,12 +12,13 @@ class Approve extends PureComponent {
 
 		let component;
 		if(status === STATUS_APPROVED)
-			component = <div className="has-text-success is-size-7 m-r-5">approved</div>
+			component = <div className="has-text-success is-size-7">approved</div>
 		else
-			component = <i className='fa fa-check-square-o m-r-5' 
-							style={{ verticalAlign:'middle' }}
-							onClick={this.props.approveSuggestion}
-						></i>
+			component = <span className="approve-suggestion icon  has-text-success">
+							<i className='fa fa-check-square' 
+								onClick={this.props.approveSuggestion}
+							></i>
+						</span>
 
         return component
 	}

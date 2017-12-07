@@ -6,13 +6,13 @@ class Fab extends Component {
 		super()
 		this.state = {
 			opacity: 1,
-			transition: '.35s .33s',
 		}
 	}
     render() {
         let style = {
             height: 40,
 			width: 40,
+			transition: '.35s .33s',
 			...this.state
         }
         return (

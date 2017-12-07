@@ -25,12 +25,7 @@ $avatar-size: 30px;
     .suggestion-actions{
         .fa {
             cursor: pointer;
-		}
-		.fa-trash-o {
 			transition: .35s;
-			&:hover{
-				color: darkred;
-			}
 		}
 	}
 	&.is-deleted{
@@ -39,9 +34,14 @@ $avatar-size: 30px;
 		.fa-trash-o {
 			color: darkred;
 		}
+		.approve-suggestion{
+			display: none;
+		}
 	}
 	&.is-approved{
 		background-color: #E8F5E9;
-		
+		.delete-suggestion{
+			display: none;
+		}
 	}
 }

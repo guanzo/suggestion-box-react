@@ -12,13 +12,13 @@ $primary-lightest: #FFF3E0;//50
 $secondary: #0288d1;
 $secondary-lightest: #e1f5fe;
 
+$offwhite: #F6F9FC;
+$blue-grey:#CFD8DC;
 
 //enforced by twitch
 $app-height: 500px;
 $app-padding: 10px;
-$app-bg-color: linear-gradient(to left,#F0FAFE 10%, $secondary-lightest 90%);
+$app-bg-color: $offwhite;
 
-$offwhite: #F6F9FC;
-$blue-grey:#CFD8DC;
 
 //linear-gradient(to left, 	#F0FAFE 10%, #e1f5fe 90%);

@@ -22,8 +22,8 @@ class Toolbar extends Component {
 		this.onListTypeChanged = this.onListTypeChanged.bind(this)
 	}
     render() {
-		let { hasSuggestions, listType, currentUser, isLoading } = this.props
-		let showSortBy = (hasSuggestions || isLoading) && listType === LIST_APPROVED
+		let { hasSuggestions, listType, currentUser } = this.props
+		let showSortBy = hasSuggestions && listType === LIST_APPROVED
 		const duration = 250;
         return (
             <div className="toolbar flex is-size-7">
@@ -107,7 +107,7 @@ class Toolbar extends Component {
 }
 
 const mapStateToProps = (state) => {
-	let { user, isLoading, suggestions } = state
+	let { user, suggestions } = state
 	let { currentListType } = suggestions
 
 	return {
@@ -115,7 +115,6 @@ const mapStateToProps = (state) => {
 			...user,
 			isAdmin: isAdminSelector(state)
 		},
-		isLoading: isLoading,
 		listType: currentListType,
 		hasSuggestions: suggestions[currentListType].data.length > 0,
     }

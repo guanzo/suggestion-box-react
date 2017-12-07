@@ -23,9 +23,11 @@ class Delete extends Component {
 		else if(askToConfirm)
 			component = this.confirm()
 		else
-			component = <i className='fa fa-trash-o' 
-							onClick={e=>this.setState({ askToConfirm: true })}
+			component = <span className="delete-suggestion icon has-text-danger">
+							<i className='fa fa-trash-o' 
+								onClick={e=>this.setState({ askToConfirm: true })}
 							></i>
+						</span>
 
         return component
 	}

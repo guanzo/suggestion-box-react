@@ -16,22 +16,21 @@ module.exports = {
 	 */
     getSuggestions(channelId, user, listType, offset, limit, sortBy = 'votesLength'){
 		var channels = db.get().collection('channels')
-		let match, sort;
+		let matchValue, sortValue;
 		if(listType === LIST_APPROVED){
-			match = { $match: { 'suggestions.status': STATUS_APPROVED } }
-            sort = { $sort: { [sortBy]: -1 } }
+			matchValue = { 'suggestions.status': STATUS_APPROVED }
+			sortValue = { [sortBy]: -1 }
 		}else if(listType === LIST_PENDING){
-			match = { $match: { 'suggestions.status': STATUS_PENDING } }
-            sort = { $sort: { 'createdAt' : 1 } }//oldest first
+			matchValue = { 'suggestions.status': STATUS_PENDING }
+			sortValue = { 'createdAt' : 1 }//oldest first
 		}else if(listType === LIST_USER){
-			match = { $match: { 
+			matchValue = { 
 							$or: [
 								{ 'suggestions.user.id': user.id }, 
 								{ 'suggestions.user.opaqueId': user.opaqueId }
 							] 
 						} 
-					}
-			sort = { $sort: { 'createdAt' : -1 } }
+			sortValue = { 'createdAt' : -1 }//newest first
 		}
 		
         return channels.aggregate([
@@ -39,7 +38,7 @@ module.exports = {
 			//easier to work with documents than array
 			{ $unwind: '$suggestions' },
 			//approved/pending/user
-			match,
+			{ $match: matchValue },
 			//get rid of irrelavent channel data
 			{ $replaceRoot: { newRoot: '$suggestions' } },
 			//add computed fields
@@ -56,31 +55,13 @@ module.exports = {
 				},
 			},
 			//client doesn't need vote data
-			{ $project :    { votes: 0 } },
-            sort,
+			{ $project :	{ votes: 0 } },
+            { $sort: 		sortValue },
             { $skip:        offset },
             { $limit:       limit },
         ])
         .toArray()
 
-	},//sorted by most recent
-	getSuggestionsByUser(channelId, user){
-        var channels = db.get().collection('channels')
-		return channels.aggregate([
-			{ $match: { channelId } },
-			{ $unwind: '$suggestions' },
-			{ $match: { 
-					$or: [
-						{ 'suggestions.user.id': user.id }, 
-						{ 'suggestions.user.opaqueId': user.opaqueId }
-					] 
-				} 
-			},
-			{ $replaceRoot: { newRoot: '$suggestions' } },
-			{ $project :    { votes: 0 } },
-            { $sort:        { createdAt: -1 } },
-		])
-        .toArray()
 	},
     addSuggestion(channelId, suggestion){
 		var channels = db.get().collection('channels')

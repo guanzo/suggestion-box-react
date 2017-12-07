@@ -54,20 +54,21 @@ function createSuggestionObj({ text, postAnonymously, user }, status){
 
 module.exports = (app) => {
     app.get('/api/channels/:channelId/suggestions',async (req, res) => {
-		let { channelId } = req.params
-		let { listType } = req.query
-        let offset = parseInt(req.query.offset)
-        let limit = parseInt(req.query.limit)
-		let sortBy = req.query.sortBy
-		let user = req.user
+		let { channelId } = req.params,
+			{ listType, sortBy } = req.query,
+			offset = parseInt(req.query.offset),
+			limit = parseInt(req.query.limit),
+			user = req.user;
 		let suggestions = await suggestionModel.getSuggestions(channelId, user, listType, offset, limit,sortBy)
         res.send(suggestions)
 	})
 
     app.post('/api/channels/:channelId/suggestions',async (req, res, next) => {
-		let { channelId } = req.params
-		let user = req.user
-		let suggestions = await suggestionModel.getSuggestions(channelId, user, LIST_USER, 0, 1,'createdAt')
+		let { channelId } = req.params,
+			user = req.user,
+			offset = 0,
+			limit = 1;
+		let suggestions = await suggestionModel.getSuggestions(channelId, user, LIST_USER, offset, limit,'createdAt')
 
 		if(suggestions.length === 0)
 			return next()
@@ -88,9 +89,9 @@ module.exports = (app) => {
 	})
 	//voteType: 'upvote' or 'downvote'
     app.put('/api/channels/:channelId/suggestions/:suggestionId/votes',async (req, res) => {
-		let { channelId, suggestionId } = req.params
-		let { voteType } = req.body
-		let user = req.user
+		let { channelId, suggestionId } = req.params,
+			{ voteType } = req.body,
+			user = req.user;
 		let response = await suggestionModel[voteType](channelId, suggestionId,user)
 		let status = response.modifiedCount === 1 ? 200 : 400
 		res.status(status).end()

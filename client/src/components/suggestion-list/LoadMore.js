@@ -4,17 +4,22 @@ import { fetchCurrentListPaginatedSuggestions } from '@/store/suggestions'
 
 class LoadMore extends PureComponent {
     render() {
-		let { data, hasMorePages } = this.props.suggestions
-        const style = {
-			visibility: data.length && hasMorePages ? 'visible':'hidden'
-		}
+		let { suggestions, isLoading } = this.props
+		let { data, hasMorePages } = suggestions
+		
+		let component;
+		if(data.length && hasMorePages){
+			component = <button onClick={this.onClick} 
+							className="button is-small is-info is-inverted"
+						>Load more</button>
+		}else if(!isLoading)
+			component = <div className="has-text-info">All suggestions loaded</div>
+
         return (
-            <div className="flex-center p-a-5" style={style}>
-                <button onClick={this.onClick} 
-                    className="button is-small"
-                    >Load more</button>
-            </div>
-        );
+            <div className="flex-center p-a-5 is-size-7">
+				{component}
+			</div>
+        )
 	}
 	onClick = ()=>{
 		this.props.onClick()

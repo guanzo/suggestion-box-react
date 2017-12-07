@@ -12,15 +12,12 @@ class Body extends Component {
 		}
 
 		let { suggestions, isLoading } = this.props
-		let component;
 		/* if(isLoading)
 			component = <div className="element is-loading absolute-center"></div>
 		else  */
-		if(suggestions.data.length || isLoading)
-			component = <SuggestionList {...this.props}></SuggestionList>
-		else
-			component = this.noSuggestions()
-
+		let component = (suggestions.data.length || isLoading)
+						? <SuggestionList {...this.props}></SuggestionList>
+						: this.noSuggestions()
         return (
 			<div className="viewer-body" style={style}>
 				{component}
@@ -28,26 +25,15 @@ class Body extends Component {
         );
     }
 	noSuggestions(){
-		let listType = this.props.suggestions.listType
-		const style = {
-			color: 'grey'
-		}
+		let { listType } = this.props.suggestions
         return (
-            <div className="no-suggestions absolute-center width-100 has-text-centered" style={style}>
-                { listType === LIST_APPROVED ? this.noApproved() : this.noPending() }
+            <div className="absolute-center width-100 has-text-centered has-text-grey">
+				{ listType === LIST_APPROVED 
+					? <div>No suggestions yet...<br/>Must be the perfect stream</div>
+					: <div>No pending suggestions</div> 
+				}
             </div>
         )
-	}
-    noApproved(){
-        return (
-			<div>
-				No suggestions yet...<br/>
-				Must be the perfect stream
-			</div>
-        )
-	}
-	noPending(){
-        return <div>No pending suggestions</div>
 	}
 }
 
