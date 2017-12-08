@@ -4,6 +4,12 @@ $avatar-size: 30px;
 	position: relative;
 	padding: 10px;
 	transition: .35s;
+	&:first-child{
+		border-top: 1px solid lightgrey;
+	}
+	&:not(:last-child){
+		border-bottom: 1px solid lightgrey;
+	}
     .suggestion-header{
         display: flex;
         align-items: center;

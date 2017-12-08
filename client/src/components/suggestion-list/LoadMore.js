@@ -16,7 +16,7 @@ class LoadMore extends PureComponent {
 			component = <div className="has-text-info">All suggestions loaded</div>
 
         return (
-            <div className="flex-center p-a-5 is-size-7">
+            <div className="flex-center p-a-15 is-size-7">
 				{component}
 			</div>
         )

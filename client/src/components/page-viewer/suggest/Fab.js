@@ -26,8 +26,7 @@ class Fab extends Component {
                 style={btnStyle}
 				onClick={this.props.onClick}
             >
-				<i className="fa fa-comment fa-lg has-text-white" style={iconStyle}>
-				</i>
+				<i className="fa fa-comment fa-lg has-text-white" style={iconStyle}></i>
 			</button>
         );
 	}

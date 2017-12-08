@@ -13,7 +13,7 @@ class Suggestion extends Component {
     render() {
 		let { text } = this.props
 		let statusClassNames = this.getStatusClassnames()
-		let className = classNames('suggestion box m-b-10', statusClassNames)
+		let className = classNames('suggestion', statusClassNames)
         return (
             <div className={className}>
                 <div className="suggestion-header is-size-7 m-b-5">

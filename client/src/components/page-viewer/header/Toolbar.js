@@ -23,7 +23,7 @@ class Toolbar extends Component {
 		let showSortBy = hasSuggestions && listType === LIST_APPROVED
 		const duration = 250;
         return (
-            <div className="toolbar flex is-size-7">
+            <div className="toolbar flex p-a-10 is-size-7">
 				<Transition in={showSortBy} timeout={duration} unmountOnExit>
 				{(state) => (
 					this.sortBy(state, duration)
