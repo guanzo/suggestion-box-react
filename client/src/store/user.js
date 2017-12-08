@@ -13,8 +13,9 @@ export const initialState = {
         role: null,
     }
 }
-export function userReducer(state = initialState, { type, user }){
-	if(type === SET_USER){
+export function userReducer(state = initialState, action){
+	let { user } = action
+	if(action.type === SET_USER){
         return {
 			...state, 
 			...user,
@@ -23,6 +24,13 @@ export function userReducer(state = initialState, { type, user }){
 			isRealUser: 	userUtil.isRealUser(user),
 			isModerator: 	userUtil.isModerator(user),
 			isBroadcaster: 	userUtil.isBroadcaster(user),
+		}
+	}
+	else if(action.type === 'TEST_USER_ROLE'){
+		return {
+			...state,
+			...user,
+			...action.roles
 		}
 	}
     else

@@ -28,7 +28,6 @@ class Toolbar extends Component {
 					{(state) => this.sortBy(state, duration)}
 				</Transition>
 				{ currentUser.isAdmin ? this.listType() : null }
-                {this.testBtn()}
             </div>
         );
 	}
@@ -86,21 +85,6 @@ class Toolbar extends Component {
 		this.setState({ sortBy })
 		this.props.sortSuggestions(sortBy)
 	}
-    testBtn(){
-		let { currentUser, channel } = this.props
-		if(parseInt(currentUser.id,10) !== 23435553 || parseInt(channel.channelId,10) !== 23435553)
-			return;
-
-		let style = {
-			position: 'absolute',
-			top: 0,
-			right: 0
-		}
-        let generate = ()=> require('axios').post(`/api/channels/${23435553}/suggestions/test`)
-        return (
-            <button style={style} onClick={generate}>g</button>
-        )
-    }
 }
 
 const mapStateToProps = (state) => {

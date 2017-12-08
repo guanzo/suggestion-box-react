@@ -7,6 +7,7 @@ class Actions extends PureComponent {
 
     render() {
 		let { currentUser } = this.props
+		
         return (
             <div className="suggestion-actions flex">
 				<Upvote {...this.props}></Upvote>

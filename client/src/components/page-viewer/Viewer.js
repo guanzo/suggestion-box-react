@@ -3,6 +3,7 @@ import Header from './header/Header'
 import Body from './body/Body'
 import './Viewer.scss';
 import Overlay from '@/components/page-viewer/suggest/_Overlay'
+import Test from '@/components/test/test'
 
 class Viewer extends Component {
     render() {
@@ -11,6 +12,7 @@ class Viewer extends Component {
             <Header></Header>
             <Body></Body>
             <Overlay></Overlay>
+			<Test></Test>
         </div>
         );
     }
