@@ -10,6 +10,7 @@
     "test": "cd client && npm run test && cd ../server && mocha src/**/*.spec.js --recursive"
   },
   "dependencies": {
-    "moment": "^2.19.3"
+    "moment": "^2.19.3",
+    "react-hot-loader": "^3.1.3"
   }
 }
