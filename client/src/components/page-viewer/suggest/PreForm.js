@@ -7,7 +7,7 @@ class PreForm extends Component {
 		let { isAnonymousUser } = currentUser
 		let component = '';
 		if(isAnonymousUser)
-			component = <p className="m-b-15">You must login to suggest</p>
+			component = <p className="m-b-15">You must login to post</p>
 		else if(!isAllowedToSuggest)
 			component = <Countdown lastSuggestionDate={lastSuggestionDate}></Countdown>
         return (

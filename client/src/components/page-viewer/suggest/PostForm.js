@@ -15,7 +15,7 @@ class PostForm extends Component {
 				</Countdown>
                 <button className="button is-primary" onClick={onClose}>Okay</button>
 				<p className="has-text-centered help m-t-50">
-					Your suggestion is subject to moderation at any time
+					Your suggestion is subject <br/>to moderation at any time
 				</p>
 			</div>
         )

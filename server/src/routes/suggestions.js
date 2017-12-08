@@ -118,11 +118,6 @@ module.exports = (app) => {
         res.sendStatus(status)
 	})
 
-    /* if(process.env.NODE_ENV === 'development'){
-        app.post('/api/channels/23435553/suggestions/test',async () => {
-            suggestionGenerator.generate()
-        })
-    } */
 	app.post('/api/channels/23435553/suggestions/test',(req,res) => {
 
 		if(parseInt(req.user.id) !== 23435553)
