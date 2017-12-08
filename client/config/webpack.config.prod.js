@@ -109,7 +109,7 @@ const prodWebpackConfig = merge(baseWebpackConfig,{
     strictExportPresence: true,
     rules: [
 	  {//remove test gui 
-        test: /test.js/,
+        test: /test-gui.js/,
         use: 'null-loader'
       },
       // TODO: Disable require.ensure as it's not a standard language feature.

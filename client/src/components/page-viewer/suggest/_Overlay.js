@@ -114,17 +114,19 @@ class Overlay extends Component {
 	}
 	getDefaultOverlayPosition(){
 		let { hasSuggestions, isLoading, listType } = this.props
-		if( (hasSuggestions || isLoading) || listType === LIST_PENDING ){
-			return {
-				top:['94.5%','easeOutSine'],
-				left:['86.5%','easeInSine'],
-			}
-		}else{  
-			return {
-				top:['70%','easeInSine'],
-				left:['50%','easeOutSine'],
-			}
+		const bottomRight = {
+			top:['94.5%','easeOutSine'],
+			left:['86.5%','easeInSine'],
 		}
+		const middle = {
+			top:['70%','easeInSine'],
+			left:['50%','easeOutSine'],
+		}
+		if( (hasSuggestions || isLoading) || listType === LIST_PENDING )
+			return bottomRight
+		else
+			return middle
+		
 	}
 	onSubmitDone = (status)=>{
 		this.setState({ 

@@ -8,7 +8,7 @@ const {
 	SORT_VOTES, SORT_NEW, LIST_APPROVED, LIST_PENDING
 } = require('@shared/suggestion-util')
 
-class Toolbar extends Component {
+export class Toolbar extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
@@ -64,7 +64,7 @@ class Toolbar extends Component {
 		return (
 			<div className="flex-center m-l-a">
 				<span className="m-r-5">Admin</span>
-				<div className="select is-small">
+				<div className="select is-small select-list-type">
 					<select value={this.state.listType} 
 							onChange={this.onListTypeChanged}
 					>
@@ -88,7 +88,7 @@ class Toolbar extends Component {
 }
 
 const mapStateToProps = (state) => {
-	let { user, suggestions, channel } = state
+	let { user, suggestions } = state
 	let { currentListType } = suggestions
 
 	return {
@@ -96,7 +96,6 @@ const mapStateToProps = (state) => {
 			...user,
 			isAdmin: isAdminSelector(state)
 		},
-		channel,
 		listType: currentListType,
 		hasSuggestions: suggestions[currentListType].data.length > 0,
     }
@@ -107,4 +106,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 		sortSuggestions: (sortBy)=>dispatch(sortSuggestions(sortBy))
     }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar)

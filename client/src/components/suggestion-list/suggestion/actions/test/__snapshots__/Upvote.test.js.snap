@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Upvote /> renders correctly 1`] = `
+<div
+  className="flex align-center justify-start"
+>
+  <span
+    className="icon"
+  >
+    <i
+      className="fa fa-thumbs-up has-text-primary"
+      onClick={undefined}
+      style={
+        Object {
+          "cursor": "pointer",
+        }
+      }
+      title=""
+    />
+  </span>
+  <div
+    className="is-size-7"
+  >
+    1
+  </div>
+  <p
+    className="broadcaster-likes m-l-10 is-size-7"
+  >
+    guanzo likes this
+  </p>
+</div>
+`;

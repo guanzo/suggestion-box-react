@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { createStore } from 'redux';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import Actions from './Actions';
-import Approve from './Approve'
-import Delete from './Delete'
+import Actions from '../Actions';
+import Approve from '../Approve'
+import Delete from '../Delete'
 
 const data = {
 	hasUpvoted: true,

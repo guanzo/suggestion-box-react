@@ -9,7 +9,7 @@ const {
 	LIST_PENDING, STATUS_APPROVED, STATUS_DELETED 
 } = require('@shared/suggestion-util')
 
-class Suggestion extends Component {
+export class Suggestion extends Component {
     render() {
 		let { text } = this.props
 		let statusClassNames = this.getStatusClassnames()

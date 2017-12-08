@@ -18,7 +18,7 @@ export class Upvote extends PureComponent {
 				<i onClick={this.props.toggleUpvote} className={classes} style={style} title={title}></i>
 			</span>
             <div className="is-size-7">{votesLength.toLocaleString()}</div>
-			<p className="m-l-10 is-size-7">{ broadcasterUpvoted ? `${channel.channelName} likes this` : null }</p>
+			<p className="broadcaster-likes m-l-10 is-size-7">{ broadcasterUpvoted ? `${channel.channelName} likes this` : null }</p>
         </div>
         );
 	}

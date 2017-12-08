@@ -12,7 +12,12 @@ exports[`<Actions /> renders correctly 1`] = `
     >
       <i
         className="fa fa-thumbs-up has-text-primary"
-        onClick={undefined}
+        onClick={[Function]}
+        style={
+          Object {
+            "cursor": "pointer",
+          }
+        }
         title=""
       />
     </span>
@@ -22,7 +27,7 @@ exports[`<Actions /> renders correctly 1`] = `
       1
     </div>
     <p
-      className="m-l-10 is-size-7"
+      className="broadcaster-likes m-l-10 is-size-7"
     >
       guanzo likes this
     </p>
