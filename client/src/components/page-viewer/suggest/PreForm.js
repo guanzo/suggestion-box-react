@@ -11,7 +11,7 @@ class PreForm extends Component {
 		else if(!isAllowedToSuggest)
 			component = <Countdown lastSuggestionDate={lastSuggestionDate}></Countdown>
         return (
-            <div className="flex-center flex-column">
+            <div className="flex-center column">
                 {component}
                 <button className="button is-primary" onClick={onClose}>Okay</button>
             </div>

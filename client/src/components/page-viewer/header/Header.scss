@@ -6,4 +6,10 @@
 		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 		color: $offwhite;
 	}
+	.toolbar{
+		padding: 15px 10px;
+		.select-sort-by{
+			max-width: 65px;
+		}
+	}
 }

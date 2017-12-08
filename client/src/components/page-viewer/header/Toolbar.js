@@ -5,7 +5,7 @@ import { isAdminSelector } from '@/store/user'
 import { sortSuggestions } from '@/store/suggestions'
 import { changeCurrentListType } from '@/store/suggestions-admin'
 const { 
-	SORT_VOTES, SORT_NEW, LIST_APPROVED, LIST_PENDING
+	SORT_VOTES, SORT_NEW, SORT_BROADCASTER_VOTES, LIST_APPROVED, LIST_PENDING
 } = require('@shared/suggestion-util')
 
 class Toolbar extends Component {
@@ -23,11 +23,9 @@ class Toolbar extends Component {
 		let showSortBy = hasSuggestions && listType === LIST_APPROVED
 		const duration = 250;
         return (
-            <div className="toolbar flex p-a-10 is-size-7">
+            <div className="toolbar flex is-size-7">
 				<Transition in={showSortBy} timeout={duration} unmountOnExit>
-				{(state) => (
-					this.sortBy(state, duration)
-				)}
+					{(state) => this.sortBy(state, duration)}
 				</Transition>
 				{ currentUser.isAdmin ? this.listType() : null }
                 {this.testBtn()}
@@ -51,12 +49,13 @@ class Toolbar extends Component {
 				}}
 			>
 				<span className="m-r-5">Sort by</span>
-				<div className="select is-small">
+				<div className="select is-small select-sort-by">
 					<select value={this.state.sortBy} 
 							onChange={this.onSortByChanged}
 					>
 						<option value={SORT_VOTES}>Top</option>
 						<option value={SORT_NEW}>New</option>
+						{/* <option value={SORT_BROADCASTER_VOTES}>Broadcaster likes</option> */}
 					</select>
 				</div>
 			</div>

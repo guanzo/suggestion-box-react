@@ -9,7 +9,7 @@ class PostForm extends Component {
         ? 'Your suggestion has been submitted'
         : 'Your suggestion is pending approval'
         return (
-            <div className="flex-center flex-column">
+            <div className="flex-center column">
                 <p className="m-b-15">{text}</p>
 				<Countdown lastSuggestionDate={lastSuggestionDate}>
 				</Countdown>

@@ -26,7 +26,7 @@ class Body extends Component {
 	noSuggestions(){
 		let { listType } = this.props.suggestions
         return (
-            <div className="absolute-center width-100 has-text-centered has-text-grey">
+            <div className="absolute-center width-100 is-size-5 has-text-centered has-text-grey">
 				{ listType === LIST_APPROVED 
 					? <div>No suggestions yet...<br/>Must be the perfect stream</div>
 					: <div>No pending suggestions</div> 

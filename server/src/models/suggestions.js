@@ -1,10 +1,33 @@
 var db = require('../db.js')
 var ObjectID = require('mongodb').ObjectID
 //const userUtil = require('../../../shared/user-util')
-const { LIST_APPROVED,LIST_PENDING, LIST_USER, 
+const { LIST_APPROVED,LIST_PENDING, LIST_USER, SORT_BROADCASTER_VOTES, SORT_VOTES,
 		STATUS_APPROVED, STATUS_PENDING, STATUS_DELETED 
 } = require('../../../shared/suggestion-util')
 const _ = require('lodash')
+
+function getPipelines(listType, sortBy, channelId, user){
+	let matchValue, sortValue;
+	if(listType === LIST_APPROVED){
+		matchValue = { 'suggestions.status': STATUS_APPROVED }
+		sortValue  = { [sortBy]: -1 }
+	}else if(listType === LIST_PENDING){
+		matchValue = { 'suggestions.status': STATUS_PENDING }
+		sortValue  = { 'createdAt' : 1 }//oldest first
+	}else if(listType === LIST_USER){
+		matchValue = { 
+						$or: [
+							{ 'suggestions.user.id': user.id }, 
+							{ 'suggestions.user.opaqueId': user.opaqueId }
+						] 
+					} 
+		sortValue  = { 'createdAt' : -1 }//newest first
+	}
+	return {
+		matchValue,
+		sortValue
+	}
+}
 
 module.exports = {
 	/**
@@ -16,22 +39,7 @@ module.exports = {
 	 */
     getSuggestions(channelId, user, listType, offset, limit, sortBy = 'votesLength'){
 		var channels = db.get().collection('channels')
-		let matchValue, sortValue;
-		if(listType === LIST_APPROVED){
-			matchValue = { 'suggestions.status': STATUS_APPROVED }
-			sortValue = { [sortBy]: -1 }
-		}else if(listType === LIST_PENDING){
-			matchValue = { 'suggestions.status': STATUS_PENDING }
-			sortValue = { 'createdAt' : 1 }//oldest first
-		}else if(listType === LIST_USER){
-			matchValue = { 
-							$or: [
-								{ 'suggestions.user.id': user.id }, 
-								{ 'suggestions.user.opaqueId': user.opaqueId }
-							] 
-						} 
-			sortValue = { 'createdAt' : -1 }//newest first
-		}
+		let { matchValue, sortValue } = getPipelines(listType, sortBy, channelId, user)
 		
         return channels.aggregate([
 			{ $match: { channelId } },

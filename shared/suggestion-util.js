@@ -4,12 +4,13 @@
 
 module.exports = {
 	//3 types of lists displayed in app
-	LIST_APPROVED:	'approved',
-	LIST_PENDING:	'pending',
-	LIST_USER:		'user',
-	SORT_VOTES:		'votesLength',
-	SORT_NEW:		'createdAt',
-	STATUS_PENDING:	'PENDING',
-	STATUS_APPROVED:'APPROVED',
-	STATUS_DELETED:	'DELETED',
+	LIST_APPROVED:			'approved',
+	LIST_PENDING:			'pending',
+	LIST_USER:				'user',
+	SORT_VOTES:				'votesLength',
+	SORT_NEW:				'createdAt',
+	SORT_BROADCASTER_VOTES: 'broadcasterUpvoted',
+	STATUS_PENDING:			'PENDING',
+	STATUS_APPROVED:		'APPROVED',
+	STATUS_DELETED:			'DELETED',
 }
