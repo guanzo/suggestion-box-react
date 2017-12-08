@@ -1,7 +1,6 @@
 {
   "devDependencies": {
-    "concurrently": "^3.5.0",
-    "null-loader": "^0.1.1"
+    "concurrently": "^3.5.0"
   },
   "scripts": {
     "build": "cd client && npm run build",

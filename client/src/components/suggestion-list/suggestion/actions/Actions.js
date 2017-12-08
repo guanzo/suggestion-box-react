@@ -17,7 +17,7 @@ class Actions extends PureComponent {
 	}
 	adminActions(){
 		return (
-			<div className="flex-center m-l-a">
+			<div className="suggestion-admin-actions flex-center m-l-a">
 				<Approve {...this.props}></Approve>
 				<Delete {...this.props}></Delete> 
 			</div>
