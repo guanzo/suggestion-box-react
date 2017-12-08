@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
-import { fetchCurrentListPaginatedSuggestions } from '@/store/suggestions'
+import { fetchCurrentListPaginatedSuggestions } from '@store/suggestions'
 
 class LoadMore extends PureComponent {
     render() {

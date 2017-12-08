@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '@/style/index.scss';
-import App from '@/components/App';
 import './assets/js/twitchExt';
+import '@style/index.scss';
+import App from '@components/App';
 
 import { Provider } from 'react-redux'
 import store from './store'
@@ -24,5 +24,5 @@ const render = Component => {
   
   // Webpack Hot Module Replacement API
   if (module.hot) {
-	module.hot.accept('@/components/App', () => { render(App) })
+	module.hot.accept('./components/App', () => { render(App) })
   }

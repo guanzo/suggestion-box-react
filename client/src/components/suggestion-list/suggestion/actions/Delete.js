@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { updateSuggestionStatus } from '@/store/suggestions-admin'
+import { updateSuggestionStatus } from '@store/suggestions-admin'
 const { STATUS_DELETED } = require('@shared/suggestion-util')
 
 //admins can delete a suggestion in any list

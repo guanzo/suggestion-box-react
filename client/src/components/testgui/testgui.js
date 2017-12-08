@@ -1,9 +1,9 @@
 /* eslint react/jsx-no-bind: 0 */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
-import { isAdminSelector } from '@/store/user'
+import { isAdminSelector } from '@store/user'
 import './test.scss'
-import store from '@/store'
+import store from '@store'
 
 const MY_ID = 23435553
 

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
-import { updateSuggestionStatus } from '@/store/suggestions-admin'
+import { updateSuggestionStatus } from '@store/suggestions-admin'
 const { STATUS_APPROVED, LIST_APPROVED } = require('@shared/suggestion-util')
 
 //admins can only approve suggestions in the pending list

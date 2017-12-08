@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Transition } from 'react-transition-group'
-import { isAdminSelector } from '@/store/user'
-import { sortSuggestions } from '@/store/suggestions'
-import { changeCurrentListType } from '@/store/suggestions-admin'
+import { isAdminSelector } from '@store/user'
+import { sortSuggestions } from '@store/suggestions'
+import { changeCurrentListType } from '@store/suggestions-admin'
 const { 
-	SORT_VOTES, SORT_NEW, SORT_BROADCASTER_VOTES, LIST_APPROVED, LIST_PENDING
+	SORT_VOTES, SORT_NEW, LIST_APPROVED, LIST_PENDING
 } = require('@shared/suggestion-util')
 
 class Toolbar extends Component {

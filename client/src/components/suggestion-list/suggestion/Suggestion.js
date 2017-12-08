@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import Actions from './actions/Actions'
-import { isAdminSelector } from '@/store/user'
+import { isAdminSelector } from '@store/user'
 import moment from 'moment'
 import classNames from 'classnames'
 import './Suggestion.scss'

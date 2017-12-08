@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Header from './header/Header'
 import Body from './body/Body'
 import './Viewer.scss';
-import Overlay from '@/components/page-viewer/suggest/_Overlay'
+import Overlay from '@components/page-viewer/suggest/_Overlay'
 //removed in production build
-import Test from '@/components/test/test'
+import TestGui from '@components/testgui/testgui'
 
 class Viewer extends Component {
     render() {
@@ -13,7 +13,7 @@ class Viewer extends Component {
             <Header></Header>
             <Body></Body>
             <Overlay></Overlay>
-			<Test></Test>
+			<TestGui></TestGui>
         </div>
         );
     }

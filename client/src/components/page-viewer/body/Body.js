@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import SuggestionList from '@/components/suggestion-list/SuggestionList'
+import SuggestionList from '@components/suggestion-list/SuggestionList'
 const { LIST_APPROVED } = require('@shared/suggestion-util')
 
 

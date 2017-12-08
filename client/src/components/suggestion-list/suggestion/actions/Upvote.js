@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
-import { toggleUpvote } from '@/store/suggestions'
+import { toggleUpvote } from '@store/suggestions'
 import classNames from 'classnames'
 
 class Upvote extends PureComponent {

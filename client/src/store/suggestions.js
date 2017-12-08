@@ -1,6 +1,6 @@
 import axios from 'axios'
 import _ from 'lodash'
-//import { delay } from '@/util'
+//import { delay } from '@util'
 import { toggleLoading } from './loading'
 export const ADD_SUGGESTIONS = 'ADD_SUGGESTIONS'
 export const SET_SUGGESTIONS = 'SET_SUGGESTIONS'

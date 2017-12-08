@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { postSuggestion } from '@/store/suggestions'
-import store from '@/store'
-import { delay } from '@/util'
+import { postSuggestion } from '@store/suggestions'
+import store from '@store'
+import { delay } from '@util'
 import classNames from 'classnames'
 
 class Form extends Component {

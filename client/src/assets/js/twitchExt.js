@@ -1,8 +1,8 @@
 
 import axios from 'axios'
-import store, { fetchInitialData } from '@/store'
-import { setChannel } from '@/store/channel'
-import { setUser } from '@/store/user'
+import store, { fetchInitialData } from '@store'
+import { setChannel } from '@store/channel'
+import { setUser } from '@store/user'
 
 //testing on localhost window, and not inside twitch iframe
 //i need to join a room so that i can cast votes locally
