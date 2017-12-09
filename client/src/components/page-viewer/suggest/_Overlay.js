@@ -104,8 +104,8 @@ class Overlay extends Component {
 					top:['50%','easeInSine'],
 					left:['50%','easeOutSine'],
 					backgroundColor: ['#fff',ease],
-					width: ['600px',ease],
-					height: ['600px',ease],
+					width: ['625px',ease],
+					height: ['625px',ease],
 				},
 				style
 			}
@@ -129,9 +129,7 @@ class Overlay extends Component {
 		
 	}
 	onSubmitDone = (status)=>{
-		this.setState({ 
-			status
-		})
+		this.setState({ status })
 		this.transition(Machine.POST_FORM)
 	}
     onClose = ()=>{
