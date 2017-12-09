@@ -37,12 +37,17 @@ function addChannel(channelId,channelName){
         suggestions:[],
         requireApproval: false,
         allowModAdmin: true
-    }
+	}
+	let update = {
+		$setOnInsert: channel
+	}
     //keep updating channelName in case it gets changed
+	if(channelName)
+		Object.assign(update, { $set:{ channelName }})
     var channels = db.get().collection('channels')
     return channels.updateOne(
         {channelId},
-        { $set:{ channelName }, $setOnInsert: channel }, 
+        update, 
         { upsert: true }
     )
 }

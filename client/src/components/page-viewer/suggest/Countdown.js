@@ -7,10 +7,11 @@ class Countdown extends Component {
 		super(props)
 		this.intervalId = null
 		this.state = { 
-			time: this.getTime(this.props.lastSuggestionDate) 
+			time: this.getTime(props.lastSuggestionDate) 
 		}
+		console.log(props.lastSuggestionDate)
 	}
-	componentWillMount(){
+	componentDidMount(){
 		this.startCountdown()
 	}
 	componentWillUnmount(){
@@ -18,6 +19,7 @@ class Countdown extends Component {
 	}
     render() {
 		let t = this.state.time
+		console.log([t.hours(),t.minutes(),t.seconds()])
 		let times = [t.hours(),t.minutes(),t.seconds()].filter(d=>d>0)
 		let language = 'You may post '
 		if(times.length === 0)

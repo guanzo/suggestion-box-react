@@ -11,7 +11,7 @@ class LoadMore extends PureComponent {
 		if(data.length && hasMorePages){
 			component = <button onClick={this.onClick} 
 							className="button is-small is-primary is-inverted"
-						>Load more</button>
+						>Show more</button>
 		}else if(!isLoading && hasPaginated)//don't show unless user has paginated at least once
 			component = <div className="has-text-primary">All suggestions loaded</div>
 

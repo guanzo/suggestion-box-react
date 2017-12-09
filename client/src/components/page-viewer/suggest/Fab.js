@@ -5,14 +5,14 @@ class Fab extends Component {
 	constructor(){
 		super()
 		this.state = {
-			opacity: 1,
+			opacity: 0,
 		}
 	}
     render() {
 		
         let btnStyle = {
-            height: '100%',
-			width: '100%',
+            height: 40,
+			width: 40,
 			transition: '.35s',
 			...this.state
 		}
@@ -30,10 +30,8 @@ class Fab extends Component {
 			</button>
         );
 	}
-	componentWillMount(){
-		this.setState({ opacity: 0 })
-	}
 	componentDidMount(){
+		//important to wait til next tick
 		setTimeout(()=>this.setState({ opacity: 1 }), 0)
 	}
 }
