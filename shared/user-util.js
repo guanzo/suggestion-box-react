@@ -28,7 +28,7 @@ var self = module.exports = {
     isBroadcaster: function (user){
         return user.role === self.ROLE_BROADCASTER
 	},
-	MIN_MINUTES_BETWEEN_POSTS: 1440,// 1 day
+	MIN_MINUTES_BETWEEN_POSTS: 1440,// 1 day = 1440 minutes
 	isAllowedToSuggest: function(lastSuggestionDate){
 		var currentDate = moment();
 		var diff = currentDate.diff(lastSuggestionDate, 'minutes')

@@ -55,10 +55,10 @@ class Overlay extends Component {
 		}
 	}
 	onFabClick = ()=>{
-		let { isAnonymousUser } = this.props.currentUser
-		let { isAllowedToSuggest: isAllowedToSuggest_Prop } = this.props
+		let { currentUser, lastSuggestionDate } = this.props
+		let { isAnonymousUser } = currentUser
 		
-		let nextComponent = (isAnonymousUser || !isAllowedToSuggest_Prop)
+		let nextComponent = (isAnonymousUser || !isAllowedToSuggest(lastSuggestionDate))
 							?	Machine.PRE_FORM
 							:	Machine.FORM
 		this.transition(nextComponent)
@@ -154,17 +154,11 @@ const getLastSuggestionDate = createSelector(
 	}
 )
 
-const isAllowedToSuggestSelector = createSelector(
-	[getLastSuggestionDate],
-	lastSuggestionDate => isAllowedToSuggest(lastSuggestionDate)
-)
-
 const mapStateToProps = (state, ownProps) => {
 	let { currentListType } = state.suggestions
     return {
 		currentUser: state.user,
 		lastSuggestionDate: getLastSuggestionDate(state),
-		isAllowedToSuggest: isAllowedToSuggestSelector(state),
 		channel: state.channel,
 		listType: currentListType,
 		hasSuggestions: state.suggestions[currentListType].data.length > 0,
