@@ -10,7 +10,7 @@ class Form extends Component {
 
 		let { isRealUser } = this.props.currentUser
         this.state = {
-            minLength: 15,
+            minLength: 10,
             maxLength: 100,
             suggestion: '',
             postAnonymously: isRealUser ? false : true,

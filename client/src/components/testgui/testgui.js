@@ -21,7 +21,7 @@ class Test extends PureComponent {
 				<button onClick={e=>this.test('isRealUser')}>real</button>
 				<button onClick={e=>this.test('isModerator')}>mod</button>
 				<button onClick={e=>this.test('isBroadcaster')}>broadcaster</button>
-				<button onClick={generate}>generator</button>
+				<button onClick={generate}>generate</button>
 			</div>
         )
 	}

@@ -182,13 +182,17 @@ export function suggestionsReducer(suggestions = {}, action){
 //to be merged with the existing list
 function listPartialReducer(list = {}, action){
 	switch(action.type) {
+		case SET_SUGGESTIONS://new suggestions
+			return {
+				data: [...action.suggestions]
+			}
 		case ADD_SUGGESTIONS://paginated suggestions
 			return {
 				data: [...list.data, ...action.suggestions]
 			}
-		case SET_SUGGESTIONS://new suggestions
-			return {
-				data: [...action.suggestions]
+		case ADD_POSTED_SUGGESTION://prepend to top, reddit style
+			return  {
+				data: [action.suggestion, ...list.data]
 			}
 		case RESET_PAGINATION:
 			return {
@@ -198,10 +202,6 @@ function listPartialReducer(list = {}, action){
 		case SET_SORTBY:
 			return {
 				sortBy: action.sortBy,
-			}
-        case ADD_POSTED_SUGGESTION://prepend to top, reddit style
-			return  {
-				data: [action.suggestion, ...list.data]
 			}
 		case TOGGLE_UPVOTE:
 			return {

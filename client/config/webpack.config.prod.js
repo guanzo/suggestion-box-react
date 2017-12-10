@@ -108,10 +108,6 @@ const prodWebpackConfig = merge(baseWebpackConfig,{
   module: {
     strictExportPresence: true,
     rules: [
-	  {//remove test gui 
-        test: /test-gui.js/,
-        use: 'null-loader'
-      },
       // TODO: Disable require.ensure as it's not a standard language feature.
       // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
       // { parser: { requireEnsure: false } },
@@ -372,7 +368,7 @@ const prodWebpackConfig = merge(baseWebpackConfig,{
     new ZipPlugin({
          filename: 'dist.zip',
     }),
-    //new BundleAnalyzerPlugin()
+    new BundleAnalyzerPlugin()
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
