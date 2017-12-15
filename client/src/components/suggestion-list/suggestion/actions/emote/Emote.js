@@ -2,8 +2,19 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
 import { Manager, Target, Popper } from 'react-popper'
 import enhanceWithClickOutside from 'react-click-outside'
+import { Fade } from '@components/transition/transition'
 import EmoteExplorer from './EmoteExplorer'
 import './Emote.scss'
+
+const popperModifiers = {
+	preventOverflow:{
+		priority: ['left','right',]
+	},
+	computeStyle:{
+		//if true, popper uses css transform, causing blurry text
+		gpuAcceleration: false,
+	}
+}
 
 const PopupManager = ({isOpen, togglePopup, ...props}) => (
 	<Manager>
@@ -12,11 +23,11 @@ const PopupManager = ({isOpen, togglePopup, ...props}) => (
 				<i className="fa fa-smile-o"></i>
 			</span>
 		</Target>
-		{isOpen && (
-			<Popper className="popper">
+		<Fade in={isOpen}>
+			<Popper modifiers={popperModifiers} className="popper">
 				<EmoteExplorer {...props}></EmoteExplorer>
 			</Popper>
-		)}
+		</Fade>
 	</Manager>
   )
 

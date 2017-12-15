@@ -9,7 +9,7 @@ const Fade = ({ children, index, ...props }) => (
 	<CSSTransition
 		{...props}
 		timeout={250}
-		classNames="fade"
+		classNames="fade-list"
 		// eslint-disable-next-line react/jsx-no-bind
 		onEnter={el=>el.style.transitionDelay = `${index*.05}s`}
 		addEndListener={end}	

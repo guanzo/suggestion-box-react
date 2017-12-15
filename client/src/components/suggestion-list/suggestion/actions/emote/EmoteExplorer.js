@@ -4,7 +4,6 @@ import _ from 'lodash'
 class EmoteExplorer extends PureComponent {
 	constructor(props){
 		super(props)
-		console.log(props)
 		this.state = {
 			query: ''
 		}
@@ -15,7 +14,9 @@ class EmoteExplorer extends PureComponent {
 		let emotes = this.searchedEmotes()
         return (
             <div className="emote-explorer">
-				<div class="subtitle is-size-6 has-text-centered">Emote reactions</div>
+				<div class="subtitle is-size-6 has-text-centered m-b-5">
+					Emote reactions
+				</div>
 				<div>
 				{emotes.map(d=>(
 					<img className="emote-image" src={getEmoteImg(d.id)} key={d.id}/>

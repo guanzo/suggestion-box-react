@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Transition } from 'react-transition-group'
 import { isAdminSelector } from '@store/user'
 import { sortSuggestions } from '@store/suggestions'
 import { changeCurrentListType } from '@store/suggestions-admin'
+import { Fade } from '@components/transition/transition'
 const { 
 	SORT_VOTES, SORT_NEW, LIST_APPROVED, LIST_PENDING
 } = require('@shared/suggestion-util')
@@ -21,32 +21,18 @@ export class Toolbar extends Component {
     render() {
 		let { hasSuggestions, listType, currentUser } = this.props
 		let showSortBy = hasSuggestions && listType === LIST_APPROVED
-		const duration = 250;
         return (
             <div className="toolbar flex is-size-7">
-				<Transition in={showSortBy} timeout={duration} unmountOnExit>
-					{(state) => this.sortBy(state, duration)}
-				</Transition>
+				<Fade in={showSortBy}>
+					{this.sortBy()}
+				</Fade>
 				{ currentUser.isAdmin ? this.listType() : null }
             </div>
         );
 	}
-	sortBy(transitionState, duration){
-		const defaultStyle = {
-			transition: `${duration}ms`,
-			opacity: 0,
-		}
-		const transitionStyles = {
-			entering: { opacity: 0 },
-			entered:  { opacity: 1 },
-		};
+	sortBy(){
 		return (
-			<div className="flex-center"
-				style={{
-					...defaultStyle,
-					...transitionStyles[transitionState]
-				}}
-			>
+			<div className="flex-center">
 				<span className="m-r-5">Sort by</span>
 				<div className="select is-small select-sort-by">
 					<select value={this.state.sortBy} 
