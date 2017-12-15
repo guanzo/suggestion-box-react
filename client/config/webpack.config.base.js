@@ -31,11 +31,12 @@ module.exports = {
         'react-redux': 'ReactRedux',
         'redux-thunk': 'ReduxThunk',
         'react-transition-group': 'ReactTransitionGroup',
-        'reselect': 'Reselect',
+		'reselect': 'Reselect',
         'axios':'axios',
 		'moment':'moment',
 		'runtime-module':'regeneratorRuntime',
 		'velocity-animate':'Velocity',
 		'lodash' : '_',
+		'react-popper':'ReactPopper'
     },
 }

@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 export class Upvote extends PureComponent {
     render() {
-		let { hasUpvoted, votesLength, broadcasterUpvoted, channel, currentUser } = this.props
+		let { hasUpvoted, votesLength, currentUser } = this.props
 		let { isAnonymousUser } = currentUser
 		let thumbIcon = hasUpvoted ? 'fa-thumbs-up':'fa-thumbs-o-up'
         let classes = classNames('fa',thumbIcon,{'has-text-primary': votesLength > 0})
@@ -18,8 +18,7 @@ export class Upvote extends PureComponent {
 				<i onClick={this.props.toggleUpvote} className={classes} style={style} title={title}></i>
 			</span>
             <div className="is-size-7">{votesLength.toLocaleString()}</div>
-			<p className="broadcaster-likes m-l-10 is-size-7">{ broadcasterUpvoted ? `${channel.channelName} likes this` : null }</p>
-        </div>
+		</div>
         );
 	}
 	//on click, check if is anon user. if so, don't dispatch and show alert

@@ -4,13 +4,13 @@ const { STATUS_APPROVED } = require('@shared/suggestion-util')
 
 class PostForm extends Component {
     render() {
-        let { status, lastSuggestionDate, onClose } = this.props
-        let text = (status === STATUS_APPROVED) 
-        ? 'Your suggestion has been submitted'
-        : 'Your suggestion is pending approval'
+		let { status, lastSuggestionDate, onClose } = this.props
+		let text = (status === STATUS_APPROVED)
+        ? <span>has been <span className="has-text-success">submitted</span></span>
+        : <span>is <span className="has-text-primary">pending approval</span></span>
         return (
             <div className="flex-center column">
-                <p className="m-b-15">{text}</p>
+                <p className="m-b-15">Your suggestion {text}</p>
 				<Countdown lastSuggestionDate={lastSuggestionDate}>
 				</Countdown>
                 <button className="button is-primary" onClick={onClose}>Okay</button>

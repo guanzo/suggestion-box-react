@@ -1,0 +1,17 @@
+.emotes {
+	.popper{
+		z-index: 10;
+	}
+	.emote-explorer{
+		background: white;
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+		padding: 10px;
+		max-width: 200px;
+		.emote-image {
+			margin: 5px;
+			max-height: 25px;
+			width: auto;
+			cursor: pointer;
+		}
+	}
+}

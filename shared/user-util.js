@@ -1,4 +1,5 @@
-//THIS FILE CANNOT CONTAIN ES6 CODE b/c of create-react-app .............
+//THIS FILE CANNOT CONTAIN ES6 CODE 
+//b/c create-react-app doesn't run babel on files outside of src folder
 //NO const, let, function shorthand, object property shorthand, etc.
 
 var _ = require('lodash')

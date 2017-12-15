@@ -4,12 +4,7 @@ $avatar-size: 30px;
 	position: relative;
 	padding: 10px;
 	transition: .35s;
-	&:first-child{
-		border-top: 1px solid lightgrey;
-	}
-	&:not(:last-child){
-		border-bottom: 1px solid lightgrey;
-	}
+	word-wrap: break-word;
     .suggestion-header{
         display: flex;
         align-items: center;
@@ -22,16 +17,35 @@ $avatar-size: 30px;
         }
         .suggestion-date{
             color: grey;
-        }
+		}
+		.broadcaster-likes{
+			align-self: flex-start;
+			margin-left: auto;
+			text-align: right;
+		}
     }
     .suggestion-text{
         font-size: 0.85rem;
-        word-wrap: break-word;
+		padding: 10px 0px;
     }
     .suggestion-actions{
         .fa {
             cursor: pointer;
 			transition: .35s;
+		}
+		.open-emotes{
+			opacity: 0;
+		}
+	}
+	&:first-child{
+		border-top: 1px solid lightgrey;
+	}
+	&:not(:last-child){
+		border-bottom: 1px solid lightgrey;
+	}
+	&:hover{
+		.open-emotes{
+			opacity: 1;
 		}
 	}
 	&.is-deleted{

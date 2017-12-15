@@ -37,7 +37,7 @@ function generateSuggestion(){
 	
     return {
         id: new ObjectID(),
-        "text": chance.sentence({ length: 100 }),
+        "text": chance.sentence({ words: 5 }),
         "postAnonymously": chance.bool(),
         createdAt: moment().subtract(chance.integer({min:0,max:500}),'days').toDate(),
         status,

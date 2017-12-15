@@ -32,11 +32,11 @@ async function addSuggestion(channelId, data){
 
 
 /**
- * 
  * @param {Object} data
  *  -text: String
  *  -postAnonymously: Boolean
  *  -user: Object
+ *  -status: String
  */
 function createSuggestionObj({ text, postAnonymously, user }, status){
     //reddit style, auto upvote own post

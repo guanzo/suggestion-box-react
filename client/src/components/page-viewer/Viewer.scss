@@ -5,6 +5,7 @@
     height: $app-height;
     max-height: $app-height;
 	overflow-y: scroll;
+    overflow-x: hidden;
 	background: $app-bg-color;
 }
 

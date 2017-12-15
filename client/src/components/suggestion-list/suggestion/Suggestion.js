@@ -24,8 +24,9 @@ export class Suggestion extends Component {
                         <div>{this.name()}</div>
                         <div className="suggestion-date">{this.date()}</div>
                     </div>
+					{this.broadcasterLikes()}
                 </div>
-                <p className="suggestion-text m-b-5">{text}</p>
+                <p className="suggestion-text">{text}</p>
                 <Actions {...this.props}></Actions>
             </div>
         );
@@ -58,6 +59,12 @@ export class Suggestion extends Component {
         if(year !== currentYear)
             fmt += ' YYYY'
         return date.format(fmt)
+	}
+	broadcasterLikes(){
+		let { channel, broadcasterUpvoted } = this.props
+		return broadcasterUpvoted
+		? <p className="broadcaster-likes is-size-7">{channel.channelName} likes this</p>
+		: null
 	}
 }
 

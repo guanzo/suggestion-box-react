@@ -2,23 +2,22 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { createSelector } from 'reselect'
-import { updateChannel } from '@store/channel'
+import { initialState, updateChannel } from '@store/channel'
 import store from '@store'
 import _ from 'lodash'
 import classNames from 'classnames'
 import Rules from './Rules'
 import './Config.scss'
 
-class Config extends Component {
-	constructor(){
-		super()
+const settingsProperties = ['requireApproval','allowModAdmin','rules']
+const defaultSettings = _.pick(initialState.channel,settingsProperties)
 
+class Config extends Component {
+	constructor(props){
+		super(props)
 		this.state = {
 			isLoading: false,
-			requireApproval: false,
-			allowModAdmin: true,
-			rules:[]
+			...defaultSettings
 		}
 		this.updateSettings = this.updateSettings.bind(this)
 		this.handleInput = this.handleInput.bind(this)
@@ -27,16 +26,11 @@ class Config extends Component {
 	}
 	componentWillReceiveProps(props){
 		let { requireApproval, allowModAdmin, rules } = props.channel
-		this.setState({ 
-			requireApproval,
-			allowModAdmin,
-			rules
-		})
+		this.setState({ requireApproval, allowModAdmin, rules })
 	}
 	hasUnsavedChanges(){
-		let properties = ['requireApproval','allowModAdmin','rules']
-		let originalSettings = _.pick(this.props.channel,properties)
-		let currentSettings  = _.pick(this.state,properties)
+		let originalSettings = _.pick(this.props.channel,settingsProperties)
+		let currentSettings  = _.pick(this.state,settingsProperties)
 
 		return !_.isEqual(originalSettings,currentSettings)
 	}
@@ -51,6 +45,7 @@ class Config extends Component {
         <div className="config">
 			<h3 className="subtitle">Thanks for installing Suggestion Box!</h3>
 			<p className="m-b-15">I hope this extension will make your stream experience better.</p>
+			<hr />
 			<form onSubmit={this.updateSettings}>
         		<h3 className="subtitle m-t-25">Settings</h3>
 				{
@@ -117,7 +112,7 @@ class Config extends Component {
 	}
 	async updateSettings(e){
 		e.preventDefault();
-		let settings  = _.pick(this.state,['requireApproval','allowModAdmin','rules'])		
+		let settings  = _.pick(this.state,settingsProperties)		
 		
 		this.setState({ isLoading: true })
 		await store.dispatch(updateChannel(settings))
