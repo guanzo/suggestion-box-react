@@ -2,77 +2,127 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import axios from 'axios'
-
+import { createSelector } from 'reselect'
+import { updateChannel } from '@store/channel'
+import store from '@store'
+import _ from 'lodash'
+import classNames from 'classnames'
+import Rules from './Rules'
 import './Config.scss'
 
 class Config extends Component {
 	constructor(){
 		super()
+
 		this.state = {
+			isLoading: false,
 			requireApproval: false,
-			allowModAdmin: true
+			allowModAdmin: true,
+			rules:[]
 		}
+		this.updateSettings = this.updateSettings.bind(this)
+		this.handleInput = this.handleInput.bind(this)
+		this.deleteRule = this.deleteRule.bind(this)
+		this.addRule = this.addRule.bind(this)
 	}
 	componentWillReceiveProps(props){
-		let { channel } = props
+		let { requireApproval, allowModAdmin, rules } = props.channel
 		this.setState({ 
-			requireApproval: channel.requireApproval,
-			allowModAdmin: channel.allowModAdmin
+			requireApproval,
+			allowModAdmin,
+			rules
 		})
 	}
+	hasUnsavedChanges(){
+		let properties = ['requireApproval','allowModAdmin','rules']
+		let originalSettings = _.pick(this.props.channel,properties)
+		let currentSettings  = _.pick(this.state,properties)
+
+		return !_.isEqual(originalSettings,currentSettings)
+	}
     render() {
-		let { requireApproval, allowModAdmin } = this.state
+		let { isLoading } = this.state
+		let hasUnsavedChanges = this.hasUnsavedChanges()
+		let btnClass = classNames("button", 
+								{ 'is-loading': isLoading }, 
+								hasUnsavedChanges ? 'is-warning':'is-success'
+							)
         return (
         <div className="config">
-			<h3 className="title">Thanks for installing Suggestion Box!</h3>
+			<h3 className="subtitle">Thanks for installing Suggestion Box!</h3>
 			<p className="m-b-15">I hope this extension will make your stream experience better.</p>
-        	<h3 className="title is-4">Settings</h3>
-			<div className="field">  
-				<div className="control">
-					<label className="checkbox"> 
-					<input type="checkbox" className="m-r-5" style={{'vertical-align': 'middle'}} 
-					checked={requireApproval}
-					onChange={e=>{
-							this.setState({ requireApproval: e.target.checked },
-								this.updateSettings)
-						}
-					}
-					/>
-						Require suggestions to be approved 
-					</label>
-					<p className="help">
-						By default, anybody will be able to publicly post to your suggestion box.<br />
-						Check this box if you want each suggestion to be approved by you or a moderator before going public.
-					</p>
+			<form onSubmit={this.updateSettings}>
+        		<h3 className="subtitle m-t-25">Settings</h3>
+				{
+					this.checkbox(
+						'requireApproval',
+						'Require suggestions to be approved',
+						'By default, anybody will be able to publicly post to your suggestion box.',
+						'Check this box if you want each suggestion to be approved by you or a moderator before going public.'
+					)
+				}
+				{
+					this.checkbox(
+						'allowModAdmin',
+						'Allow moderators to administer suggestions',
+						'Chat moderators will have the same admin control as you. They will be able to approve and delete suggestions.',
+						'Moderators must grant this extension their Twitch User ID in order to become admins.'
+					)
+				}
+				<Rules rules={this.state.rules} 
+						handleInput={this.handleInput}
+						deleteRule={this.deleteRule}
+						addRule={this.addRule}
+				></Rules>
+				<div className="m-t-40">
+					{hasUnsavedChanges ? <div className="help m-b-5">You have unsaved changes</div> : null}
+					<button className={btnClass}>Save</button>
 				</div>
-			</div>
-			<div className="field">  
-				<div className="control">
-					<label className="checkbox"> 
-					<input type="checkbox" className="m-r-5" style={{'vertical-align': 'middle'}} 
-					checked={allowModAdmin}
-					onChange={e=>{
-							this.setState({ allowModAdmin: e.target.checked },
-								this.updateSettings)
-						}
-					}
-					/>
-						Allow moderators to administer suggestions
-					</label>
-					<p className="help">Chat moderators will have the same admin control as you. 
-						They will be able to approve and delete suggestions.<br />
-						Moderators must grant this extension their Twitch User ID in order to become admins.
-					</p>
-				</div>
-			</div>
-			<p className="p-t-15">Your changes will be saved automatically.</p>
+			</form>
         </div>
         );
 	}
-	updateSettings(){
-		let { channelId } = this.props.channel
-		axios.put(`/api/channels/${channelId}/settings`,this.state)
+	checkbox(propertyName,label, ...help){
+		let style = {verticalAlign: 'middle'}
+		let propertyValue = this.state[propertyName]
+		return (
+			<div className="field">  
+				<div className="control">
+					<label className="checkbox"> 
+					<input type="checkbox" className="m-r-5" style={style} 
+					checked={propertyValue}
+					onChange={e=>this.setState({ [propertyName]: e.target.checked })}
+					/>
+						{label}
+					</label>
+					<p className="help">
+					{help.map(d=><React.Fragment key={d}>{d}<br/></React.Fragment>)}
+					</p>
+				</div>
+			</div>
+		)
+	}
+	handleInput(rule,index){
+		let rules = [...this.state.rules]
+		rules[index] = rule
+		this.setState({ rules })
+	}
+	addRule(){
+		let rules = [...this.state.rules, '']
+		this.setState({ rules })
+	}
+	deleteRule(index){
+		let rules = this.state.rules.filter((d,i)=>i !== index)
+		this.setState({ rules })
+	}
+	async updateSettings(e){
+		e.preventDefault();
+		let settings  = _.pick(this.state,['requireApproval','allowModAdmin','rules'])		
+		
+		this.setState({ isLoading: true })
+		await store.dispatch(updateChannel(settings))
+        this.setState({ isLoading: false })
+        
 	}
 }
 

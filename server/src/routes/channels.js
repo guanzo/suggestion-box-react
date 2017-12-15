@@ -9,15 +9,26 @@ module.exports = (app) => {
         res.json(channel)
 	})
 	
+    app.put('/api/channels/:channelId',async (req, res) => {
+		let { channelId } = req.params
+		let { requireApproval, allowModAdmin, rules } = req.body
+		let user = req.user
+		if(user.id !== channelId)
+			return res.sendStatus(403)
+		
+		await channelModel.updateSettings(channelId, requireApproval, allowModAdmin, rules)
+		res.sendStatus(201)
+	})
+
+	//version 0.1.0 compatability
     app.put('/api/channels/:channelId/settings',async (req, res) => {
 		let { channelId } = req.params
 		let { requireApproval, allowModAdmin } = req.body
 		let user = req.user
-		if(user.id !== channelId || user.role !== ROLE_BROADCASTER)
+		if(user.id !== channelId)
 			return res.sendStatus(403)
 		
-		let result = await channelModel.updateSettings(channelId, requireApproval, allowModAdmin)
-		let status = result.modifiedCount === 1 ? 201 : 400
-		res.sendStatus(status)
+		await channelModel.updateSettings(channelId, requireApproval, allowModAdmin)
+		res.sendStatus(201)
 	})
 }

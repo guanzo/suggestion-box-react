@@ -7,3 +7,11 @@
 	overflow-y: scroll;
 	background: $app-bg-color;
 }
+
+.viewer.dark-mode{
+	background: $app-darkmode-bg-color;
+	color: #f9f9f9;
+	.overlay{
+		background: $app-darkmode-bg-color !important;
+	}
+}

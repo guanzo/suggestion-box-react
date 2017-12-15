@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { delay } from '@util'
 export const SET_CHANNEL = 'SET_CHANNEL'
 
 export const initialState = {
@@ -6,7 +7,12 @@ export const initialState = {
         channelId: -1,
         channelName: 'The broadcaster',
         requireApproval: false,
-        allowModAdmin: true
+		allowModAdmin: true,
+		rules:[
+			'Leave a helpful suggestion or constructive criticism.',
+			'Check existing posts to see if your idea has already been posted.',
+			'Be respectful',
+		]
     },
 }
 
@@ -26,6 +32,18 @@ export function fetchChannel(){
         .then(res=>{
 			dispatch(setChannel(res.data))
 			return res.data
+        })
+    }
+}
+export function updateChannel(settings){
+    return (dispatch,getState) => {
+		let { channelId } = getState().channel
+		return Promise.all([
+            axios.put(`/api/channels/${channelId}`,settings), 
+            delay()
+        ])
+        .then(res=>{
+			dispatch(setChannel(settings))
         })
     }
 }

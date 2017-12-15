@@ -30,16 +30,15 @@ export async function fetchInitialData(){
 	store.dispatch(toggleLoading(false))
 }
 
+function reduceReducers(...reducers) {
+    return (initialState, action) => reducers.reduce( (state, reducer) => reducer(state, action), initialState );
+}
 
 function root(state = initialState, action){
-
-	let suggestions = suggestionsReducer(state.suggestions, action)
-	suggestions = suggestionsAdminReducer(suggestions, action)
-
     return {
         user: userReducer(state.user, action),
         channel: channelReducer(state.channel, action),
-		suggestions,
+		suggestions: reduceReducers(suggestionsReducer,suggestionsAdminReducer)(state.suggestions, action),
 		isLoading: loadingReducer(state.isLoading, action),
     }
 }

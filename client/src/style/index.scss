@@ -47,6 +47,9 @@ body {
 	&.wrap{
 		flex-wrap: wrap;
 	}
+	&.nowrap{
+		flex-wrap: nowrap;
+	}
 	&.align-center{
 		align-items: center
 	}

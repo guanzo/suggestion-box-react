@@ -7,7 +7,6 @@ import classNames from 'classnames'
 class Form extends Component {
     constructor(props){
 		super(props)
-
 		let { isRealUser } = this.props.currentUser
         this.state = {
             minLength: 10,
@@ -19,8 +18,11 @@ class Form extends Component {
 		this.onSubmit = this.onSubmit.bind(this)
 	}
     render(){
+		const style = { maxWidth: '100%' }
         return (
-            <div className="suggestion-form flex column justify-between height-100">
+            <div className="suggestion-form flex column justify-between height-100"
+				style={style}
+			>
                 <div>{this.rules()}</div>
 				<div>
 				{this.settings()}
@@ -30,13 +32,17 @@ class Form extends Component {
         )
     }
     rules(){
+		let { rules } = this.props.channel
+		const style = { wordWrap: 'break-word' }
         return (
             <div className="m-b-15">
                 <h5 className="subtitle is-4 has-text-centered">Rules</h5>
-                <ol className="p-l-15">
-                    <li>Leave a helpful suggestion or constructive criticism.</li>
-                    <li>Check existing posts to see if your idea has already been posted.</li>
-                    <li>Be respectful.</li>
+                <ol className="p-l-15" style={style}>
+					{ 
+						rules.length 
+						? rules.map((rule,i)=><li key={i}>{rule}</li>)
+						: <div className="has-text-centered">...There are no rules.</div>
+					}
                 </ol>
             </div>
         )
@@ -98,14 +104,14 @@ class Form extends Component {
                             minLength={minLength}
                             maxLength={maxLength}
                             value={suggestion}
-                            onInput={this.handleInput}
+                            onChange={this.handleInput}
                             required
                     >
                     </textarea>
                 </div>
                 <div className="flex justify-between p-t-5">
                     <p className="help m-t-0">{this.helpText()}</p>
-                    <div className="buttons">    
+                    <div className="buttons flex nowrap">    
                         <button className="button is-danger is-outlined is-small"
 							type="button"
                             onClick={this.props.onClose}

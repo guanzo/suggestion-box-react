@@ -20,10 +20,10 @@ module.exports = {
                     console.log(err)
                 })
 	},
-	async updateSettings(channelId, requireApproval, allowModAdmin ){
+	async updateSettings(channelId, requireApproval, allowModAdmin, rules ){
         var channels = db.get().collection('channels')
 		return channels
-			.updateOne({ channelId },  { $set: { requireApproval, allowModAdmin } } )
+			.updateOne({ channelId },  { $set: { requireApproval, allowModAdmin, rules } } )
 			.catch(err=>{
 				console.log(err)
 			})
