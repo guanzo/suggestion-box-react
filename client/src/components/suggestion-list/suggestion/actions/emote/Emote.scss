@@ -1,17 +1,39 @@
 .emotes {
+	.emote-image {
+		height: 25px;
+		width: 25px;
+		object-fit: contain;
+		cursor: pointer;
+	}
 	.popper{
 		z-index: 10;
+		width: 290px;
+		height: 210px;
 	}
-	.emote-explorer{
-		background: white;
-		box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-		padding: 10px;
-		max-width: 200px;
-		.emote-image {
-			margin: 5px;
-			max-height: 25px;
-			width: auto;
-			cursor: pointer;
+}
+
+
+.emote-explorer{
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	width: 290px;
+	height: 210px;
+	background: white;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	
+	.emote-grid{
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		padding: 5px 0px;
+		.emote-image-wrapper{
+			height: 25px;
+			width: 25px;
+			margin: 4px;
 		}
+	}
+	.field{
+		margin-top: auto;
 	}
 }

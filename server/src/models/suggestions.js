@@ -59,6 +59,13 @@ module.exports = {
 							{$in : [ user.opaqueId, "$votes.opaqueId" ]}
 						]
 					},
+					//check if user has emoted post with either real id or opaque id
+					hasEmoted: { 
+						$and: [
+							{$in : [ user.id, "$emotes.user.id" ]},
+							{$in : [ user.opaqueId, "$emotes.user.opaqueId" ]}
+						]
+					},
 					broadcasterUpvoted: { $in : [ channelId, "$votes.id" ] }
 				},
 			},
@@ -127,13 +134,43 @@ module.exports = {
 						user, opaqueUser
 					]
 				}
-			})
+		})
+	},
+	addEmote(channelId, suggestionId, emoteId, user){
+		//var channels = db.get().collection('channels')
+		user = _.pick(user,'id','opaqueId')
+		let suggestionOid = new ObjectID(suggestionId)
+		let data = {
+			emoteId,
+			user
+		}
+		return db.get().command({
+			update: 'channels',
+			updates:[
+				{
+					q:{ 
+						channelId, 
+						  'suggestions.emotes.user': {$ne: user },
+						  "suggestions.id": suggestionOid,
+					},
+					u:{
+						$push:
+						{
+							"suggestions.$[s].emotes": data
+						}
+					},
+					arrayFilters:[
+						{ 's.id': suggestionOid }
+					]
+				}
+			]
+		})
 	},
 	getSuggestionsCount(channelId){
 		var channels = db.get().collection('channels')
 		return channels.aggregate([
 			{ $match:{ channelId } },
-			{ $project: { count: { $size: '$sugestions' } } }
+			{ $project: { count: { $size: '$suggestions' } } }
 		])
 	},
 }

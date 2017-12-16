@@ -31,11 +31,13 @@ $avatar-size: 30px;
     .suggestion-actions{
         .fa {
             cursor: pointer;
-			transition: .35s;
-		}
-		.open-emotes{
 			transition: .25s;
-			opacity: 0;
+		}
+		.open-emotes .fa{
+			color: grey;
+			&:hover{
+				color: $primary;
+			}
 		}
 	}
 	&:first-child{
@@ -43,11 +45,6 @@ $avatar-size: 30px;
 	}
 	&:not(:last-child){
 		border-bottom: 1px solid lightgrey;
-	}
-	&:hover{
-		.open-emotes{
-			opacity: 1;
-		}
 	}
 	&.is-deleted{
 		background-color: #f4eaea;

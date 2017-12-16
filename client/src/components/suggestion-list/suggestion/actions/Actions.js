@@ -12,7 +12,7 @@ class Actions extends PureComponent {
             <div className="suggestion-actions">
 				<div className="flex">
 					<Upvote {...this.props}></Upvote>
-					<Emote></Emote>
+					<Emote  {...this.props}></Emote>
 					{ currentUser.isAdmin ? this.adminActions() : null }
 				</div>
             </div>

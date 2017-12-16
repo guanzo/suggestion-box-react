@@ -3,12 +3,13 @@ import { connect } from 'react-redux'
 import { Manager, Target, Popper } from 'react-popper'
 import enhanceWithClickOutside from 'react-click-outside'
 import { Fade } from '@components/transition/transition'
+import { postEmote } from '@store/emotes'
 import EmoteExplorer from './EmoteExplorer'
 import './Emote.scss'
 
 const popperModifiers = {
 	preventOverflow:{
-		priority: ['left','right',]
+		priority: ['left','right']
 	},
 	computeStyle:{
 		//if true, popper uses css transform, causing blurry text
@@ -41,11 +42,14 @@ class Emote extends PureComponent {
     render() {
 		let { isOpen } = this.state
 		let { emotes } = this.props
+		
 		let popupProps = {
 			togglePopup: this.togglePopup,
+			closePopup: this.closePopup,
 			isOpen,
 			emotes,
-			getEmoteImg: this.getEmoteImg
+			getEmoteImg: this.getEmoteImg,
+			onSelectEmote: this.onSelectEmote
 		}
         return (
             <div className="emotes m-l-10">
@@ -62,6 +66,13 @@ class Emote extends PureComponent {
 	togglePopup = ()=>{
 		this.setState({ isOpen: !this.state.isOpen })
 	}
+	onSelectEmote = (emoteId)=>{
+		let { postEmote, id:suggestionId } = this.props
+		postEmote(suggestionId, emoteId)
+	}
+	componentDidCatch(){
+		console.log('error')
+	}
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -69,4 +80,9 @@ const mapStateToProps = (state, ownProps) => {
 		emotes: state.emotes
     }
 }
-export default connect(mapStateToProps)(enhanceWithClickOutside(Emote))
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+		postEmote: (suggestionId,emoteId)=>dispatch(postEmote(suggestionId,emoteId)),
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(enhanceWithClickOutside(Emote))

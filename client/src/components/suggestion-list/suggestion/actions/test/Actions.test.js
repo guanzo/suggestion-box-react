@@ -25,7 +25,7 @@ function mockStore(store){
 
 describe('<Actions />',()=>{
 	it('does not show admin actions to non-admins', () => {
-		const store =mockStore(Object.assign({},data,{ currentUser:{ isAdmin:false } }))
+		const store = mockStore(Object.assign({},data,{ currentUser:{ isAdmin:false } }))
 		const wrapper = shallow(<Actions {...store.getState()} store={store}/>)
 		expect(wrapper.find(Approve)).toHaveLength(0);
 	})

@@ -2,7 +2,7 @@ import React from 'react';
 import { CSSTransition } from 'react-transition-group'
 import './transition.scss'
 
-const duration = 250;
+const duration = 350;
 export const Fade = ({ children, ...props }) => (
 	<CSSTransition
 		{...props}

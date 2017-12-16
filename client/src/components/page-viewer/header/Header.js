@@ -26,12 +26,12 @@ class Header extends Component {
 	anonymousUserNotification(){
 		/*eslint react/jsx-no-bind:0 */
 		return (
-			<article class="message is-warning is-small">
-				<div class="message-header">
+			<article className="message is-warning is-small">
+				<div className="message-header">
 				<p>Anonymous User</p>
-				<button onClick={()=>this.setState({ showNotification: false })} class="delete is-small"></button>
+				<button onClick={()=>this.setState({ showNotification: false })} className="delete is-small"></button>
 				</div>
-				<div class="message-body">
+				<div className="message-body">
 					Logged out users cannot upvote or post.
 				</div>
 			</article>

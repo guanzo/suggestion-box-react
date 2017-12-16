@@ -47,7 +47,8 @@ function createSuggestionObj({ text, postAnonymously, user }, status){
         postAnonymously,
         user,
         status,
-        votes: [initialVote],
+		votes: [initialVote],
+		emotes:[],
         createdAt: new Date(),
     }
 }
@@ -95,6 +96,15 @@ module.exports = (app) => {
 		let response = await suggestionModel[voteType](channelId, suggestionId,user)
 		let status = response.modifiedCount === 1 ? 200 : 400
 		res.status(status).end()
+	})
+	
+    app.put('/api/channels/:channelId/suggestions/:suggestionId/emotes',async (req, res) => {
+		let { channelId, suggestionId } = req.params,
+			{ emoteId } = req.body,
+			user = req.user;
+		let result = await suggestionModel.addEmote(channelId, suggestionId, emoteId, user)
+		let status = result.ok === 1 ? 200 : 400
+		res.status(status).end() 
 	})
 	
 	app.put('/api/channels/:channelId/suggestions/:suggestionId',async (req, res, next) => {

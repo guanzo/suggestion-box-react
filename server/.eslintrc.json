@@ -12,6 +12,7 @@
         "node/exports-style": ["error", "module.exports"],
 		"node/no-unpublished-require": "warn",
 		"no-console": "warn",
-		"eqeqeq": ["error","smart"]
+		"eqeqeq": ["error","smart"],
+		"no-mixed-spaces-and-tabs": 0
     }
 }

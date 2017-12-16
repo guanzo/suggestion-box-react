@@ -21,11 +21,28 @@ export function fetchEmotes(){
 			}
         })
         .then(res=>{
-			let emotes = res.data.emoticon_sets[0]
+			let emotes = res.data.emoticon_sets[0].sort((a,b)=>a.code.localeCompare(b.code))
 			dispatch(setEmotes(emotes))
         })
     }
 }
+
+
+export function postEmote(suggestionId, emoteId){
+    return (dispatch,getState) => {
+        let state = getState()
+        let channelId = state.channel.channelId;
+        return axios.put(`/api/channels/${channelId}/suggestions/${suggestionId}/emotes`,{
+            emoteId
+        })
+        .then(res=>{
+			console.log(res)
+			
+        })
+		.catch(console.log)
+    }
+}
+
 export function emotesReducer(state = [], action){
     switch(action.type) {
         case SET_EMOTES:

@@ -10,16 +10,23 @@ class EmoteExplorer extends PureComponent {
 	}
     render() {
 		let { query } = this.state
-		let { getEmoteImg } = this.props
+		let { getEmoteImg, onSelectEmote } = this.props
 		let emotes = this.searchedEmotes()
         return (
             <div className="emote-explorer">
-				<div class="subtitle is-size-6 has-text-centered m-b-5">
+				<div className="subtitle is-size-6 has-text-centered m-b-0">
 					Emote reactions
 				</div>
-				<div>
+				<div className="emote-grid">
 				{emotes.map(d=>(
-					<img className="emote-image" src={getEmoteImg(d.id)} key={d.id}/>
+					<div className="emote-image-wrapper" key={d.id}>
+						<img className="emote-image"
+							onClick={e=>onSelectEmote(d.id)}
+							src={getEmoteImg(d.id)} 
+							alt={d.code}
+							title={d.code}
+						/>
+					</div>
 				))}
 				</div>
 				<div className="field">
@@ -38,13 +45,16 @@ class EmoteExplorer extends PureComponent {
 		this.setState({ query: e.target.value })
 	}
 	searchedEmotes(){
-		const maxEmotes = 15
+		const maxEmotes = 32
 		let { query } = this.state
 		let { emotes } = this.props
+		//escape regex special characters
+		query = query.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&");
 		let regex = new RegExp(query,'i');
-		return _(emotes).filter(d=>regex.test(d.code))
-						.take(maxEmotes)
-						.value()
+		return _(emotes)
+				.filter(d=>regex.test(d.code))
+				.take(maxEmotes)
+				.value()
 	}
 }
 
