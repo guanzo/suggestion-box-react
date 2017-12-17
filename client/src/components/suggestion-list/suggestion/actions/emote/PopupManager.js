@@ -8,6 +8,9 @@ const popperModifiers = {
 	preventOverflow:{
 		priority: ['left','right']
 	},
+	offset:{
+		offset: 15
+	},
 	computeStyle:{
 		//if true, popper uses css transform, causing blurry text
 		gpuAcceleration: false,
@@ -24,11 +27,12 @@ class PopupManager extends PureComponent {
 	render(){
 		let { isOpen } = this.state
 		return (
-		<Manager className="open-emotes">
-			<Target>
-				<span onClick={this.togglePopup} className="icon">
+		<Manager className="popup-manager">
+			<Target onClick={this.togglePopup} className="open-emote-explorer">
+				<div>+</div>
+				<div className="icon is-small">
 					<i className="fa fa-smile-o"></i>
-				</span>
+				</div>
 			</Target>
 			<Fade in={isOpen}>
 				<Popper modifiers={popperModifiers} className="popper">

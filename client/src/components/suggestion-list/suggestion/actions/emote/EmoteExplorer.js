@@ -42,7 +42,7 @@ class EmoteExplorer extends PureComponent {
 		this.setState({ query: e.target.value })
 	}
 	searchedEmotes(){
-		const maxEmotes = 32
+		const maxEmotes = 33
 		let { query } = this.state
 		let { emotes } = this.props
 		//escape regex special characters

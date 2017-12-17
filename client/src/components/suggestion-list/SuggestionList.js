@@ -1,24 +1,7 @@
 import React, { Component } from 'react';
 import Suggestion from './suggestion/Suggestion'
 import LoadMore from './LoadMore'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import './SuggestionList.scss'
-
-const end = el => el.addEventListener('transitionend',()=>el.style.transitionDelay = null, false)
-const Fade = ({ children, index, ...props }) => (
-	<CSSTransition
-		{...props}
-		timeout={250}
-		classNames="fade-list"
-		// eslint-disable-next-line react/jsx-no-bind
-		onEnter={el=>el.style.transitionDelay = `${index*.05}s`}
-		addEndListener={end}	
-		appear
-		exit={false}
-	>
-	  {children}
-	</CSSTransition>
-);
+import FlipMove from 'react-flip-move'
 
 class SuggestionList extends Component {
 	constructor(){
@@ -34,21 +17,28 @@ class SuggestionList extends Component {
 		let { hasPaginated } = this.state
 		let { suggestions } = this.props
 		let { listType } = suggestions
+		const animation = {
+			from: { transform: 'translateY(30px)', opacity: 0 },
+			to:   { transform: 'translateY(0px)' , opacity: 1}
+		}
+		const delay = hasPaginated ? 0 : 50
         return (
-            <TransitionGroup className="suggestions-list">
-                {suggestions.data.map((suggestion,i)=>(
-					<Fade index={hasPaginated ? 0 : i}
-						  key={suggestion.id}
-					>
+			<FlipMove appearAnimation={animation} enterAnimation={animation} 
+						leaveAnimation="none" staggerDelayBy={delay}
+			>
+				{suggestions.data.map((suggestion,i)=>(
+					<div key={suggestion.id}>
 						<Suggestion 
 							{...suggestion} 
 							listType={listType}
 						>
 						</Suggestion>
-					</Fade>
+					</div>
                 ))}
-                <LoadMore onClick={this.onPaginate}{...this.props} hasPaginated={hasPaginated}></LoadMore>
-            </TransitionGroup>
+				<LoadMore onClick={this.onPaginate} {...this.props} 
+							hasPaginated={hasPaginated}
+				></LoadMore>
+			</FlipMove>
         )
 	}
 	componentWillReceiveProps(nextProps){

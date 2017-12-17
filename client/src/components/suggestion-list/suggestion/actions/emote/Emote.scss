@@ -2,17 +2,23 @@ $emote-size: 20px;
 $popup-width: 290px;
 $popup-height: 150px;
 
-.emote {
-	display: flex;
-	align-items: center;
-	flex-wrap: wrap;
-	.open-emotes .fa{
-		margin-left: auto;
-		color: grey;
-		&:hover{
-			color: $primary;
-		}
+@mixin emote-wrapper {
+	border: 1px solid lightgrey;
+	border-radius: 5px;
+	@include flex-center;
+	margin: 2px;
+	padding: 0px 1px;
+	cursor: pointer;
+}
+
+@mixin reaction-clickable {
+	transition: .35s;
+	&:hover{
+		border: 1px solid $primary;
 	}
+}
+
+.suggestion-actions {
 	.emote-image-wrapper{
 		height: $emote-size;
 		width: $emote-size;
@@ -26,24 +32,43 @@ $popup-height: 150px;
 		cursor: pointer;
 	}
 	.reaction{
-		border: 1px solid lightgrey;
-		border-radius: 5px;
-		@include flex-center;
-		margin: 0px 4px 4px 4px;
+		@include emote-wrapper;
+		position: relative;
 		.reaction-count{
 			margin: 2px;
 			font-size: 0.75rem;
 		}
+		&.reaction-clickable{
+			@include reaction-clickable;
+			&:after {
+				@include flex-center;
+				content:'+1';
+				background: white;
+				border-radius: 5px;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				position: absolute;
+				pointer-events: none;
+				font-size: 0.9rem;
+				transition: 0.35s;
+			}
+			&:hover:after{
+				opacity: 1;
+			}
+		}
+	}
+	.open-emote-explorer,
+	.show-all-emotes{
+		@include emote-wrapper;
+		@include reaction-clickable;
+		padding: 0px 2px;
 	}
 	.popper{
 		z-index: 10;
 		width: $popup-width;
 		height: $popup-height;
 	}	
-	.show-all-emotes{
-		cursor: pointer;
-		margin-left: 10px;
-	}
 }
 
 .emote-explorer{

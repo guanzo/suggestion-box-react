@@ -37,6 +37,7 @@ module.exports = {
 		'runtime-module':'regeneratorRuntime',
 		'velocity-animate':'Velocity',
 		'lodash' : '_',
-		'react-popper':'ReactPopper'
+		'react-popper':'ReactPopper',
+		'react-flip-move':'FlipMove'
     },
 }

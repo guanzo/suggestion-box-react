@@ -9,8 +9,11 @@ import './Emote.scss'
 class Emote extends PureComponent {
     render() {
 		let { emotes, emoteReactions, hasEmoted } = this.props
-		let onSelect = {
-			onSelectEmote: this.onSelectEmote
+		let onSelect = { onSelectEmote: this.onSelectEmote }
+		let reactionProps = {
+			emoteReactions,
+			hasEmoted,
+			...onSelect
 		}
 		let popupProps = {
 			togglePopup: this.togglePopup,
@@ -19,12 +22,10 @@ class Emote extends PureComponent {
 			...onSelect
 		}
         return (
-            <div className="emote">
-				<Reactions emoteReactions={emoteReactions} 
-						   {...onSelect}
-				></Reactions>
+            <React.Fragment>
+				<Reactions {...reactionProps}></Reactions>
 				{ !hasEmoted ? <PopupManager {...popupProps}></PopupManager> : null }
-			</div>
+			</React.Fragment>
         )
 	}
 	onSelectEmote = (emoteId)=>{
