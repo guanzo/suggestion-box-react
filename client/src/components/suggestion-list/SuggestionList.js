@@ -23,22 +23,24 @@ class SuggestionList extends Component {
 		}
 		const delay = hasPaginated ? 0 : 50
         return (
-			<FlipMove appearAnimation={animation} enterAnimation={animation} 
-						leaveAnimation="none" staggerDelayBy={delay}
-			>
-				{suggestions.data.map((suggestion,i)=>(
-					<div key={suggestion.id}>
-						<Suggestion 
-							{...suggestion} 
-							listType={listType}
-						>
-						</Suggestion>
-					</div>
-                ))}
+			<React.Fragment>
+				<FlipMove appearAnimation={animation} enterAnimation={animation} 
+							leaveAnimation="none" staggerDelayBy={delay}
+				>
+					{suggestions.data.map((suggestion,i)=>(
+						<div key={suggestion.id}>
+							<Suggestion 
+								{...suggestion} 
+								listType={listType}
+							>
+							</Suggestion>
+						</div>
+					))}
+				</FlipMove>
 				<LoadMore onClick={this.onPaginate} {...this.props} 
 							hasPaginated={hasPaginated}
 				></LoadMore>
-			</FlipMove>
+			</React.Fragment>
         )
 	}
 	componentWillReceiveProps(nextProps){

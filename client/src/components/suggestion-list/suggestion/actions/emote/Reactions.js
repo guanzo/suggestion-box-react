@@ -27,7 +27,9 @@ class Reactions extends PureComponent {
 		let className = classNames('reaction', hasEmoted ? '' : 'reaction-clickable')
 		return (
 			<React.Fragment>
-				<FlipMove typeName={null} enterAnimation="none">
+				<FlipMove typeName={null} staggerDelayBy={50}
+							enterAnimation="fade" leaveAnimation="none"
+				>
 					{reactions.map(({emoteId, count})=>(
 						<div onClick={e=>onSelectEmote(emoteId)} 
 							className={className} 
@@ -47,7 +49,7 @@ class Reactions extends PureComponent {
 		let remaining = reactions.length - limit
 		return (
 			remaining > 0 && !showAll
-			? <div onClick={this.showAllEmotes}
+			? <div onClick={this.showAllEmotes} key='showall'
 					className="show-all-emotes is-size-7">{remaining} more</div> 
 			: null
 		)

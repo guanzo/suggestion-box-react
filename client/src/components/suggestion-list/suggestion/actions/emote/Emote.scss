@@ -19,6 +19,7 @@ $popup-height: 150px;
 }
 
 .suggestion-actions {
+	position: relative;
 	.emote-image-wrapper{
 		height: $emote-size;
 		width: $emote-size;

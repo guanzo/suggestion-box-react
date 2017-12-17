@@ -27,7 +27,7 @@ class PopupManager extends PureComponent {
 	render(){
 		let { isOpen } = this.state
 		return (
-		<Manager className="popup-manager">
+		<Manager className="popup-manager" >
 			<Target onClick={this.togglePopup} className="open-emote-explorer">
 				<div>+</div>
 				<div className="icon is-small">
