@@ -1,77 +1,38 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
-import { Manager, Target, Popper } from 'react-popper'
-import enhanceWithClickOutside from 'react-click-outside'
-import { Fade } from '@components/transition/transition'
 import { postEmote } from '@store/emotes'
-import EmoteExplorer from './EmoteExplorer'
+import Reactions from './Reactions'
+import PopupManager from './PopupManager'
 import './Emote.scss'
 
-const popperModifiers = {
-	preventOverflow:{
-		priority: ['left','right']
-	},
-	computeStyle:{
-		//if true, popper uses css transform, causing blurry text
-		gpuAcceleration: false,
-	}
-}
-
-const PopupManager = ({isOpen, togglePopup, ...props}) => (
-	<Manager>
-		<Target>
-			<span onClick={togglePopup} className="icon open-emotes">
-				<i className="fa fa-smile-o"></i>
-			</span>
-		</Target>
-		<Fade in={isOpen}>
-			<Popper modifiers={popperModifiers} className="popper">
-				<EmoteExplorer {...props}></EmoteExplorer>
-			</Popper>
-		</Fade>
-	</Manager>
-  )
 
 class Emote extends PureComponent {
-	constructor(props){
-		super(props)
-		this.state = {
-			isOpen: false
-		}
-	}
     render() {
-		let { isOpen } = this.state
-		let { emotes } = this.props
-		
+		let { emotes, emoteReactions, hasEmoted } = this.props
+		let onSelect = {
+			onSelectEmote: this.onSelectEmote
+		}
 		let popupProps = {
 			togglePopup: this.togglePopup,
 			closePopup: this.closePopup,
-			isOpen,
 			emotes,
-			getEmoteImg: this.getEmoteImg,
-			onSelectEmote: this.onSelectEmote
+			...onSelect
 		}
         return (
-            <div className="emotes m-l-10">
-				<PopupManager {...popupProps}></PopupManager>
-            </div>
+            <div className="emote">
+				<Reactions emoteReactions={emoteReactions} 
+						   {...onSelect}
+				></Reactions>
+				{ !hasEmoted ? <PopupManager {...popupProps}></PopupManager> : null }
+			</div>
         )
 	}
-	getEmoteImg(id){
-		return `https://static-cdn.jtvnw.net/emoticons/v1/${id}/1.0`
-	}
-	handleClickOutside() {
-		this.setState({ isOpen: false })
-	}
-	togglePopup = ()=>{
-		this.setState({ isOpen: !this.state.isOpen })
-	}
 	onSelectEmote = (emoteId)=>{
-		let { postEmote, id:suggestionId } = this.props
-		postEmote(suggestionId, emoteId)
+		let { postEmote, id: suggestionId, listType } = this.props
+		postEmote(suggestionId, emoteId, listType)
 	}
 	componentDidCatch(){
-		console.log('error')
+		
 	}
 }
 
@@ -82,7 +43,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-		postEmote: (suggestionId,emoteId)=>dispatch(postEmote(suggestionId,emoteId)),
+		postEmote: (...args)=>dispatch(postEmote(...args)),
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(enhanceWithClickOutside(Emote))
+export default connect(mapStateToProps,mapDispatchToProps)(Emote)

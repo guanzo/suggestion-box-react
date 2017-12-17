@@ -1,5 +1,6 @@
 import axios from 'axios'
 export const SET_EMOTES = 'SET_EMOTES'
+export const ADD_EMOTE_REACTION = 'ADD_EMOTE_REACTION'
 
 export const initialState = {
     emotes: []
@@ -28,7 +29,7 @@ export function fetchEmotes(){
 }
 
 
-export function postEmote(suggestionId, emoteId){
+export function postEmote(suggestionId, emoteId, listType){
     return (dispatch,getState) => {
         let state = getState()
         let channelId = state.channel.channelId;
@@ -36,8 +37,12 @@ export function postEmote(suggestionId, emoteId){
             emoteId
         })
         .then(res=>{
-			console.log(res)
-			
+			dispatch({
+				type: ADD_EMOTE_REACTION,
+				suggestionId,
+				emoteId,
+				listType,
+			})
         })
 		.catch(console.log)
     }

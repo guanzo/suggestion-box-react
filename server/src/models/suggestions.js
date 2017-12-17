@@ -47,7 +47,7 @@ module.exports = {
 			{ $unwind: '$suggestions' },
 			//approved/pending/user
 			{ $match: matchValue },
-			//get rid of irrelavent channel data
+			//get rid of irrelevent channel data
 			{ $replaceRoot: { newRoot: '$suggestions' } },
 			//add computed fields
             { $addFields: { 
@@ -59,18 +59,20 @@ module.exports = {
 							{$in : [ user.opaqueId, "$votes.opaqueId" ]}
 						]
 					},
+					//map emoteReactions to only return emoteIds
+					emoteReactions: '$emoteReactions.emoteId',
 					//check if user has emoted post with either real id or opaque id
 					hasEmoted: { 
 						$and: [
-							{$in : [ user.id, "$emotes.user.id" ]},
-							{$in : [ user.opaqueId, "$emotes.user.opaqueId" ]}
+							{$in : [ user.id, "$emoteReactions.user.id" ]},
+							{$in : [ user.opaqueId, "$emoteReactions.user.opaqueId" ]}
 						]
 					},
 					broadcasterUpvoted: { $in : [ channelId, "$votes.id" ] }
 				},
 			},
-			//client doesn't need vote data
-			{ $project :	{ votes: 0 } },
+			//client doesn't need original votes data
+			{ $project :	{ votes: 0} },
             { $sort: 		sortValue },
             { $skip:        offset },
             { $limit:       limit },
@@ -137,34 +139,30 @@ module.exports = {
 		})
 	},
 	addEmote(channelId, suggestionId, emoteId, user){
-		//var channels = db.get().collection('channels')
+		var channels = db.get().collection('channels')
 		user = _.pick(user,'id','opaqueId')
 		let suggestionOid = new ObjectID(suggestionId)
 		let data = {
 			emoteId,
 			user
 		}
-		return db.get().command({
-			update: 'channels',
-			updates:[
+		return channels.updateOne(
+			{
+				channelId, 
+				"suggestions":{
+					$elemMatch:{
+						id: suggestionOid,
+						'emoteReactions.user': {$ne: user }
+					}
+				},
+			},
+			{
+				$push:
 				{
-					q:{ 
-						channelId, 
-						  'suggestions.emotes.user': {$ne: user },
-						  "suggestions.id": suggestionOid,
-					},
-					u:{
-						$push:
-						{
-							"suggestions.$[s].emotes": data
-						}
-					},
-					arrayFilters:[
-						{ 's.id': suggestionOid }
-					]
+					"suggestions.$.emoteReactions": data
 				}
-			]
-		})
+			}
+		)
 	},
 	getSuggestionsCount(channelId){
 		var channels = db.get().collection('channels')

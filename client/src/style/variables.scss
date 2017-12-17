@@ -23,5 +23,17 @@ $app-bg-color: white;
 
 $app-darkmode-bg-color: #2E2C35;
 
+@mixin flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin absolute-center{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 
 //linear-gradient(to left, 	#F0FAFE 10%, #e1f5fe 90%);

@@ -48,7 +48,7 @@ function createSuggestionObj({ text, postAnonymously, user }, status){
         user,
         status,
 		votes: [initialVote],
-		emotes:[],
+		emoteReactions:[],
         createdAt: new Date(),
     }
 }
@@ -103,7 +103,7 @@ module.exports = (app) => {
 			{ emoteId } = req.body,
 			user = req.user;
 		let result = await suggestionModel.addEmote(channelId, suggestionId, emoteId, user)
-		let status = result.ok === 1 ? 200 : 400
+		let status = result.modifiedCount === 1 ? 200 : 400
 		res.status(status).end() 
 	})
 	

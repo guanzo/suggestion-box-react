@@ -33,12 +33,6 @@ $avatar-size: 30px;
             cursor: pointer;
 			transition: .25s;
 		}
-		.open-emotes .fa{
-			color: grey;
-			&:hover{
-				color: $primary;
-			}
-		}
 	}
 	&:first-child{
 		border-top: 1px solid lightgrey;

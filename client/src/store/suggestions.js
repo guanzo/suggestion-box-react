@@ -2,6 +2,7 @@ import axios from 'axios'
 import _ from 'lodash'
 //import { delay } from '@util'
 import { toggleLoading } from './loading'
+import { ADD_EMOTE_REACTION } from './emotes'
 export const ADD_SUGGESTIONS = 'ADD_SUGGESTIONS'
 export const SET_SUGGESTIONS = 'SET_SUGGESTIONS'
 export const ADD_POSTED_SUGGESTION = 'ADD_POSTED_SUGGESTION'
@@ -203,6 +204,10 @@ function listPartialReducer(list = {}, action){
 			return {
 				sortBy: action.sortBy,
 			}
+		case ADD_EMOTE_REACTION:
+			return {
+				data: list.data.map(d=>addEmote(d,action))
+			}
 		case TOGGLE_UPVOTE:
 			return {
 				data: list.data.map(d=>toggleVote(d,action))
@@ -221,7 +226,7 @@ function listPartialReducer(list = {}, action){
 }
 
 
-function toggleVote(suggestion = {}, {type, suggestionId, hasUpvoted}){
+function toggleVote(suggestion = {}, {suggestionId, hasUpvoted}){
 	if(suggestion.id !== suggestionId)
 		return suggestion
 		
@@ -229,6 +234,19 @@ function toggleVote(suggestion = {}, {type, suggestionId, hasUpvoted}){
 	return {
 		...suggestion,
 		votesLength: hasUpvoted ? ++votesLength : --votesLength,
-		hasUpvoted: hasUpvoted
+		hasUpvoted
+	}
+}
+
+
+function addEmote(suggestion = {}, {suggestionId, emoteId}){
+	if(suggestion.id !== suggestionId)
+		return suggestion
+		
+	let { emoteReactions } = suggestion
+	return {
+		...suggestion,
+		emoteReactions: [emoteId, ...emoteReactions],
+		hasEmoted: true
 	}
 }

@@ -34,6 +34,15 @@ function generateSuggestion(){
 		let userId = chance.integer({min: 1000, max: 9999}) 
 		votes.push({ userId })
 	}
+	let emoteReactions = []
+	let numEmotes = (status === STATUS_APPROVED) 
+					? chance.integer({min: 20, max: 50}) 
+					: 0
+	for(let i=0;i<numEmotes;i++){
+		let emoteId = chance.integer({min: 1, max: 8}) 
+		let userId = chance.integer({min: 1000, max: 9999}) 
+		emoteReactions.push({ emoteId, user:{ userId, opaqueId: userId } })
+	}
 	
     return {
         id: new ObjectID(),
@@ -41,7 +50,8 @@ function generateSuggestion(){
         "postAnonymously": chance.bool(),
         createdAt: moment().subtract(chance.integer({min:0,max:500}),'days').toDate(),
         status,
-        votes,
+		votes,
+		emoteReactions,
         "user": {
             "id":  userId,
             "opaqueId": 'U'+userId,

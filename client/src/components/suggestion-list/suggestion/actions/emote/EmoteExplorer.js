@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux'
 import _ from 'lodash'
+import EmoteImage from './EmoteImage'
+
 class EmoteExplorer extends PureComponent {
 	constructor(props){
 		super(props)
@@ -10,7 +11,7 @@ class EmoteExplorer extends PureComponent {
 	}
     render() {
 		let { query } = this.state
-		let { getEmoteImg, onSelectEmote } = this.props
+		let { onSelectEmote } = this.props
 		let emotes = this.searchedEmotes()
         return (
             <div className="emote-explorer">
@@ -18,15 +19,11 @@ class EmoteExplorer extends PureComponent {
 					Emote reactions
 				</div>
 				<div className="emote-grid">
-				{emotes.map(d=>(
-					<div className="emote-image-wrapper" key={d.id}>
-						<img className="emote-image"
-							onClick={e=>onSelectEmote(d.id)}
-							src={getEmoteImg(d.id)} 
-							alt={d.code}
-							title={d.code}
-						/>
-					</div>
+				{emotes.map(emote=>(
+					<EmoteImage emote={emote}
+						onSelectEmote={onSelectEmote} 
+						key={emote.id}
+					></EmoteImage>
 				))}
 				</div>
 				<div className="field">

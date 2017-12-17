@@ -13,7 +13,7 @@ export class Upvote extends PureComponent {
 		const title = isAnonymousUser ? 'You must login to upvote':''
 		const style = { cursor: isAnonymousUser ? 'not-allowed' : 'pointer' }
         return (
-        <div className="flex align-center justify-start">
+        <div className="upvote flex align-center m-r-5">
             <span className="icon">
 				<i onClick={this.props.toggleUpvote} className={classes} style={style} title={title}></i>
 			</span>
