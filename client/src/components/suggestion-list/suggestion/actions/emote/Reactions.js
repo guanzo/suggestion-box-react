@@ -21,11 +21,11 @@ class Reactions extends PureComponent {
 		this.setState({ reactions })
 	}
     render() {
-		let { onSelectEmote, allowedToEmote } = this.props
+		let { onSelectEmote, isAllowedToEmote } = this.props
 		let { reactions, showAll, limit } = this.state
 		reactions = showAll ? reactions : reactions.slice(0,limit)
 
-		let className = classNames('reaction', allowedToEmote ? 'reaction-clickable':'')
+		let className = classNames('reaction', isAllowedToEmote ? 'reaction-clickable':'')
 		let animation = {
 			from: { transform: 'rotateX(90deg)', opacity: 0 }
 		}

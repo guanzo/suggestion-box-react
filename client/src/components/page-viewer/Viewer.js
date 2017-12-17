@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './header/Header'
 import Body from './body/Body'
 import './Viewer.scss';
-import Overlay from '@components/page-viewer/suggest/_Overlay'
+import Overlay from '@components/page-viewer/overlay/_Overlay'
 //removed in production build
 import TestGui from '@components/testgui/testgui'
 

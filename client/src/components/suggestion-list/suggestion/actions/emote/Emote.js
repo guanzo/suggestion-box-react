@@ -10,12 +10,12 @@ class Emote extends PureComponent {
     render() {
 		let { emotes, emoteReactions } = this.props
 		let onSelect = { onSelectEmote: this.onSelectEmote }
-		let allowedToEmote = this.allowedToEmote()
-		
+		let isAllowedToEmote = this.isAllowedToEmote()
+
 		let reactionProps = {
 			emoteReactions,
 			...onSelect,
-			allowedToEmote
+			isAllowedToEmote
 		}
 		let popupProps = {
 			togglePopup: this.togglePopup,
@@ -27,17 +27,17 @@ class Emote extends PureComponent {
         return (
             <React.Fragment>
 				<Reactions {...reactionProps}></Reactions>
-				{ allowedToEmote ? <PopupManager {...popupProps}></PopupManager> : null }
+				{ isAllowedToEmote ? <PopupManager {...popupProps}></PopupManager> : null }
 			</React.Fragment>
         )
 	}
-	allowedToEmote(){
+	isAllowedToEmote(){
 		let { hasEmoted, currentUser } = this.props
 		return !(hasEmoted || currentUser.isAnonymousUser)
-	}
+	}//can select emote from reactions list or popup
 	onSelectEmote = (emoteId)=>{
-		let { postEmote, id: suggestionId, listType,currentUser,hasEmoted } = this.props
-		if(!this.allowedToEmote())
+		let { postEmote, id: suggestionId, listType } = this.props
+		if(!this.isAllowedToEmote())
 			return;
 
 		postEmote(suggestionId, emoteId, listType)
