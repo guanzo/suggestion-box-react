@@ -21,14 +21,18 @@ class Reactions extends PureComponent {
 		this.setState({ reactions })
 	}
     render() {
-		let { onSelectEmote, hasEmoted } = this.props
+		let { onSelectEmote, allowedToEmote } = this.props
 		let { reactions, showAll, limit } = this.state
 		reactions = showAll ? reactions : reactions.slice(0,limit)
-		let className = classNames('reaction', hasEmoted ? '' : 'reaction-clickable')
+
+		let className = classNames('reaction', allowedToEmote ? 'reaction-clickable':'')
+		let animation = {
+			from: { transform: 'rotateX(90deg)', opacity: 0 }
+		}
 		return (
 			<React.Fragment>
 				<FlipMove typeName={null} staggerDelayBy={50}
-							enterAnimation="fade" leaveAnimation="none"
+							enterAnimation={animation} leaveAnimation="none"
 				>
 					{reactions.map(({emoteId, count})=>(
 						<div onClick={e=>onSelectEmote(emoteId)} 

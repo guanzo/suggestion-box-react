@@ -8,11 +8,11 @@ $popup-height: 150px;
 	@include flex-center;
 	margin: 2px;
 	padding: 0px 1px;
-	cursor: pointer;
 }
 
 @mixin reaction-clickable {
-	transition: .35s;
+	transition: border .35s;
+	cursor: pointer;
 	&:hover{
 		border: 1px solid $primary;
 	}
@@ -30,7 +30,6 @@ $popup-height: 150px;
 		height: $emote-size;
 		width: $emote-size;
 		object-fit: contain;
-		cursor: pointer;
 	}
 	.reaction{
 		@include emote-wrapper;
@@ -86,6 +85,9 @@ $popup-height: 150px;
 		justify-content: center;
 		flex-wrap: wrap;
 		padding: 5px 0px;
+		.emote-image{
+			cursor: pointer;
+		}
 	}
 	.field{
 		margin-top: auto;

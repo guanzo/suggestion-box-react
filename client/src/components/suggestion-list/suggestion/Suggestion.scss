@@ -3,8 +3,12 @@ $avatar-size: 30px;
 .suggestion {
 	position: relative;
 	padding: 10px;
-	transition: .35s;
+	transition: background-color .35s;
 	word-wrap: break-word;
+	border-bottom: 1px solid lightgrey;
+	&:first-child{
+		border-top: 1px solid lightgrey;
+	}
     .suggestion-header{
         display: flex;
         align-items: center;
@@ -33,12 +37,6 @@ $avatar-size: 30px;
             cursor: pointer;
 			transition: .25s;
 		}
-	}
-	&:first-child{
-		border-top: 1px solid lightgrey;
-	}
-	&:not(:last-child){
-		border-bottom: 1px solid lightgrey;
 	}
 	&.is-deleted{
 		background-color: #f4eaea;

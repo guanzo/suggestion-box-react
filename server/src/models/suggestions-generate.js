@@ -35,11 +35,12 @@ function generateSuggestion(){
 		votes.push({ userId })
 	}
 	let emoteReactions = []
+	let emotes = [425618,114836,28087,22639,360,354,245,88,25,41,33,]
 	let numEmotes = (status === STATUS_APPROVED) 
 					? chance.integer({min: 20, max: 50}) 
 					: 0
 	for(let i=0;i<numEmotes;i++){
-		let emoteId = chance.integer({min: 1, max: 8}) 
+		let emoteId = chance.pickone(emotes)
 		let userId = chance.integer({min: 1000, max: 9999}) 
 		emoteReactions.push({ emoteId, user:{ userId, opaqueId: userId } })
 	}

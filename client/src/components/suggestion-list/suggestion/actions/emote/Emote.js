@@ -8,12 +8,14 @@ import './Emote.scss'
 
 class Emote extends PureComponent {
     render() {
-		let { emotes, emoteReactions, hasEmoted } = this.props
+		let { emotes, emoteReactions } = this.props
 		let onSelect = { onSelectEmote: this.onSelectEmote }
+		let allowedToEmote = this.allowedToEmote()
+		
 		let reactionProps = {
 			emoteReactions,
-			hasEmoted,
-			...onSelect
+			...onSelect,
+			allowedToEmote
 		}
 		let popupProps = {
 			togglePopup: this.togglePopup,
@@ -21,15 +23,23 @@ class Emote extends PureComponent {
 			emotes,
 			...onSelect
 		}
+		
         return (
             <React.Fragment>
 				<Reactions {...reactionProps}></Reactions>
-				{ !hasEmoted ? <PopupManager {...popupProps}></PopupManager> : null }
+				{ allowedToEmote ? <PopupManager {...popupProps}></PopupManager> : null }
 			</React.Fragment>
         )
 	}
+	allowedToEmote(){
+		let { hasEmoted, currentUser } = this.props
+		return !(hasEmoted || currentUser.isAnonymousUser)
+	}
 	onSelectEmote = (emoteId)=>{
-		let { postEmote, id: suggestionId, listType } = this.props
+		let { postEmote, id: suggestionId, listType,currentUser,hasEmoted } = this.props
+		if(!this.allowedToEmote())
+			return;
+
 		postEmote(suggestionId, emoteId, listType)
 	}
 	componentDidCatch(){

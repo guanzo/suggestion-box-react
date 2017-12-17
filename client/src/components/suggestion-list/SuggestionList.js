@@ -18,8 +18,7 @@ class SuggestionList extends Component {
 		let { suggestions } = this.props
 		let { listType } = suggestions
 		const animation = {
-			from: { transform: 'translateY(30px)', opacity: 0 },
-			to:   { transform: 'translateY(0px)' , opacity: 1}
+			from: { transform: 'translateY(30px)', opacity: 0 }
 		}
 		const delay = hasPaginated ? 0 : 50
         return (
@@ -28,13 +27,12 @@ class SuggestionList extends Component {
 							leaveAnimation="none" staggerDelayBy={delay}
 				>
 					{suggestions.data.map((suggestion,i)=>(
-						<div key={suggestion.id}>
-							<Suggestion 
-								{...suggestion} 
-								listType={listType}
-							>
-							</Suggestion>
-						</div>
+						<Suggestion 
+							{...suggestion} 
+							listType={listType}
+							key={suggestion.id}
+						>
+						</Suggestion>
 					))}
 				</FlipMove>
 				<LoadMore onClick={this.onPaginate} {...this.props} 
