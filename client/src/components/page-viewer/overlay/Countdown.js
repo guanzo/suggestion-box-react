@@ -11,6 +11,7 @@ class Countdown extends Component {
 		}
 	}
 	componentDidMount(){
+		this.tick()
 		this.intervalId = setInterval(()=>this.tick(),1000)
 	}
 	componentWillUnmount(){
@@ -24,7 +25,7 @@ class Countdown extends Component {
 			language += 'now'
 		else
 			language += 'again in...'
-
+		
 		let format = moment.utc(t.asMilliseconds()).format("HH:mm:ss")
 
         return (
@@ -32,7 +33,7 @@ class Countdown extends Component {
 			<p className="m-b-15">{language}</p> 
 			{ hasTimeRemaining ? <p className="is-size-1">{format}</p> : null }
         </div>
-        );
+        )
 	}
 	hasTimeRemaining(){
 		return this.state.time.asMilliseconds() > 0
