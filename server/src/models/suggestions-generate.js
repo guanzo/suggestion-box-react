@@ -41,8 +41,8 @@ function generateSuggestion(){
 					: 0
 	for(let i=0;i<numEmotes;i++){
 		let emoteId = chance.pickone(emotes)
-		let userId = chance.integer({min: 1000, max: 9999}) 
-		emoteReactions.push({ emoteId, user:{ userId, opaqueId: userId } })
+		let id = chance.integer({min: 1000, max: 9999}) 
+		emoteReactions.push({ emoteId, user:{ id, opaqueId: id } })
 	}
 	
     return {

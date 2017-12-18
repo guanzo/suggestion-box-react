@@ -16,17 +16,13 @@ module.exports = {
         await addChannel(channelId, channelName);
         return channels
                 .findOne({ channelId }, { _id: 0, suggestions: 0 })
-                .catch(err=>{
-                    console.log(err)
-                })
+				.catch(console.error)
 	},
 	async updateSettings(channelId, requireApproval, allowModAdmin, rules ){
         var channels = db.get().collection('channels')
 		return channels
 			.updateOne({ channelId },  { $set: { requireApproval, allowModAdmin, rules } } )
-			.catch(err=>{
-				console.log(err)
-			})
+			.catch(console.error)
 	}
 }
 
@@ -50,4 +46,5 @@ function addChannel(channelId,channelName){
         update, 
         { upsert: true }
     )
+	.catch(console.error)
 }

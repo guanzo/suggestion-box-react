@@ -93,7 +93,7 @@ export function fetchSuggestions(listType, actionType = SET_SUGGESTIONS){
 		let { offset, sortBy } = state.suggestions[listType]
 		let { channelId } = state.channel
 		return axios.get(`/api/channels/${channelId}/suggestions`,{
-			params:{ offset, listType, limit: PAGE_LIMIT, sortBy },
+			params:{ listType, offset, limit: PAGE_LIMIT, sortBy },
 		})
         .then(res=>{
 			let { data } = res

@@ -49,14 +49,19 @@ module.exports = {
 			{ $match: matchValue },
 			//get rid of irrelevent channel data
 			{ $replaceRoot: { newRoot: '$suggestions' } },
+			{	//backwards compatibility for suggestions that don't have emoteReactions field
+				$addFields:{
+					emoteReactions:{ $ifNull:[ '$emoteReactions', [] ] }
+				}
+			},
 			//add computed fields
             { $addFields: { 
 					votesLength: { $size: "$votes" } ,
 					//check if user has upvoted post with either real id or opaque id
 					hasUpvoted: { 
 						$and: [
-							{$in : [ user.id, "$votes.id" ]},
-							{$in : [ user.opaqueId, "$votes.opaqueId" ]}
+							{$in: [ user.id, "$votes.id" ]},
+							{$in: [ user.opaqueId, "$votes.opaqueId" ]}
 						]
 					},
 					//map emoteReactions to only return emoteIds
@@ -64,20 +69,21 @@ module.exports = {
 					//check if user has emoted post with either real id or opaque id
 					hasEmoted: { 
 						$and: [
-							{$in : [ user.id, "$emoteReactions.user.id" ]},
-							{$in : [ user.opaqueId, "$emoteReactions.user.opaqueId" ]}
+							{$in: [ user.id, "$emoteReactions.user.id" ]},
+							{$in: [ user.opaqueId, "$emoteReactions.user.opaqueId" ]}
 						]
 					},
-					broadcasterUpvoted: { $in : [ channelId, "$votes.id" ] }
+					broadcasterUpvoted: { $in: [ channelId, "$votes.id" ] }
 				},
 			},
 			//client doesn't need original votes data
-			{ $project :	{ votes: 0} },
+			{ $project:		{ votes: 0 } },
             { $sort: 		sortValue },
             { $skip:        offset },
             { $limit:       limit },
         ])
-        .toArray()
+		.toArray()
+		.catch(console.error)
 
 	},
     addSuggestion(channelId, suggestion){
@@ -93,6 +99,7 @@ module.exports = {
                 }
             }
         )
+		.catch(console.error)
 	},
 	/**
 	 * 
@@ -109,6 +116,7 @@ module.exports = {
 			{ channelId, "suggestions.id": new ObjectID(suggestionId) },
 			{ $set: setFields }
         )
+		.catch(console.error)
 	},
 	upvote(channelId,suggestionId,user){
 		var channels = db.get().collection('channels')
@@ -121,6 +129,7 @@ module.exports = {
 					"suggestions.$.votes": user
 				}
 			})
+			.catch(console.error)
 	},//not technically a downvote, it just removes existing upvote
 	//checks for real user vote && opaque user vote to be thorough.
 	downvote(channelId,suggestionId,user){
@@ -137,6 +146,7 @@ module.exports = {
 					]
 				}
 		})
+		.catch(console.error)
 	},
 	addEmote(channelId, suggestionId, emoteId, user){
 		var channels = db.get().collection('channels')
@@ -163,6 +173,7 @@ module.exports = {
 				}
 			}
 		)
+		.catch(console.error)
 	},
 	getSuggestionsCount(channelId){
 		var channels = db.get().collection('channels')
@@ -170,5 +181,6 @@ module.exports = {
 			{ $match:{ channelId } },
 			{ $project: { count: { $size: '$suggestions' } } }
 		])
+		.catch(console.error)
 	},
 }

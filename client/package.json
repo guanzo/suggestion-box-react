@@ -1,5 +1,5 @@
 {
-	"name": "suggestion-box",
+	"name": "suggestionbox-client",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
