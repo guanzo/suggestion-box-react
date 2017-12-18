@@ -147,19 +147,17 @@ export function toggleUpvote({ id: suggestionId, hasUpvoted }){
 		let listType = state.suggestions.currentListType
 		hasUpvoted = !hasUpvoted
 
-		let voteType = hasUpvoted ? 'upvote' : 'downvote'
+		dispatch({ 
+			type: TOGGLE_UPVOTE,
+			suggestionId,
+			hasUpvoted,
+			listType
+		 })
 
+		let voteType = hasUpvoted ? 'upvote' : 'downvote'
         return axios.put(`/api/channels/${channelId}/suggestions/${suggestionId}/votes`,{
 			voteType
 		})
-        .then(res=>{
-			dispatch({ 
-				type: TOGGLE_UPVOTE,
-				suggestionId,
-				hasUpvoted,
-				listType
-			 })
-        })
         .catch(console.log)
     }
 }

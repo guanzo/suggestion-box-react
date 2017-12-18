@@ -1,7 +1,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createStore } from 'redux';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import {Upvote} from '../Upvote';
@@ -24,10 +23,6 @@ function mockProps(){
 }
 
 describe('<Upvote />',()=>{
-	it('says broadcaster likes this if he did',()=>{
-		const wrapper = shallow(<Upvote {...mockProps()}/>)
-		expect(wrapper.find('.broadcaster-likes')).toHaveLength(1);
-	})
 	it('renders correctly',()=>{
 		const component = renderer.create(<Upvote {...mockProps()}/>)
 		let tree = component.toJSON();

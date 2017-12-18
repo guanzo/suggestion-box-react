@@ -71,6 +71,10 @@ export class Toolbar extends Component {
 		this.setState({ sortBy })
 		this.props.sortSuggestions(sortBy)
 	}
+	componentDidCatch(error, info){
+		console.log(error)
+		//console.log(info)
+	}
 }
 
 const mapStateToProps = (state) => {

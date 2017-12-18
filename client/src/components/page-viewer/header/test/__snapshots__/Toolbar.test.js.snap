@@ -5,40 +5,6 @@ exports[`<Toolbar /> renders correctly 1`] = `
   className="toolbar flex is-size-7"
 >
   <div
-    className="flex-center"
-    style={
-      Object {
-        "opacity": 1,
-        "transition": "250ms",
-      }
-    }
-  >
-    <span
-      className="m-r-5"
-    >
-      Sort by
-    </span>
-    <div
-      className="select is-small select-sort-by"
-    >
-      <select
-        onChange={[Function]}
-        value="votesLength"
-      >
-        <option
-          value="votesLength"
-        >
-          Top
-        </option>
-        <option
-          value="createdAt"
-        >
-          New
-        </option>
-      </select>
-    </div>
-  </div>
-  <div
     className="flex-center m-l-a"
   >
     <span

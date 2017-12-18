@@ -9,7 +9,7 @@ const {
 	SORT_VOTES, SORT_NEW, LIST_APPROVED, LIST_PENDING
 } = require('@shared/suggestion-util')
 
-function mockProps({currentListType = LIST_APPROVED, isAdmin, hasSuggestions = true}){
+function mockProps({currentListType = LIST_APPROVED, isAdmin, hasSuggestions = false}){
 	return {
 		currentUser: {
 			isAdmin

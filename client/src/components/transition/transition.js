@@ -8,8 +8,8 @@ export const Fade = ({ children, ...props }) => (
 		{...props}
 		timeout={duration}
 		classNames="fade"
-		appear
-		unmountOnExit
+		appear={true}
+		unmountOnExit={true}
 	>
 	  {children}
 	</CSSTransition>

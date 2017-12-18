@@ -46,6 +46,7 @@ class Emote extends PureComponent {
 		
 	}
 }
+export { Emote }
 
 const mapStateToProps = (state, ownProps) => {
     return {

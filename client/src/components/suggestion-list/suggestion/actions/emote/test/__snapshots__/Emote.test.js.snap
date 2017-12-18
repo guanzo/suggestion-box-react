@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Emote /> renders correctly 1`] = `
+<div
+  className="popup-manager"
+>
+  <div
+    className="open-emote-explorer"
+    onClick={[Function]}
+  >
+    <div>
+      +
+    </div>
+    <div
+      className="icon is-small"
+    >
+      <i
+        className="fa fa-smile-o"
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -2,7 +2,7 @@
 
 exports[`<Upvote /> renders correctly 1`] = `
 <div
-  className="flex align-center justify-start"
+  className="upvote flex align-center m-r-5"
 >
   <span
     className="icon"
@@ -23,10 +23,5 @@ exports[`<Upvote /> renders correctly 1`] = `
   >
     1
   </div>
-  <p
-    className="broadcaster-likes m-l-10 is-size-7"
-  >
-    guanzo likes this
-  </p>
 </div>
 `;

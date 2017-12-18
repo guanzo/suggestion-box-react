@@ -8,7 +8,7 @@
     "start": "concurrently  \"npm run server\" \"npm run client\" ",
     "server": "cd server && npm run start",
     "client": "cd client && npm run start",
-    "test": "mocha shared && cd client && npm run test && cd ../server && mocha src/**/*.spec.js --recursive"
+    "test": "mocha shared && cd server && mocha src/**/*.spec.js --recursive && cd ../client && npm run test "
   },
   "dependencies": {
     "moment": "^2.19.3"

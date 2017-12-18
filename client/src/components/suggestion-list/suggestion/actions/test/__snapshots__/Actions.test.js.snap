@@ -2,10 +2,10 @@
 
 exports[`<Actions /> renders correctly 1`] = `
 <div
-  className="suggestion-actions flex"
+  className="suggestion-actions flex justify-start"
 >
   <div
-    className="flex align-center justify-start"
+    className="upvote flex align-center m-r-5"
   >
     <span
       className="icon"
@@ -26,11 +26,25 @@ exports[`<Actions /> renders correctly 1`] = `
     >
       1
     </div>
-    <p
-      className="broadcaster-likes m-l-10 is-size-7"
+  </div>
+  <div
+    className="popup-manager"
+  >
+    <div
+      className="open-emote-explorer"
+      onClick={[Function]}
     >
-      guanzo likes this
-    </p>
+      <div>
+        +
+      </div>
+      <div
+        className="icon is-small"
+      >
+        <i
+          className="fa fa-smile-o"
+        />
+      </div>
+    </div>
   </div>
   <div
     className="suggestion-admin-actions flex-center m-l-a"
