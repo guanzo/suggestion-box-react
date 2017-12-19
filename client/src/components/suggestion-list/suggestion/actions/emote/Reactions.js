@@ -30,7 +30,7 @@ class Reactions extends PureComponent {
 			from: { transform: 'rotateX(90deg)', opacity: 0 }
 		}
 		return (
-			<React.Fragment>
+			<>
 				<FlipMove typeName={null} staggerDelayBy={50}
 							enterAnimation={animation} leaveAnimation="none"
 				>
@@ -45,7 +45,7 @@ class Reactions extends PureComponent {
 					))}
 					{this.remainingEmotes()}
 				</FlipMove>
-			</React.Fragment>
+			</>
 		)
 	}
 	remainingEmotes(){

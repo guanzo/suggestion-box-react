@@ -22,7 +22,7 @@ class SuggestionList extends Component {
 		}
 		const delay = hasPaginated ? 0 : 50
         return (
-			<React.Fragment>
+			<>
 				<FlipMove appearAnimation={animation} enterAnimation={animation} 
 							leaveAnimation="none" staggerDelayBy={delay}
 				>
@@ -38,7 +38,7 @@ class SuggestionList extends Component {
 				<LoadMore onClick={this.onPaginate} {...this.props} 
 							hasPaginated={hasPaginated}
 				></LoadMore>
-			</React.Fragment>
+			</>
         )
 	}
 	componentWillReceiveProps(nextProps){

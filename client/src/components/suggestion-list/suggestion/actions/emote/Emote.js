@@ -25,10 +25,10 @@ class Emote extends PureComponent {
 		}
 		
         return (
-            <React.Fragment>
+            <>
 				<Reactions {...reactionProps}></Reactions>
 				{ isAllowedToEmote ? <PopupManager {...popupProps}></PopupManager> : null }
-			</React.Fragment>
+			</>
         )
 	}
 	isAllowedToEmote(){

@@ -91,7 +91,7 @@ class Config extends Component {
 						{label}
 					</label>
 					<p className="help">
-					{help.map(d=><React.Fragment key={d}>{d}<br/></React.Fragment>)}
+					{help.map(d=><>{d}<br/></>)}
 					</p>
 				</div>
 			</div>

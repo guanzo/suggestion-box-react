@@ -39,7 +39,7 @@ class EmoteExplorer extends PureComponent {
         )
 	}
 	handleInput = (e)=>{
-		this.setState({ query: e.target.value })
+		this.setState({ query: e.target.value.trim() })
 	}
 	searchedEmotes(){
 		const maxEmotes = 33

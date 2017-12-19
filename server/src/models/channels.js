@@ -40,6 +40,7 @@ function addChannel(channelId,channelName){
     //keep updating channelName in case it gets changed
 	if(channelName)
 		Object.assign(update, { $set:{ channelName }})
+		
     var channels = db.get().collection('channels')
     return channels.updateOne(
         {channelId},
