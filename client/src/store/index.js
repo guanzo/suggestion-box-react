@@ -49,6 +49,6 @@ function root(state = initialState, action){
     }
 }
 
-let store = createStore(root,applyMiddleware(ReduxThunk))
+const store = createStore(root,applyMiddleware(ReduxThunk))
 
 export default store

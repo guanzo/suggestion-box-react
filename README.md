@@ -10,3 +10,5 @@ A twitch panel extension that allows viewers post suggestions about the stream.
 * Comment sorting/pagination
 * Moderation tools for the broadcaster and chat moderators.
 * Customizable posting rules
+
+The extension can be found on my twitch channel: twitch.tv/guanzo
