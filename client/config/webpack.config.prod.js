@@ -321,13 +321,7 @@ const prodWebpackConfig = merge(baseWebpackConfig,{
     new webpack.DefinePlugin(env.stringified),
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        dead_code: true,
-		unused: true,
-		side_effects: true,
-		warnings: false,
-        comparisons: false,
-	  },    
+      compress: false,
 	  mangle: false,
       output: {
         beautify: true,

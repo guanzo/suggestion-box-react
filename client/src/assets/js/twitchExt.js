@@ -73,7 +73,8 @@ function inIframe () {
 }
 
 function getTwitchUser(userId){
-    return axios.get(`https://api.twitch.tv/helix/users?id=${userId}`).then((response)=>{
+	return axios.get(`https://api.twitch.tv/helix/users?id=${userId}`)
+	.then((response)=>{
         let user = response.data.data[0];
         return user
     })

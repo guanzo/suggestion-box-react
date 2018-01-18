@@ -42,11 +42,3 @@ $sides: (top, bottom, left, right); // Leave this variable alone
         padding-#{$side}: auto;
     }
 }
-@each $side in $sides {
-    .m-#{str-slice($side, 0, 1)}-a{
-        margin-#{$side}: auto;
-    }
-    .p-#{str-slice($side, 0, 1)}-a{
-        padding-#{$side}: auto;
-    }
-}
