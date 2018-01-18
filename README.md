@@ -12,6 +12,6 @@ A Twitch panel extension that allows viewers post suggestions about the stream.
 * Customizable posting rules
 
 
-The extension can be found on my Twitch channel: [twitch.tv/guanzo](https://www.twitch.tv/guanzo) (scroll down below the video)
+The extension can be viewed on my Twitch channel: [twitch.tv/guanzo](https://www.twitch.tv/guanzo) (scroll down below the video)
 
 You can also find it on the Twitch extensions list.
