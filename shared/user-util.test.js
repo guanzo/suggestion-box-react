@@ -15,4 +15,4 @@ describe('user-util',()=>{
 		let lastSuggestDate = moment().subtract(25,'hours')
 		expect(userUtil.isAllowedToSuggest(lastSuggestDate)).to.be.true
 	})
-})
+}) 

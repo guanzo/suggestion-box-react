@@ -6,10 +6,12 @@ import { initialState, updateChannel } from '@store/channel'
 import store from '@store'
 import _ from 'lodash'
 import classNames from 'classnames'
+import ToggleSettings from './ToggleSettings'
+import PostCooldown from './PostCooldown'
 import Rules from './Rules'
 import './Config.scss'
 
-const settingsProperties = ['requireApproval','allowModAdmin','rules']
+const settingsProperties = ['requireApproval','allowModAdmin','rules','postCooldownMinutes']
 const defaultSettings = _.pick(initialState.channel,settingsProperties)
 
 class Config extends Component {
@@ -19,14 +21,58 @@ class Config extends Component {
 			isLoading: false,
 			...defaultSettings
 		}
-		this.updateSettings = this.updateSettings.bind(this)
-		this.handleInput = this.handleInput.bind(this)
-		this.deleteRule = this.deleteRule.bind(this)
-		this.addRule = this.addRule.bind(this)
+		this.updateSettings 		= this.updateSettings.bind(this)
+		this.handleCheckboxInput 	= this.handleCheckboxInput.bind(this)
+		this.handleRuleInput 		= this.handleRuleInput.bind(this)
+		this.deleteRule 			= this.deleteRule.bind(this)
+		this.addRule 				= this.addRule.bind(this)
+		this.updateCooldown 		= this.updateCooldown.bind(this)
 	}
 	componentWillReceiveProps(props){
-		let { requireApproval, allowModAdmin, rules } = props.channel
-		this.setState({ requireApproval, allowModAdmin, rules })
+		let settings = _.pick(props.channel,settingsProperties)
+		this.setState( settings )
+	}
+    render() {
+		let { appIsLoading } = this.props
+        return appIsLoading ? null : this.renderSettings()
+	}
+	renderSettings(){
+		let { isLoading } = this.state
+		let { channel } = this.props
+		let hasUnsavedChanges = this.hasUnsavedChanges()
+		let btnClass = classNames("button", 
+								{ 'is-loading': isLoading }, 
+								hasUnsavedChanges ? 'is-warning':'is-success'
+							)
+		return (
+			<div className="config">
+				<h3 className="subtitle is-4">Thanks for installing Suggestion Box!</h3>
+				<p className="m-b-15">I hope this extension will make your stream experience better.</p>
+				<hr />
+				<form onSubmit={this.updateSettings}>
+					<h3 className="subtitle is-4 m-t-25 m-b-5">Settings</h3>
+					<p className="help m-b-25">
+						Make sure to save your changes.
+					</p>
+					<ToggleSettings handleCheckboxInput={this.handleCheckboxInput}
+									{...this.state}
+					></ToggleSettings>
+					<PostCooldown postCooldownMinutes={channel.postCooldownMinutes}
+									updateCooldown={this.updateCooldown}
+					>
+					</PostCooldown>
+					<Rules rules={this.state.rules} 
+							handleRuleInput={this.handleRuleInput}
+							deleteRule={this.deleteRule}
+							addRule={this.addRule}
+					></Rules>
+					<div className="m-t-40">
+						{hasUnsavedChanges ? <div className="help m-b-5">You have unsaved changes</div> : null}
+						<button className={btnClass}>Save</button>
+					</div>
+				</form>
+			</div>
+		)
 	}
 	hasUnsavedChanges(){
 		let originalSettings = _.pick(this.props.channel,settingsProperties)
@@ -34,70 +80,10 @@ class Config extends Component {
 
 		return !_.isEqual(originalSettings,currentSettings)
 	}
-    render() {
-		let { isLoading } = this.state
-		let hasUnsavedChanges = this.hasUnsavedChanges()
-		let btnClass = classNames("button", 
-								{ 'is-loading': isLoading }, 
-								hasUnsavedChanges ? 'is-warning':'is-success'
-							)
-        return (
-        <div className="config">
-			<h3 className="subtitle">Thanks for installing Suggestion Box!</h3>
-			<p className="m-b-15">I hope this extension will make your stream experience better.</p>
-			<hr />
-			<form onSubmit={this.updateSettings}>
-        		<h3 className="subtitle m-t-25">Settings</h3>
-				{
-					this.checkbox(
-						'requireApproval',
-						'Require suggestions to be approved',
-						'By default, anybody will be able to publicly post to your suggestion box.',
-						'Check this box if you want each suggestion to be approved by you or a moderator before going public.'
-					)
-				}
-				{
-					this.checkbox(
-						'allowModAdmin',
-						'Allow moderators to administer suggestions',
-						'Chat moderators will have the same admin control as you. They will be able to approve and delete suggestions.',
-						'Moderators must grant this extension their Twitch User ID in order to become admins.'
-					)
-				}
-				<Rules rules={this.state.rules} 
-						handleInput={this.handleInput}
-						deleteRule={this.deleteRule}
-						addRule={this.addRule}
-				></Rules>
-				<div className="m-t-40">
-					{hasUnsavedChanges ? <div className="help m-b-5">You have unsaved changes</div> : null}
-					<button className={btnClass}>Save</button>
-				</div>
-			</form>
-        </div>
-        );
+	handleCheckboxInput(propertyName, isChecked){
+		this.setState({ [propertyName]: isChecked })
 	}
-	checkbox(propertyName,label, ...help){
-		let style = {verticalAlign: 'middle'}
-		let propertyValue = this.state[propertyName]
-		return (
-			<div className="field">  
-				<div className="control">
-					<label className="checkbox"> 
-					<input type="checkbox" className="m-r-5" style={style} 
-					checked={propertyValue}
-					onChange={e=>this.setState({ [propertyName]: e.target.checked })}
-					/>
-						{label}
-					</label>
-					<p className="help">
-					{help.map(d=><>{d}<br/></>)}
-					</p>
-				</div>
-			</div>
-		)
-	}
-	handleInput(rule,index){
+	handleRuleInput(rule,index){
 		let rules = [...this.state.rules]
 		rules[index] = rule
 		this.setState({ rules })
@@ -109,6 +95,9 @@ class Config extends Component {
 	deleteRule(index){
 		let rules = this.state.rules.filter((d,i)=>i !== index)
 		this.setState({ rules })
+	}
+	updateCooldown(postCooldownMinutes){
+		this.setState({ postCooldownMinutes })
 	}
 	async updateSettings(e){
 		e.preventDefault();
@@ -123,7 +112,8 @@ class Config extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-		channel: state.channel
+		channel: state.channel,
+		appIsLoading: state.isLoading
     }
 }
 export default connect(mapStateToProps)(Config)

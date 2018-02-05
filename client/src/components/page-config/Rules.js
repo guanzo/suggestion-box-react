@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 class Rules extends Component {
     render() {
-		let { rules, handleInput, deleteRule, addRule } = this.props
+		let { rules, handleRuleInput, deleteRule, addRule } = this.props
 		const maxRules = 10;
 
 		let inputs = rules.map((rule,i)=>(
@@ -12,7 +12,7 @@ class Rules extends Component {
 				<div className="p-r-5">{i+1+'.'}</div>
 				<div className="control is-expanded">
 					<input className="input is-primary" 
-						onChange={e=>handleInput(e.target.value,i)} 
+						onChange={e=>handleRuleInput(e.target.value,i)} 
 						value={rule} 
 						maxLength={100}
 						required

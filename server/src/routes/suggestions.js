@@ -74,8 +74,9 @@ module.exports = (app) => {
 		if(suggestions.length === 0)
 			return next()
 
+		let channel = await channelModel.getChannel(channelId)
 		let lastSuggestionDate = suggestions[0].createdAt
-		if(isAllowedToSuggest(lastSuggestionDate)) 
+		if(isAllowedToSuggest(lastSuggestionDate, channel.postCooldownMinutes)) 
 			next()
 		else 
 			res.status(403).send('You must wait 24 hours between posts')

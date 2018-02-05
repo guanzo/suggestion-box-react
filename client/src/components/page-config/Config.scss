@@ -2,4 +2,16 @@
 	padding: 30px;
 	height: 100%;
 	overflow: auto;
+
+	.post-cooldown{
+		.is-grouped .field{
+			margin-right: 0.75rem;
+		}
+		label{
+			font-weight: 400;
+		}
+		input[type="number"]{
+			max-width: 75px;
+		}
+	}
 }

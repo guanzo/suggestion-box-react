@@ -18,10 +18,10 @@ module.exports = {
                 .findOne({ channelId }, { _id: 0, suggestions: 0 })
 				.catch(console.error)
 	},
-	async updateSettings(channelId, requireApproval, allowModAdmin, rules ){
+	async updateSettings(channelId, settings){
         var channels = db.get().collection('channels')
 		return channels
-			.updateOne({ channelId },  { $set: { requireApproval, allowModAdmin, rules } } )
+			.updateOne({ channelId },  { $set: settings } )
 			.catch(console.error)
 	}
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Suggestion from './suggestion/Suggestion'
 import LoadMore from './LoadMore'
 import FlipMove from 'react-flip-move'
@@ -22,7 +22,7 @@ class SuggestionList extends Component {
 		}
 		const delay = hasPaginated ? 0 : 50
         return (
-			<>
+			<Fragment>
 				<FlipMove appearAnimation={animation} enterAnimation={animation} 
 							leaveAnimation="none" staggerDelayBy={delay}
 				>
@@ -38,7 +38,7 @@ class SuggestionList extends Component {
 				<LoadMore onClick={this.onPaginate} {...this.props} 
 							hasPaginated={hasPaginated}
 				></LoadMore>
-			</>
+			</Fragment>
         )
 	}
 	componentWillReceiveProps(nextProps){

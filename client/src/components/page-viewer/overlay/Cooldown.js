@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment'
-const { MIN_MINUTES_BETWEEN_POSTS } = require('@shared/user-util')
 
-class Countdown extends Component {
+class Cooldown extends Component {
 	constructor(props){
 		super(props)
 		this.intervalId = null
@@ -46,9 +45,10 @@ class Countdown extends Component {
 			clearInterval(this.intervalId)
 	}
 	getTime(lastSuggestionDate){
-		let dateUserCanPost = moment(lastSuggestionDate).add(MIN_MINUTES_BETWEEN_POSTS, 'minutes')
+		let { postCooldownMinutes } = this.props
+		let dateUserCanPost = moment(lastSuggestionDate).add(postCooldownMinutes, 'minutes')
 		return moment.duration(dateUserCanPost.diff(moment()))
 	}
 }
 
-export default Countdown;
+export default Cooldown;

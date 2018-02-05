@@ -1,6 +1,6 @@
 /*eslint react/jsx-no-bind:0*/
 
-import React, { PureComponent } from 'react';
+import React, { PureComponent,Fragment } from 'react';
 import _ from 'lodash'
 import FlipMove from 'react-flip-move'
 import classNames from 'classnames'
@@ -30,7 +30,7 @@ class Reactions extends PureComponent {
 			from: { transform: 'rotateX(90deg)', opacity: 0 }
 		}
 		return (
-			<>
+			<Fragment>
 				<FlipMove typeName={null} staggerDelayBy={50}
 							enterAnimation={animation} leaveAnimation="none"
 				>
@@ -45,7 +45,7 @@ class Reactions extends PureComponent {
 					))}
 					{this.remainingEmotes()}
 				</FlipMove>
-			</>
+			</Fragment>
 		)
 	}
 	remainingEmotes(){

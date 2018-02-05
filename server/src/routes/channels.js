@@ -11,24 +11,12 @@ module.exports = (app) => {
 	
     app.put('/api/channels/:channelId',async (req, res) => {
 		let { channelId } = req.params
-		let { requireApproval, allowModAdmin, rules } = req.body
+		let settings = req.body
 		let user = req.user
 		if(user.id !== channelId)
 			return res.sendStatus(403)
 		
-		await channelModel.updateSettings(channelId, requireApproval, allowModAdmin, rules)
-		res.sendStatus(201)
-	})
-
-	//version 0.1.0 compatability
-    app.put('/api/channels/:channelId/settings',async (req, res) => {
-		let { channelId } = req.params
-		let { requireApproval, allowModAdmin } = req.body
-		let user = req.user
-		if(user.id !== channelId)
-			return res.sendStatus(403)
-		
-		await channelModel.updateSettings(channelId, requireApproval, allowModAdmin)
+		await channelModel.updateSettings(channelId, settings)
 		res.sendStatus(201)
 	})
 }

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux'
 import { postEmote } from '@store/emotes'
 import Reactions from './Reactions'
@@ -25,10 +25,10 @@ class Emote extends PureComponent {
 		}
 		
         return (
-            <>
+            <Fragment>
 				<Reactions {...reactionProps}></Reactions>
 				{ isAllowedToEmote ? <PopupManager {...popupProps}></PopupManager> : null }
-			</>
+			</Fragment>
         )
 	}
 	isAllowedToEmote(){

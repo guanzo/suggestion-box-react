@@ -137,7 +137,7 @@ class Form extends Component {
         .then(([status])=>{
             this.setState({ isLoading: false })
 			this.props.onSubmitDone(status)
-        })
+		})
     }
 }
 

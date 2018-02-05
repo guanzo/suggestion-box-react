@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { delay } from '@util'
+const { MIN_MINUTES_BETWEEN_POSTS } = require('@shared/user-util')
+
 export const SET_CHANNEL = 'SET_CHANNEL'
 
 export const initialState = {
@@ -8,6 +10,7 @@ export const initialState = {
         channelName: 'The broadcaster',
         requireApproval: false,
 		allowModAdmin: true,
+		postCooldownMinutes: MIN_MINUTES_BETWEEN_POSTS,
 		rules:[
 			'Leave a helpful suggestion or constructive criticism.',
 			'Check existing posts to see if your idea has already been posted.',

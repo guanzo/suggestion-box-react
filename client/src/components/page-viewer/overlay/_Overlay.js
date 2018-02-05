@@ -55,12 +55,13 @@ class Overlay extends Component {
 		}
 	}
 	onFabClick = ()=>{
-		let { currentUser, lastSuggestionDate } = this.props
+		let { channel, currentUser, lastSuggestionDate } = this.props
 		let { isAnonymousUser } = currentUser
-		
-		let nextComponent = (isAnonymousUser || !isAllowedToSuggest(lastSuggestionDate))
-							?	Machine.PRE_FORM
-							:	Machine.FORM
+		let nextComponent;
+		if(isAnonymousUser || !isAllowedToSuggest(lastSuggestionDate, channel.postCooldownMinutes))
+			nextComponent = Machine.PRE_FORM
+		else
+			nextComponent = Machine.FORM
 		this.transition(nextComponent)
 		this.setState({ hasOverlay: true })
 	}
