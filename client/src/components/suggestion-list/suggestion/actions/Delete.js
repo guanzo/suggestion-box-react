@@ -34,7 +34,7 @@ class Delete extends Component {
 	confirm(){
 		const style = { cursor: 'pointer' }
 		return (
-			<div className="flex justify-end is-size-7">
+			<div className="flex wrap justify-end is-size-7">
 				<span className="has-text-danger">are you sure?</span>&nbsp;
 				<div className="flex">
 					<div onClick={this.props.deleteSuggestion} style={style}>yes</div>&nbsp;

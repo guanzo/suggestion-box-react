@@ -23,7 +23,7 @@ class Form extends Component {
             <div className="suggestion-form flex column justify-between height-100"
 				style={style}
 			>
-                <div>{this.rules()}</div>
+                <div style={style}>{this.rules()}</div>
 				<div>
 				{this.settings()}
 				{this.input()}
@@ -98,7 +98,7 @@ class Form extends Component {
         return (
             <form className="field">
                 <div className="control">
-                    <textarea className="textarea is-primary" rows="4" 
+                    <textarea className="textarea is-primary" rows="3" 
                             placeholder={`A brilliant suggestion for ${channelName}`} 
                             style={{resize: 'none', overflow:'hidden'}}
                             minLength={minLength}

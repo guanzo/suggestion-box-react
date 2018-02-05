@@ -9,7 +9,7 @@ class Actions extends PureComponent {
     render() {
 		let { currentUser } = this.props
         return (
-            <div className="suggestion-actions flex justify-start">
+            <div className="suggestion-actions flex wrap justify-start">
 				<Upvote {...this.props}></Upvote>
 				<Emote  {...this.props}></Emote>
 				{ currentUser.isAdmin ? this.adminActions() : null }

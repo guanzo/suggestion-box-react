@@ -2,7 +2,7 @@ var db = require('../db.js')
 var ObjectID = require('mongodb').ObjectID
 //const userUtil = require('../../../shared/user-util')
 const { LIST_APPROVED,LIST_PENDING, LIST_USER, SORT_BROADCASTER_VOTES, SORT_VOTES,
-		STATUS_APPROVED, STATUS_PENDING, STATUS_DELETED 
+		STATUS_APPROVED, STATUS_PENDING, STATUS_DELETED, RULE_MAX_LENGTH
 } = require('../../../shared/suggestion-util')
 const _ = require('lodash')
 
@@ -88,8 +88,7 @@ module.exports = {
 	},
     addSuggestion(channelId, suggestion){
 		var channels = db.get().collection('channels')
-		let maxLength = 100;
-		suggestion.text = suggestion.text.substring(0,maxLength)
+		suggestion.text = suggestion.text.substring(0,RULE_MAX_LENGTH)
 
         return channels.updateOne(
             { channelId },

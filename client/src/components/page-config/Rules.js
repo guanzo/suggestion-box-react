@@ -1,11 +1,11 @@
 /*eslint react/jsx-no-bind:0*/
 
 import React, { Component } from 'react';
-
+const { RULE_MAX_LENGTH } = require('@shared/suggestion-util')
 class Rules extends Component {
     render() {
 		let { rules, handleRuleInput, deleteRule, addRule } = this.props
-		const maxRules = 10;
+		const maxRules = 5;
 
 		let inputs = rules.map((rule,i)=>(
 			<div className="field has-addons" key={i}>
@@ -14,7 +14,7 @@ class Rules extends Component {
 					<input className="input is-primary" 
 						onChange={e=>handleRuleInput(e.target.value,i)} 
 						value={rule} 
-						maxLength={100}
+						maxLength={RULE_MAX_LENGTH}
 						required
 					/>
 				</div>

@@ -25,12 +25,16 @@ class Cooldown extends Component {
 		else
 			language += 'again in...'
 		
-		let format = moment.utc(t.asMilliseconds()).format("HH:mm:ss")
+		let timeRemaining;
+		if(t.asDays() > 1)
+			timeRemaining = t.days() + ' day' + (t.days() > 1 ? 's':'')
+		else
+			timeRemaining = moment.utc(t.asMilliseconds()).format("HH:mm:ss")
 
         return (
         <div className="has-text-centered m-b-15">
 			<p className="m-b-15">{language}</p> 
-			{ hasTimeRemaining ? <p className="is-size-1">{format}</p> : null }
+			{ hasTimeRemaining && <p className="is-size-1">{timeRemaining}</p> }
         </div>
         )
 	}

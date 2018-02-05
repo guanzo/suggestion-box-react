@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import Cooldown from './Cooldown'
-const { STATUS_APPROVED } = require('@shared/suggestion-util')
+const { STATUS_APPROVED, STATUS_PENDING, STATUS_DENIED } = require('@shared/suggestion-util')
 
 class PostForm extends Component {
     render() {
 		let { channel, status, lastSuggestionDate, onClose } = this.props
-		let text = (status === STATUS_APPROVED)
-        ? <span>has been <span className="has-text-success">submitted</span></span>
-        : <span>is <span className="has-text-primary">pending approval</span></span>
+		let text;
+		if(status === STATUS_APPROVED)
+			text = <span>has been <span className="has-text-success">submitted</span></span>
+		else if(status === STATUS_PENDING)
+			text = <span>is <span className="has-text-primary">pending approval</span></span>
+		else if(status === STATUS_DENIED)
+			text = <span>is <span className="has-text-danger">denied</span></span>
+
         return (
             <div className="flex-center column">
                 <p className="m-b-15">Your suggestion {text}</p>

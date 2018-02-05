@@ -50,7 +50,7 @@ class Rules extends Component {
 						</div>
 					</div>
 				</div>
-				{ hasBlankField && <p class="help has-text-danger">These fields cannot be blank, enter a zero instead</p> }
+				{ hasBlankField && <p class="help has-text-danger">These fields cannot be blank, enter a zero instead.</p> }
 			</div>
 		)
 	}

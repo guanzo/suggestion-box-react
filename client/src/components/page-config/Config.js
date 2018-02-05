@@ -67,7 +67,7 @@ class Config extends Component {
 							addRule={this.addRule}
 					></Rules>
 					<div className="m-t-40">
-						{hasUnsavedChanges ? <div className="help m-b-5">You have unsaved changes</div> : null}
+						{hasUnsavedChanges ? <div className="help m-b-5">You have unsaved changes.</div> : null}
 						<button className={btnClass}>Save</button>
 					</div>
 				</form>
