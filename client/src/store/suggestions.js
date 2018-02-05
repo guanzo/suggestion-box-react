@@ -122,7 +122,6 @@ export function postSuggestion(text, postAnonymously){
             user,
         })
         .then(res=>{
-			console.log('done')
 			let suggestion = res.data.suggestion
 			let lists = [LIST_USER]
 			if(suggestion.status === STATUS_APPROVED){

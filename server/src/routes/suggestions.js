@@ -66,20 +66,22 @@ module.exports = (app) => {
 
     app.post('/api/channels/:channelId/suggestions',async (req, res, next) => {
 		let { channelId } = req.params,
-			user = req.user,
-			offset = 0,
-			limit = 1;
+			user 	= req.user,
+			offset 	= 0,
+			limit 	= 1;
 		let suggestions = await suggestionModel.getSuggestions(channelId, user, LIST_USER, offset, limit,'createdAt')
 
-		if(suggestions.length === 0)
+		if(suggestions.length === 0){
 			return next()
+		}
 
 		let channel = await channelModel.getChannel(channelId)
 		let lastSuggestionDate = suggestions[0].createdAt
+		
 		if(isAllowedToSuggest(lastSuggestionDate, channel.postCooldownMinutes)) 
 			next()
 		else 
-			res.status(403).send('You must wait 24 hours between posts')
+			res.status(403).send('You are not allowed to post yet.')
 	},async (req, res) => {
         let { channelId } = req.params
         let data = req.body

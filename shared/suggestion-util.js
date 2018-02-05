@@ -16,5 +16,5 @@ module.exports = {
 	//user submitted a post before post cooldown was complete. 
 	//can occur if user is on page && streamer changes cooldown
 	STATUS_DENIED:			'DENIED',
-	RULE_MAX_LENGTH:		75,
+	RULE_MAX_LENGTH:		100,
 }

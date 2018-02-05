@@ -31,7 +31,10 @@ var self = module.exports = {
         return user.role === self.ROLE_BROADCASTER
 	},
 	MIN_MINUTES_BETWEEN_POSTS: MIN_MINUTES_BETWEEN_POSTS,// 1 day = 1440 minutes
-	isAllowedToSuggest: function(lastSuggestionDate, postCooldownMinutes = MIN_MINUTES_BETWEEN_POSTS){
+	isAllowedToSuggest: function(lastSuggestionDate, postCooldownMinutes){
+		postCooldownMinutes = typeof postCooldownMinutes === 'undefined' 
+								? MIN_MINUTES_BETWEEN_POSTS 
+								: postCooldownMinutes;
 		var currentDate = moment();
 		var diff = currentDate.diff(lastSuggestionDate, 'minutes')
 		return diff >= postCooldownMinutes
