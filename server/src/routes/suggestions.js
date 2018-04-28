@@ -2,11 +2,14 @@ const channelModel = require('../models/channels')
 const suggestionModel = require('../models/suggestions')
 const suggestionGenerator = require('../models/suggestions-generate')
 const { 
-	STATUS_PENDING, STATUS_APPROVED, LIST_PENDING, LIST_USER 
+    STATUS_PENDING, STATUS_APPROVED, LIST_PENDING, LIST_USER,
+    STATUS_COOLDOWN_DENIED, STATUS_PROFANITY_DENIED
 } = require('../../../shared/suggestion-util')
 const { isAllowedToSuggest, ROLE_MODERATOR, ROLE_BROADCASTER } = require('../../../shared/user-util')
-
 const ObjectID = require('mongodb').ObjectID
+const Filter = require('bad-words')
+const filter = new Filter()
+filter.addWords(['fvck', 'fck'])
 
 async function addSuggestion(channelId, data){
 	let channel = await channelModel.getChannel(channelId)
@@ -65,7 +68,9 @@ module.exports = (app) => {
 	})
 
     app.post('/api/channels/:channelId/suggestions',async (req, res, next) => {
-		let { channelId } = req.params,
+        // Check if user is allowed to post
+        let { channelId } = req.params,
+            data = req.body,
 			user 	= req.user,
 			offset 	= 0,
 			limit 	= 1;
@@ -78,11 +83,20 @@ module.exports = (app) => {
 		let channel = await channelModel.getChannel(channelId)
 		let lastSuggestionDate = suggestions[0].createdAt
 		
-		if(isAllowedToSuggest(lastSuggestionDate, channel.postCooldownMinutes)) 
-			next()
-		else 
-			res.status(403).send('You are not allowed to post yet.')
-	},async (req, res) => {
+		if(!isAllowedToSuggest(lastSuggestionDate, channel.postCooldownMinutes))
+            return res.status(403).json({ 
+                status: STATUS_COOLDOWN_DENIED, 
+                message: 'You are not allowed to post yet.' 
+            })
+        
+        if(channel.filterProfanity && filter.isProfane(data.text))
+            return res.status(403).json({
+                status: STATUS_PROFANITY_DENIED,
+                message: 'This channel does not allow toxicity, mind your manners.' 
+            })
+        
+        next()
+	}, async (req, res) => {
         let { channelId } = req.params
         let data = req.body
         let response = await addSuggestion(channelId, data)

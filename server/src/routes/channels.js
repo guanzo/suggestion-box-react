@@ -15,7 +15,6 @@ module.exports = (app) => {
 		let user = req.user
 		if(user.id !== channelId)
 			return res.sendStatus(403)
-		
 		await channelModel.updateSettings(channelId, settings)
 		res.sendStatus(201)
 	})

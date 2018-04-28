@@ -8,6 +8,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "bad-words": "^1.6.1",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "chance": "^1.0.12",

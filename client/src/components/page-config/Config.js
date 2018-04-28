@@ -11,7 +11,7 @@ import PostCooldown from './PostCooldown'
 import Rules from './Rules'
 import './Config.scss'
 
-const settingsProperties = ['requireApproval','allowModAdmin','rules','postCooldownMinutes']
+const settingsProperties = ['filterProfanity','requireApproval','allowModAdmin','rules','postCooldownMinutes']
 const defaultSettings = _.pick(initialState.channel,settingsProperties)
 
 class Config extends Component {
@@ -47,7 +47,6 @@ class Config extends Component {
 		return (
 			<div className="config">
 				<h3 className="subtitle is-4">Thanks for installing Suggestion Box!</h3>
-				<p className="m-b-15">I hope this extension will make your stream experience better.</p>
 				<hr />
 				<form onSubmit={this.updateSettings}>
 					<h3 className="subtitle is-4 m-t-25 m-b-5">Settings</h3>
@@ -81,7 +80,7 @@ class Config extends Component {
 		return !_.isEqual(originalSettings,currentSettings)
 	}
 	handleCheckboxInput(propertyName, isChecked){
-		this.setState({ [propertyName]: isChecked })
+		this.setState({ [propertyName]: isChecked }, ()=>console.log(this.state))
 	}
 	handleRuleInput(rule,index){
 		let rules = [...this.state.rules]

@@ -8,6 +8,7 @@ export const initialState = {
     channel:{
         channelId: -1,
         channelName: 'The broadcaster',
+        filterProfanity: true,
         requireApproval: false,
 		allowModAdmin: true,
 		postCooldownMinutes: MIN_MINUTES_BETWEEN_POSTS,

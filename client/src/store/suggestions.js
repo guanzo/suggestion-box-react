@@ -13,7 +13,7 @@ export const SET_HAS_MORE_PAGES = 'SET_HAS_MORE_PAGES'
 export const TOGGLE_UPVOTE = 'TOGGLE_UPVOTE'
 const { 
 	LIST_APPROVED, LIST_PENDING, LIST_USER, 
-	STATUS_APPROVED, STATUS_DENIED, SORT_VOTES, SORT_NEW
+	STATUS_APPROVED, STATUS_COOLDOWN_DENIED, SORT_VOTES, SORT_NEW
 } = require('@shared/suggestion-util')
 
 
@@ -137,8 +137,10 @@ export function postSuggestion(text, postAnonymously){
             return suggestion.status
         })
 		.catch(err=>{
-			//403
-			return STATUS_DENIED
+            //403 Reponse returns a status in the reponse.
+            // Possible statuses found in shared/user-util
+            let { status } = err.response.data
+			return status
 		})
     }
 }

@@ -6,6 +6,12 @@ class ToggleSettings extends Component {
     render() {
 		return (
 			<div>
+                {this.checkbox(
+                    'filterProfanity',
+                    'Automatically block posts if it contains profanity. (Recommended)',
+                    'We all know how toxic twitch chat can be.',
+                    'The profanity filter isn\'t perfect and may block non-malicious posts. Better safe than sorry.'
+                )}
 				{this.checkbox(
 					'requireApproval',
 					'Require suggestions to be approved',

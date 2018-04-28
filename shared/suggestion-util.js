@@ -15,6 +15,7 @@ module.exports = {
 	STATUS_DELETED:			'DELETED',
 	//user submitted a post before post cooldown was complete. 
 	//can occur if user is on page && streamer changes cooldown
-	STATUS_DENIED:			'DENIED',
+	STATUS_COOLDOWN_DENIED:	'COOLDOWN_DENIED',
+	STATUS_PROFANITY_DENIED:'PROFANITY_DENIED',
 	RULE_MAX_LENGTH:		100,
 }

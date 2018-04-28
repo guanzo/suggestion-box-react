@@ -19,11 +19,9 @@ class Cooldown extends Component {
     render() {
 		let t = this.state.time
 		let hasTimeRemaining = this.hasTimeRemaining()
-		let language = 'You may post '
-		if(!hasTimeRemaining)
-			language += 'now'
-		else
-			language += 'again in...'
+		let language = 'You may post again'
+		if(hasTimeRemaining)
+			language += ' again in...'
 		
 		let timeRemaining;
 		if(t.asDays() > 1)

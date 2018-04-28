@@ -2,7 +2,7 @@
 
 exports[`<Actions /> renders correctly 1`] = `
 <div
-  className="suggestion-actions flex justify-start"
+  className="suggestion-actions flex wrap justify-start"
 >
   <div
     className="upvote flex align-center m-r-5"

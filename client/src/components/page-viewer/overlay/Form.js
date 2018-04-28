@@ -135,6 +135,8 @@ class Form extends Component {
             delay()//if ajax is too fast it looks weird
         ])
         .then(([status])=>{
+            console.log(status)
+            
             this.setState({ isLoading: false })
 			this.props.onSubmitDone(status)
 		})
