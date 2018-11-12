@@ -5,7 +5,7 @@ exports[`<Toolbar /> renders correctly 1`] = `
   className="toolbar flex is-size-7"
 >
   <div
-    className="flex-center m-l-a"
+    className="flex-center-children m-l-a"
   >
     <span
       className="m-r-5"

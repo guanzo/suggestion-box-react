@@ -8,7 +8,7 @@ exports[`<Upvote /> renders correctly 1`] = `
     className="icon"
   >
     <i
-      className="fa fa-thumbs-up has-text-primary"
+      className="fa fa-thumbs-up has-text-theme"
       onClick={undefined}
       style={
         Object {

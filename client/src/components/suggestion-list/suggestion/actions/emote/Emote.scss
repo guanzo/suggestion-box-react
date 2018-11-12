@@ -5,7 +5,7 @@ $popup-height: 150px;
 @mixin emote-wrapper {
 	border: 1px solid lightgrey;
 	border-radius: 5px;
-	@include flex-center;
+	@include flex-center-children;
 	margin: 2px;
 	padding: 0px 1px;
 }
@@ -14,7 +14,7 @@ $popup-height: 150px;
 	transition: border .35s;
 	cursor: pointer;
 	&:hover{
-		border: 1px solid $primary;
+		border: 1px solid var(--theme-color);
 	}
 }
 
@@ -24,7 +24,7 @@ $popup-height: 150px;
 		height: $emote-size;
 		width: $emote-size;
 		margin: 2px;
-		@include flex-center;
+		@include flex-center-children;
 	}
 	.emote-image {
 		height: $emote-size;
@@ -41,7 +41,7 @@ $popup-height: 150px;
 		&.reaction-clickable{
 			@include reaction-clickable;
 			&:after {
-				@include flex-center;
+				@include flex-center-children;
 				content:'+1';
 				background: white;
 				border-radius: 5px;
@@ -68,7 +68,7 @@ $popup-height: 150px;
 		z-index: 10;
 		width: $popup-width;
 		height: $popup-height;
-	}	
+	}
 }
 
 .emote-explorer{
@@ -79,7 +79,7 @@ $popup-height: 150px;
 	height: 100%;
 	background: white;
 	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-	
+
 	.emote-grid{
 		display: flex;
 		justify-content: center;

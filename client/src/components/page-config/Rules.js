@@ -11,9 +11,9 @@ class Rules extends Component {
 			<div className="field has-addons" key={i}>
 				<div className="p-r-5">{i+1+'.'}</div>
 				<div className="control is-expanded">
-					<input className="input is-primary" 
-						onChange={e=>handleRuleInput(e.target.value,i)} 
-						value={rule} 
+					<input className="input is-primary"
+						onChange={e=>handleRuleInput(e.target.value,i)}
+						value={rule}
 						maxLength={RULE_MAX_LENGTH}
 						required
 					/>
@@ -31,9 +31,12 @@ class Rules extends Component {
 		let noRules = <div>You haven't set any rules</div>
 		return(
 			<div>
-				<h3 className="subtitle m-t-25">Rules <p className="help">Posting etiquette that you want viewers to follow.</p></h3>
+				<h3 className="subtitle">Rules</h3>
+                <p className="help">
+                    Posting etiquette that you want viewers to follow.
+                </p>
 				{inputs.length ? inputs : noRules}
-				<button onClick={addRule} 
+				<button onClick={addRule}
 						disabled={rules.length === maxRules}
 						type="button"
 						className="button is-small m-t-15"

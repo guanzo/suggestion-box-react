@@ -1,5 +1,48 @@
 @import 'bulma/bulma';
 @import 'spacing-helpers';
+
+:root {
+    --theme-color: $primary;
+    --theme-color-secondary: $primary-dark;
+    // A color that is readable against the primary background.
+    --theme-color-contrast: $offwhite;
+}
+.has-background-theme {
+    background-color: var(--theme-color) !important;
+}
+.has-text-theme {
+    color: var(--theme-color) !important;
+}
+.has-text-theme-contrast {
+    color: var(--theme-color-contrast) !important;
+}
+
+button.is-primary {
+    background-color: var(--theme-color) !important;
+    color: var(--theme-color-contrast) !important;
+}
+
+.input.is-primary, .textarea.is-primary {
+    border-color: var(--theme-color) !important;
+}
+
+.input.is-primary:focus,
+.input.is-primary.is-focused,
+.input.is-primary:active,
+.input.is-primary.is-active,
+.textarea.is-primary:focus,
+.textarea.is-primary.is-focused,
+.textarea.is-primary:active,
+.textarea.is-primary.is-active {
+    box-shadow: 0 0 0 0.125em var(--theme-color) !important;
+}
+.button.is-primary:focus:not(:active), .button.is-primary.is-focused:not(:active) {
+    box-shadow: 0 0 0 0.125em var(--theme-color) !important;
+}
+.load-more-button {
+    border: none;
+}
+
 html{
 	overflow: hidden;
 	min-width: initial !important; /**bulma override**/
@@ -12,7 +55,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  font-family: 'Roboto', sans-serif; 
+  font-family: 'Roboto', sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -25,12 +68,12 @@ body {
 	width: 100%;
 }
 
-.absolute-center {
-	@include absolute-center;
+.absolute-center-self {
+	@include absolute-center-self;
 }
 
-.flex-center {
-    @include flex-center;
+.flex-center-children {
+    @include flex-center-children;
     &.column {
         flex-direction: column;
     }
@@ -77,7 +120,7 @@ body {
             width: 3em;
             height: 3em;
 			border-width: 0.25em;
-			border: 2px solid $primary;
+			border: 2px solid var(--theme-color);
 			border-right-color: transparent;
 			border-top-color: transparent;
         }
@@ -85,6 +128,6 @@ body {
 }
 
 .is-primary input[type=checkbox]:checked+label:before {
-    background-color: $primary;
-    border-color: $primary;
+    background-color: var(--theme-color);
+    border-color: var(--theme-color);
 }

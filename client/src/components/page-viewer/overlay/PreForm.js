@@ -9,12 +9,12 @@ class PreForm extends Component {
 		if(isAnonymousUser)
 			component = <p className="m-b-15">You must login to post</p>
 		else if(!isAllowedToSuggest)
-			component = <Cooldown 
+			component = <Cooldown
 							postCooldownMinutes={channel.postCooldownMinutes}
 							lastSuggestionDate={lastSuggestionDate}
 						></Cooldown>
         return (
-            <div className="flex-center column">
+            <div className="flex-center-children column">
                 {component}
                 <button className="button is-primary" onClick={onClose}>Okay</button>
             </div>

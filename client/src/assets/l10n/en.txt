@@ -1,0 +1,38 @@
+Approved
+Pending
+Admin
+Sort by
+Top
+New
+Rules
+Cancel
+Post
+Okay
+yes
+no
+deleted
+approved
+No suggestions yet...
+No pending suggestions
+Anonymous User
+Logged out users cannot upvote or post.
+There are no rules
+You may post again
+You may post again in...
+Post anonymously
+You will post as anonymous unless you grant this extension your Twitch User ID
+Enter at least X characters
+X more to go...
+A suggestion for X
+Potential profanity was detected in your post.
+This channel does not allow toxicity, mind your manners.
+Your suggestion has been submitted
+Your suggestion is pending approval
+Your suggesion is denied
+Your suggestion is subject to moderation at any time
+You must login to post
+Emote reactions
+are you sure?
+X likes this
+Show more
+All suggestions loaded

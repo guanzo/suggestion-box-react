@@ -1,15 +1,15 @@
 import ReduxThunk from 'redux-thunk'
 import { createStore, applyMiddleware } from 'redux'
 import { initialState as user, userReducer } from './user'
-import { 
-	initialState as suggestions, fetchSuggestions, suggestionsReducer 
+import {
+	initialState as suggestions, fetchSuggestions, suggestionsReducer
 } from './suggestions'
 import { suggestionsAdminReducer } from './suggestions-admin'
-import { 
-	initialState as channel, fetchChannel, channelReducer 
+import {
+	initialState as channel, fetchChannel, channelReducer
 } from './channel'
-import { 
-	initialState as emotes, fetchEmotes, emotesReducer 
+import {
+	initialState as emotes, fetchEmotes, emotesReducer
 } from './emotes'
 import { toggleLoading, loadingReducer } from './loading'
 
@@ -49,6 +49,6 @@ function root(state = initialState, action){
     }
 }
 
-const store = createStore(root,applyMiddleware(ReduxThunk))
+const store = createStore(root, applyMiddleware(ReduxThunk))
 
 export default store

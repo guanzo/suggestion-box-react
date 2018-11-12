@@ -5,8 +5,8 @@ import { isAdminSelector } from '@store/user'
 import moment from 'moment'
 import classNames from 'classnames'
 import './Suggestion.scss'
-const { 
-	LIST_PENDING, STATUS_APPROVED, STATUS_DELETED 
+const {
+	LIST_PENDING, STATUS_APPROVED, STATUS_DELETED
 } = require('@shared/suggestion-util')
 
 export class Suggestion extends Component {
@@ -17,7 +17,7 @@ export class Suggestion extends Component {
         return (
             <div className={className}>
                 <div className="suggestion-header is-size-7 m-b-5">
-                    <div className="profile-img m-r-10 flex-center">
+                    <div className="profile-img m-r-10 flex-center-children">
                         {this.img()}
                     </div>
                     <div>
@@ -43,8 +43,8 @@ export class Suggestion extends Component {
 	}
     img(){
         let { postAnonymously, user } = this.props
-        return postAnonymously 
-        ? <i className="fa fa-user-circle-o"></i> 
+        return postAnonymously
+        ? <i className="fa fa-user-circle-o"></i>
         : <img src={user.profileImg} alt="profile" />
     }
     name(){

@@ -6,17 +6,19 @@ class LoadMore extends PureComponent {
     render() {
 		let { suggestions, isLoading, hasPaginated } = this.props
 		let { data, hasMorePages } = suggestions
-		
+
+
+
 		let component;
 		if(data.length && hasMorePages){
-			component = <button onClick={this.onClick} 
-							className="button is-small is-primary is-inverted"
+			component = <button onClick={this.onClick}
+							className="button is-small is-white"
 						>Show more</button>
 		}else if(!isLoading && hasPaginated)//don't show unless user has paginated at least once
-			component = <div className="has-text-primary">All suggestions loaded</div>
+			component = <div>All suggestions loaded</div>
 
         return (
-            <div className="flex-center p-a-15 is-size-7">
+            <div className="flex-center-children p-a-15 is-size-7">
 				{component}
 			</div>
         )
@@ -33,4 +35,3 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 export default connect(null, mapDispatchToProps)(LoadMore)
-

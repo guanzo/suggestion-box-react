@@ -8,7 +8,7 @@ class ToggleSettings extends Component {
 			<div>
                 {this.checkbox(
                     'filterProfanity',
-                    'Automatically block posts if it contains profanity. (Recommended)',
+                    'Automatically block posts that contain profanity. (Recommended)',
                     'We all know how toxic twitch chat can be.',
                     'The profanity filter isn\'t perfect and may block non-malicious posts. Better safe than sorry.'
                 )}
@@ -31,17 +31,17 @@ class ToggleSettings extends Component {
 		let style = {verticalAlign: 'middle'}
 		let propertyValue = this.props[propertyName]
 		return (
-			<div className="field">  
+			<div className="field">
 				<div className="control">
-					<label className="checkbox"> 
-					<input type="checkbox" className="m-r-5" style={style} 
+					<label className="checkbox">
+					<input type="checkbox" className="m-r-5" style={style}
 					checked={propertyValue}
-					onChange={e=>this.props.handleCheckboxInput(propertyName, e.target.checked)}
+					onChange={e => this.props.handleCheckboxInput(propertyName, e.target.checked)}
 					/>
 						{label}
 					</label>
 					<p className="help">
-					{help.map(d=><Fragment>{d}<br/></Fragment>)}
+					{help.map(d=><Fragment key={d}>{d}<br/></Fragment>)}
 					</p>
 				</div>
 			</div>

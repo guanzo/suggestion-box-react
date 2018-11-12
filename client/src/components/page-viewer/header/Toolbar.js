@@ -4,7 +4,7 @@ import { isAdminSelector } from '@store/user'
 import { sortSuggestions } from '@store/suggestions'
 import { changeCurrentListType } from '@store/suggestions-admin'
 import { Fade } from '@components/transition/transition'
-const { 
+const {
 	SORT_VOTES, SORT_NEW, LIST_APPROVED, LIST_PENDING
 } = require('@shared/suggestion-util')
 
@@ -32,10 +32,10 @@ export class Toolbar extends Component {
 	}
 	sortBy(){
 		return (
-			<div className="flex-center">
+			<div className="flex-center-children">
 				<span className="m-r-5">Sort by</span>
 				<div className="select is-small select-sort-by">
-					<select value={this.state.sortBy} 
+					<select value={this.state.sortBy}
 							onChange={this.onSortByChanged}
 					>
 						<option value={SORT_VOTES}>Top</option>
@@ -48,10 +48,10 @@ export class Toolbar extends Component {
 	}
 	listType(){
 		return (
-			<div className="flex-center m-l-a">
+			<div className="flex-center-children m-l-a">
 				<span className="m-r-5">Admin</span>
 				<div className="select is-small select-list-type">
-					<select value={this.state.listType} 
+					<select value={this.state.listType}
 							onChange={this.onListTypeChanged}
 					>
 						<option value={LIST_APPROVED}>Approved</option>

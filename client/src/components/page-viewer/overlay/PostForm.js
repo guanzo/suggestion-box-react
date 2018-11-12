@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-const { 
+const {
     STATUS_APPROVED, STATUS_PENDING, STATUS_COOLDOWN_DENIED, STATUS_PROFANITY_DENIED
 } = require('@shared/suggestion-util')
 
 class PostForm extends Component {
     render() {
-		let { channel, status, lastSuggestionDate, onClose } = this.props
+		let { status, onClose } = this.props
 		let text;
 		if(status === STATUS_APPROVED)
 			text = <span>has been <span className="has-text-success">submitted</span></span>
 		else if(status === STATUS_PENDING)
-			text = <span>is <span className="has-text-primary">pending approval</span></span>
+			text = <span>is <span className="has-text-warning">pending approval</span></span>
 		else if(status === STATUS_COOLDOWN_DENIED)
 			text = <span>is <span className="has-text-danger">denied</span></span>
         else if(status === STATUS_PROFANITY_DENIED)
@@ -23,7 +23,7 @@ class PostForm extends Component {
                     )
 
         return (
-            <div className="flex-center column has-text-centered">
+            <div className="flex-center-children column has-text-centered">
                 <p className="m-b-30 ">Your suggestion {text}</p>
                 <button className="button is-primary m-b-30" onClick={onClose}>Okay</button>
 				<p className="help">

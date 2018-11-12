@@ -19,4 +19,4 @@ class Viewer extends Component {
     }
 }
 
-export default Viewer;
+export default Viewer

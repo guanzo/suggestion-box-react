@@ -5,7 +5,7 @@ const { MIN_MINUTES_BETWEEN_POSTS } = require('@shared/user-util')
 export const SET_CHANNEL = 'SET_CHANNEL'
 
 export const initialState = {
-    channel:{
+    channel: {
         channelId: -1,
         channelName: 'The broadcaster',
         filterProfanity: true,
@@ -16,7 +16,12 @@ export const initialState = {
 			'Leave a helpful suggestion or constructive criticism.',
 			'Check existing posts to see if your idea has already been posted.',
 			'Be respectful',
-		]
+        ],
+        theme: {
+            color: '#F57C00',
+            colorSecondary: '#E65100',
+            colorContrast: '#F6F9FC',
+        }
     },
 }
 
@@ -43,7 +48,7 @@ export function updateChannel(settings){
     return (dispatch,getState) => {
 		let { channelId } = getState().channel
 		return Promise.all([
-            axios.put(`/api/channels/${channelId}`,settings), 
+            axios.put(`/api/channels/${channelId}`,settings),
             delay()
         ])
         .then(res=>{

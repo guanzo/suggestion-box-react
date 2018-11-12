@@ -8,7 +8,7 @@ class Rules extends Component {
 		let { postCooldownMinutes } = props;
 		let hours = this.getTotalHours(postCooldownMinutes)
 		let minutes = this.getRemainingMinutes(postCooldownMinutes)
-		
+
 		this.state = {
 			hasBlankField: false,
 			hours,
@@ -19,18 +19,21 @@ class Rules extends Component {
 		let { hours, minutes, hasBlankField } = this.state
 		return(
 			<div className="post-cooldown">
-				<h3 className="subtitle m-t-25">Post Cooldown <p className="help">The amount of time a viewer must wait until he can post again.</p></h3>
+				<h3 className="subtitle">Post Cooldown</h3>
+                <p className="help">
+                The amount of time a viewer must wait until they can post again.
+                </p>
 				<div className="field is-grouped">
 					<div className="field">
 						<label className="label">Hours</label>
 						<div className="control">
-							<input className="input" 
+							<input className="input"
 									value={hours}
 									onChange={e=>this.setTime("hours",e)}
-									type="number" 
+									type="number"
 									min="0"
-									max="99" 
-									placeholder="24" 
+									max="99"
+									placeholder="24"
 									required
 							/>
 						</div>
@@ -38,13 +41,13 @@ class Rules extends Component {
 					<div className="field">
 						<label className="label">Minutes</label>
 						<div className="control">
-							<input className="input" 
+							<input className="input"
 									value={minutes}
 									onChange={e=>this.setTime("minutes",e)}
 									type="number"
-									min="0" 
-									max="59" 
-									placeholder="0" 
+									min="0"
+									max="59"
+									placeholder="0"
 									required
 							 />
 						</div>
@@ -58,7 +61,7 @@ class Rules extends Component {
 		let { value } = e.target
 		let hasBlankField = value.length === 0
 
-		this.setState({ 
+		this.setState({
 			[unit]: parseInt(value,10),
 			hasBlankField
 		}, ()=>{

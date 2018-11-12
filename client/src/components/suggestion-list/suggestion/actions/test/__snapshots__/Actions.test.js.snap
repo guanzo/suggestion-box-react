@@ -11,7 +11,7 @@ exports[`<Actions /> renders correctly 1`] = `
       className="icon"
     >
       <i
-        className="fa fa-thumbs-up has-text-primary"
+        className="fa fa-thumbs-up has-text-theme"
         onClick={[Function]}
         style={
           Object {
@@ -47,7 +47,7 @@ exports[`<Actions /> renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="suggestion-admin-actions flex-center m-l-a"
+    className="suggestion-admin-actions flex-center-children m-l-a"
   >
     <span
       className="approve-suggestion icon  has-text-success"

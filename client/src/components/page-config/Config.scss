@@ -13,5 +13,14 @@
 		input[type="number"]{
 			max-width: 75px;
 		}
-	}
+    }
+    .subtitle {
+        margin-bottom: 5px;
+        & + p.help {
+            margin-bottom: 15px;
+        }
+    }
+    form > * {
+        margin-bottom: 30px;
+    }
 }

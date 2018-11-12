@@ -38,8 +38,8 @@ class Form extends Component {
             <div className="m-b-15">
                 <h5 className="subtitle is-4 has-text-centered">Rules</h5>
                 <ol className="p-l-15" style={style}>
-					{ 
-						rules.length 
+					{
+						rules.length
 						? rules.map((rule,i)=><li key={i}>{rule}</li>)
 						: <div className="has-text-centered">...There are no rules.</div>
 					}
@@ -54,7 +54,7 @@ class Form extends Component {
 		let { isRealUser } = this.props.currentUser
         if(isRealUser){
             return (
-			<div className="field">  
+			<div className="field">
 				<div className="control">
 					<div className="b-checkbox is-primary">
 						<input id="post-anon" type="checkbox"
@@ -62,7 +62,7 @@ class Form extends Component {
 							checked={this.state.postAnonymously}
 							onChange={this.handleCheckbox}
 						/>
-						<label htmlFor="post-anon" className="is-size-7"> 
+						<label htmlFor="post-anon" className="is-size-7">
 							Post anonymously
 						</label>
 					</div>
@@ -76,7 +76,7 @@ class Form extends Component {
 			</p>
 			)
 		}
-        
+
     }
     helpText(){
         let { minLength, maxLength, suggestion } = this.state
@@ -93,13 +93,16 @@ class Form extends Component {
 	}
     input() {
         let { minLength, maxLength, suggestion, isLoading } = this.state
-        let btnClass = classNames("button is-primary is-small", { 'is-loading': isLoading })
+        let btnClass = classNames(
+            'button is-primary is-small',
+            { 'is-loading': isLoading }
+        )
         let { channelName } = this.props.channel
         return (
             <form className="field">
                 <div className="control">
-                    <textarea className="textarea is-primary" rows="3" 
-                            placeholder={`A brilliant suggestion for ${channelName}`} 
+                    <textarea className="textarea is-primary" rows="3"
+                            placeholder={`A suggestion for ${channelName}`}
                             style={{resize: 'none', overflow:'hidden'}}
                             minLength={minLength}
                             maxLength={maxLength}
@@ -111,7 +114,7 @@ class Form extends Component {
                 </div>
                 <div className="flex justify-between p-t-5">
                     <p className="help m-t-0">{this.helpText()}</p>
-                    <div className="buttons flex nowrap">    
+                    <div className="buttons flex nowrap">
                         <button className="button is-danger is-outlined is-small"
 							type="button"
                             onClick={this.props.onClose}
@@ -119,7 +122,7 @@ class Form extends Component {
                         <button className={btnClass}
                             disabled={suggestion.length < minLength}
                             onClick={this.onSubmit}
-                        >Post</button> 
+                        >Post</button>
                     </div>
                 </div>
             </form>
@@ -131,12 +134,10 @@ class Form extends Component {
         this.setState({ isLoading: true })
         let { suggestion, postAnonymously } = this.state
         Promise.all([
-            store.dispatch(postSuggestion(suggestion, postAnonymously)), 
+            store.dispatch(postSuggestion(suggestion, postAnonymously)),
             delay()//if ajax is too fast it looks weird
         ])
         .then(([status])=>{
-            console.log(status)
-            
             this.setState({ isLoading: false })
 			this.props.onSubmitDone(status)
 		})

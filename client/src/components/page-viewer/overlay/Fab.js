@@ -9,7 +9,7 @@ class Fab extends Component {
 		}
 	}
     render() {
-		
+
         let btnStyle = {
             height: 40,
 			width: 40,
@@ -20,13 +20,12 @@ class Fab extends Component {
 			transition: '.35s .33s',
 			...this.state
 		}
-		
+
         return (
-			<button className="button is-primary is-small is-floating open-suggestion-form"
+			<button className="button is-primary is-small suggestion-fab"
                 style={btnStyle}
-				onClick={this.props.onClick}
-            >
-				<i className="fa fa-comment fa-lg has-text-white" style={iconStyle}></i>
+				onClick={this.props.onClick}>
+				<i className="fa fa-comment fa-lg has-text-theme-contrast" style={iconStyle}></i>
 			</button>
         );
 	}

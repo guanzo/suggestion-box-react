@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import Title from './Title'
 import Toolbar from './Toolbar'
 import './Header.scss'
 
@@ -15,10 +16,8 @@ class Header extends Component {
 		let { currentUser } = this.props
         return (
             <div className="viewer-header">
-                <h1 className="title has-text-centered p-a-10 m-b-0 has-text-weight-normal">
-				Suggestion Box
-				</h1>
-				<Toolbar></Toolbar>
+                <Title/>
+				<Toolbar/>
 				{currentUser.isAnonymousUser && showNotification ? this.anonymousUserNotification() : null}
             </div>
         );

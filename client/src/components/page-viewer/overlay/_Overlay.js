@@ -44,7 +44,7 @@ class Overlay extends Component {
 				return <PreForm {...close} {...this.props}></PreForm>
 			case Machine.FORM:
 				return <Form {...close}
-							{...this.props} 
+							{...this.props}
 							onSubmitDone={this.onSubmitDone}
 							transition={this.transition}>
 						</Form>
@@ -68,12 +68,15 @@ class Overlay extends Component {
     render() {
 		let { hasOverlay } = this.state
 		let velocityProps = this.velocityProps()
-		let className = classNames('overlay flex-center',{ 'is-expanded': hasOverlay }) 
+		let className = classNames(
+            'overlay flex-center-children',
+            { 'is-expanded': hasOverlay }
+        )
 
         return (
 			<VelocityComponent {...velocityProps}>
 				<div className={className}>
-					<div className="overlay-inner flex-center">
+					<div className="overlay-inner flex-center-children">
 						{this.getCurrentComponent()}
 					</div>
 				</div>
@@ -81,6 +84,7 @@ class Overlay extends Component {
         )
 	}
 	velocityProps(){
+        const { theme } = this.props.channel
 		let { hasOverlay } = this.state
 		let velocityProps;
 		let ease = [0.4, 0.0, 0.2, 1]
@@ -92,7 +96,7 @@ class Overlay extends Component {
 				runOnMount: true,
 				animation: {
 					...defaultPosition,
-					backgroundColor: ['#F57C00',ease],
+					backgroundColor: [theme.color, ease],
 					width: ['40px',ease],
 					height: ['40px',ease],
 				},
@@ -127,7 +131,7 @@ class Overlay extends Component {
 			return bottomRight
 		else
 			return middle
-		
+
 	}
 	onSubmitDone = (status)=>{
 		this.setState({ status })
@@ -165,4 +169,3 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 export default connect(mapStateToProps)(Overlay)
-

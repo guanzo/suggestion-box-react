@@ -5,8 +5,8 @@ class Cooldown extends Component {
 	constructor(props){
 		super(props)
 		this.intervalId = null
-		this.state = { 
-			time: this.getTime(props.lastSuggestionDate) 
+		this.state = {
+			time: this.getTime(props.lastSuggestionDate)
 		}
 	}
 	componentDidMount(){
@@ -21,8 +21,8 @@ class Cooldown extends Component {
 		let hasTimeRemaining = this.hasTimeRemaining()
 		let language = 'You may post again'
 		if(hasTimeRemaining)
-			language += ' again in...'
-		
+			language += ' in...'
+
 		let timeRemaining;
 		if(t.asDays() > 1)
 			timeRemaining = t.days() + ' day' + (t.days() > 1 ? 's':'')
@@ -31,7 +31,7 @@ class Cooldown extends Component {
 
         return (
         <div className="has-text-centered m-b-15">
-			<p className="m-b-15">{language}</p> 
+			<p className="m-b-15">{language}</p>
 			{ hasTimeRemaining && <p className="is-size-1">{timeRemaining}</p> }
         </div>
         )

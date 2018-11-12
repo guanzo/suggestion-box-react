@@ -6,34 +6,27 @@
 //orange
 $primary: #F57C00;//700
 $primary-dark: #E65100;//900
-$primary-light: #FFB74D;//300
-$primary-lightest: #FFF3E0;//50
 
-$secondary: #3F51B5;
-$secondary-lightest: #e1f5fe;
+$yellow: #f9a825;
 
 $offwhite: #F6F9FC;
-$blue-grey:#CFD8DC;
 
 //enforced by twitch
 $app-height: 500px;
 $app-padding: 10px;
 $app-bg-color: white;
 
-
 $app-darkmode-bg-color: #2E2C35;
 
-@mixin flex-center{
+@mixin flex-center-children{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-@mixin absolute-center{
+@mixin absolute-center-self{
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
 }
-
-//linear-gradient(to left, 	#F0FAFE 10%, #e1f5fe 90%);
