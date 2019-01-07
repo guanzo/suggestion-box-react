@@ -15,9 +15,6 @@ class Theme extends Component {
         this.selectTheme = this.selectTheme.bind(this)
         this.handleClose = this.handleClose.bind(this)
     }
-    componentWillReceiveProps () {
-        this.applyThemeToPreviewOnly(this.props.theme)
-    }
     componentWillMount () {
         document.addEventListener('mousedown', this.handleClick, false)
     }
@@ -34,10 +31,11 @@ class Theme extends Component {
     }
     render () {
         const { updateTheme, theme } = this.props
+        this.applyThemeToPreview(theme)
         return (
             <div className="theme-layout">
                 <div className="theme-settings">
-                    <h3 className="subtitle m-b-5">Theme</h3>
+                    <h3 className="subtitle">Theme</h3>
                     <p className="help">Personalize colors to match your brand.</p>
                     <div>
                         {this.themeHelp(theme).map(t => (
@@ -52,7 +50,7 @@ class Theme extends Component {
                     </div>
                 </div>
                 <div className="theme-preview">
-                    <h3 className="subtitle m-t-25">Theme preview</h3>
+                    <h3 className="subtitle">Theme preview</h3>
                     <Title/>
                     <div className="theme-widgets">
                         <Fab />
@@ -92,9 +90,12 @@ class Theme extends Component {
     handleClose () {
         this.setState({ selectedTheme: {} })
     }
-    applyThemeToPreviewOnly (theme) {
-        const { color, colorSecondary, colorContrast } = theme
+    applyThemeToPreview (theme) {
         const $root = document.querySelector('.theme-preview')
+        if (!$root) {
+            return
+        }
+        const { color, colorSecondary, colorContrast } = theme
         $root.style.setProperty('--theme-color', color)
         $root.style.setProperty('--theme-color-secondary', colorSecondary)
         $root.style.setProperty('--theme-color-contrast', colorContrast)
@@ -125,20 +126,11 @@ class ThemePicker extends Component {
             </div>
         )
     }
-    handleClickOutside () {
-        const { theme, selectedTheme } = this.props
-        if (theme.key !== selectedTheme.key) {
-            return
-        }
-        this.props.handleClose()
-    }
     themePickerOverlay (theme) {
-        if (theme.key === 'color') {
-            //console.log(theme.value)
-        }
         return (
             <SketchPicker
                 className="theme-picker"
+                disableAlpha
                 color={theme.value}
                 onChange={this.handleChange} />
         )

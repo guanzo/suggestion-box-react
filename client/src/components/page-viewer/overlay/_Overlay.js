@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from "react-dom";
 import { createSelector } from 'reselect'
 import { connect } from 'react-redux'
 import Fab from './Fab'
@@ -28,7 +29,12 @@ class Overlay extends Component {
             status: STATUS_APPROVED,
 			hasOverlay: false,
 		}
-	}
+    }
+    componentDidMount () {
+        // In Firefox, the root el gets display: none for no fucking reason.
+        const node = ReactDOM.findDOMNode(this)
+        node.style.display = 'flex'
+    }
 	transition = (to)=>{
 		this.setState({ current: to })
 	}
@@ -140,10 +146,10 @@ class Overlay extends Component {
     onClose = ()=>{
 		this.setState({ hasOverlay: false })
 		this.transition(Machine.FAB)
-	}//stupid firefox...
+	} //stupid firefox...
 	componentDidCatch(error,info){
-		//console.log(error)
-		//console.log(info)
+		console.log(error)
+		console.log(info)
 	}
 }
 

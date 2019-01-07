@@ -1,5 +1,8 @@
 # Suggestion Box
+
 A Twitch panel extension that allows viewers post suggestions about the stream.
+
+View the extension on Twitch [here](https://www.twitch.tv/ext/6rh8h42nhnjmirlyxc0w9lbpmeehi0).
 
 ### Features
 
