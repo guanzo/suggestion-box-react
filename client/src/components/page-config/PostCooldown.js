@@ -5,18 +5,21 @@ import React, { Component } from 'react';
 class Rules extends Component {
 	constructor(props){
 		super(props)
-		let { postCooldownMinutes } = props;
-		let hours = this.getTotalHours(postCooldownMinutes)
-		let minutes = this.getRemainingMinutes(postCooldownMinutes)
+        let { postCooldownMinutes } = props
 
-		this.state = {
-			hasBlankField: false,
-			hours,
-			minutes,
-		}
+		this.state = this.getHoursAndMinutesFromCooldown(props)
+    }
+    getHoursAndMinutesFromCooldown (props) {
+		let { postCooldownMinutes } = props
+		let hours = this.getTotalHours(postCooldownMinutes)
+        let minutes = this.getRemainingMinutes(postCooldownMinutes)
+        return { hours, minutes }
+    }
+	componentWillReceiveProps(props){
+        this.setState(this.getHoursAndMinutesFromCooldown(props))
 	}
     render() {
-		let { hours, minutes, hasBlankField } = this.state
+		let { hours, minutes } = this.state
 		return(
 			<div className="post-cooldown">
 				<h3 className="subtitle">Post Cooldown</h3>
@@ -53,26 +56,28 @@ class Rules extends Component {
 						</div>
 					</div>
 				</div>
-				{ hasBlankField && <p class="help has-text-danger">These fields cannot be blank, enter a zero instead.</p> }
 			</div>
 		)
 	}
 	setTime(unit, e){
 		let { value } = e.target
-		let hasBlankField = value.length === 0
+
+        value = parseInt(value,10)
+        if (Number.isNaN(value)) {
+            value = 0
+        }
 
 		this.setState({
-			[unit]: parseInt(value,10),
-			hasBlankField
+			[unit]: value,
 		}, ()=>{
-			this.props.updateCooldown(this.calculateTotalMinutes())
+            this.props.updateCooldown(this.calculateTotalMinutes())
 		})
 	}
 	getTotalHours(postCooldownMinutes){
-		return Math.floor(postCooldownMinutes/60)
+		return Math.floor(postCooldownMinutes / 60)
 	}
 	getRemainingMinutes(postCooldownMinutes){
-		return postCooldownMinutes%60;
+		return postCooldownMinutes % 60;
 	}
 	calculateTotalMinutes(){
 		let { hours, minutes } = this.state
