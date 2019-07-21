@@ -4,14 +4,10 @@ const { STATUS_APPROVED } = require('../../../shared/suggestion-util') */
 
 
 module.exports = {
-    /**
-     * current vote is first element in "voteHistory". should always return a value
-     * handles creation of channel if not exists
-     */
     async getChannel(channelId, channelName){
         var channels = db.get().collection('channels')
         channels.createIndex({ channelId: 1 })
-        
+
         //ensure channel document exists
         await addChannel(channelId, channelName);
         return channels
@@ -31,6 +27,7 @@ function addChannel(channelId,channelName){
     var channel = {
         channelId,
         suggestions:[],
+        filterProfanity: true,
         requireApproval: false,
         allowModAdmin: true
 	}
@@ -40,11 +37,11 @@ function addChannel(channelId,channelName){
     //keep updating channelName in case it gets changed
 	if(channelName)
 		Object.assign(update, { $set:{ channelName }})
-		
+
     var channels = db.get().collection('channels')
     return channels.updateOne(
         {channelId},
-        update, 
+        update,
         { upsert: true }
     )
 	.catch(console.error)

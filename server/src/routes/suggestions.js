@@ -1,7 +1,7 @@
 const channelModel = require('../models/channels')
 const suggestionModel = require('../models/suggestions')
 const suggestionGenerator = require('../models/suggestions-generate')
-const { 
+const {
     STATUS_PENDING, STATUS_APPROVED, LIST_PENDING, LIST_USER,
     STATUS_COOLDOWN_DENIED, STATUS_PROFANITY_DENIED
 } = require('../../../shared/suggestion-util')
@@ -17,7 +17,7 @@ async function addSuggestion(channelId, data){
     let suggestion = createSuggestionObj(data, status)
 
     return new Promise(async resolve=>{
- 
+
         let result = await suggestionModel.addSuggestion(channelId, suggestion)
 
         //conform to "get" endpoint response
@@ -82,19 +82,19 @@ module.exports = (app) => {
 
 		let channel = await channelModel.getChannel(channelId)
 		let lastSuggestionDate = suggestions[0].createdAt
-		
+
 		if(!isAllowedToSuggest(lastSuggestionDate, channel.postCooldownMinutes))
-            return res.status(403).json({ 
-                status: STATUS_COOLDOWN_DENIED, 
-                message: 'You are not allowed to post yet.' 
+            return res.status(403).json({
+                status: STATUS_COOLDOWN_DENIED,
+                message: 'You are not allowed to post yet.'
             })
-        
+
         if(channel.filterProfanity && filter.isProfane(data.text))
             return res.status(403).json({
                 status: STATUS_PROFANITY_DENIED,
-                message: 'This channel does not allow toxicity, mind your manners.' 
+                message: 'Your post was blocked due to potential profanity, please try again.'
             })
-        
+
         next()
 	}, async (req, res) => {
         let { channelId } = req.params
@@ -114,16 +114,16 @@ module.exports = (app) => {
 		let status = response.modifiedCount === 1 ? 200 : 400
 		res.status(status).end()
 	})
-	
+
     app.put('/api/channels/:channelId/suggestions/:suggestionId/emotes',async (req, res) => {
 		let { channelId, suggestionId } = req.params,
 			{ emoteId } = req.body,
 			user = req.user;
 		let result = await suggestionModel.addEmote(channelId, suggestionId, emoteId, user)
 		let status = result.modifiedCount === 1 ? 200 : 400
-		res.status(status).end() 
+		res.status(status).end()
 	})
-	
+
 	app.put('/api/channels/:channelId/suggestions/:suggestionId',async (req, res, next) => {
 		let { channelId } = req.params
 		let user = req.user
