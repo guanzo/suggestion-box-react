@@ -100,7 +100,7 @@ const devWebpackConfig = merge(baseWebpackConfig,{
   module: {
     strictExportPresence: true,
     rules: [
-		
+
       // TODO: Disable require.ensure as it's not a standard language feature.
       // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
       // { parser: { requireEnsure: false } },
@@ -143,7 +143,7 @@ const devWebpackConfig = merge(baseWebpackConfig,{
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-              
+
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
               // directory for faster rebuilds.
@@ -239,6 +239,12 @@ const devWebpackConfig = merge(baseWebpackConfig,{
       filename: 'viewer.html',
       template: paths.appHtml,
       title: 'viewer',
+      inject: true
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'mobile.html',
+      template: paths.appHtml,
+      title: 'mobile',
       inject: true
     }),
     new HtmlWebpackPlugin({

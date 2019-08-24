@@ -14,7 +14,7 @@ var db = require('./db.js')
 const { isAnonymousUser } = require('../../shared/user-util')
 
 console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
-console.log('process.env.TWITCH_EXTENSION_SECRET:', process.env.TWITCH_EXTENSION_SECRET);
+//console.log('process.env.TWITCH_EXTENSION_SECRET:', process.env.TWITCH_EXTENSION_SECRET);
 
 app.use(cors({ credentials: true, origin: true }))
 let server;
@@ -48,9 +48,9 @@ app.delete('/*',blockAnonymousUsers)
 
 //anonymous users can ONLY get info. no changing
 function blockAnonymousUsers(req,res,next){
-	if(isAnonymousUser(req.user)) 
+	if(isAnonymousUser(req.user))
 		res.status(403).send('You must login.')
-	else 
+	else
 		next()
 }
 
@@ -58,7 +58,7 @@ channelsRouter(app);
 suggestionsRouter(app)
 
 db.connect().then(()=>{
-    
+
     server.listen(port, () => {
         console.log(`Find the server at: https://localhost:${port}/`); // eslint-disable-line no-console
     });

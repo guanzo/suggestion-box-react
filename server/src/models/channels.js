@@ -27,6 +27,7 @@ function addChannel(channelId,channelName){
     var channel = {
         channelId,
         suggestions:[],
+        title: 'Suggestion Box',
         filterProfanity: true,
         requireApproval: false,
         allowModAdmin: true

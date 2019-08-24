@@ -13,9 +13,10 @@ module.exports = {
 	STATUS_PENDING:			'PENDING',
 	STATUS_APPROVED:		'APPROVED',
 	STATUS_DELETED:			'DELETED',
-	//user submitted a post before post cooldown was complete. 
+	//user submitted a post before post cooldown was complete.
 	//can occur if user is on page && streamer changes cooldown
 	STATUS_COOLDOWN_DENIED:	'COOLDOWN_DENIED',
 	STATUS_PROFANITY_DENIED:'PROFANITY_DENIED',
 	RULE_MAX_LENGTH:		100,
+	TITLE_MAX_LENGTH:		30,
 }

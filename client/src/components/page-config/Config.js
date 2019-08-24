@@ -8,6 +8,7 @@ import _ from 'lodash'
 import classNames from 'classnames'
 import ToggleSettings from './ToggleSettings'
 import Theme from './Theme'
+import CustomTitle from './CustomTitle'
 import PostCooldown from './PostCooldown'
 import Rules from './Rules'
 import './Config.scss'
@@ -18,6 +19,7 @@ const settingsProperties = [
     'allowModAdmin',
     'rules',
     'postCooldownMinutes',
+    'title',
     'theme'
 ]
 const defaultSettings = _.pick(initialState.channel,settingsProperties)
@@ -75,6 +77,10 @@ class Config extends Component {
                         theme={settings.theme}
                         updateTheme={this.updateTheme}
                     />
+                    <CustomTitle
+                        title={settings.title}
+                        updateTitle={this.updateTitle}
+                    />
 					<PostCooldown
                         postCooldownMinutes={settings.postCooldownMinutes}
 					    updateCooldown={this.updateCooldown}
@@ -124,6 +130,9 @@ class Config extends Component {
         const theme = {...this.state.theme}
         theme[themeName] = value
         this.setState({ theme })
+	}
+	updateTitle(event) {
+		this.setState({ title: event.target.value })
 	}
 	async updateSettings(e){
 		e.preventDefault();

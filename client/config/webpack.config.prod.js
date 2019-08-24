@@ -122,7 +122,7 @@ const prodWebpackConfig = merge(baseWebpackConfig,{
             options: {
               formatter: eslintFormatter,
               eslintPath: require.resolve('eslint'),
-              
+
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -150,7 +150,7 @@ const prodWebpackConfig = merge(baseWebpackConfig,{
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-              
+
               compact: true,
             },
           },
@@ -278,6 +278,24 @@ const prodWebpackConfig = merge(baseWebpackConfig,{
           minifyURLs: true,
         },
       }),
+      new HtmlWebpackPlugin({
+          filename: 'mobile.html',
+          template: paths.productionAppHtml,
+          title: 'mobile',
+          inject: true,
+          minify: {
+            removeComments: true,
+            collapseWhitespace: true,
+            removeRedundantAttributes: true,
+            useShortDoctype: true,
+            removeEmptyAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            keepClosingSlash: true,
+            minifyJS: true,
+            minifyCSS: true,
+            minifyURLs: true,
+          },
+        }),
       new HtmlWebpackPlugin({
         filename: 'liveconfig.html',
         template: paths.productionAppHtml,
