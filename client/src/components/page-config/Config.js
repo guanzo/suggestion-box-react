@@ -20,7 +20,8 @@ const settingsProperties = [
     'rules',
     'postCooldownMinutes',
     'title',
-    'theme'
+    'titleFontSize',
+    'theme',
 ]
 const defaultSettings = _.pick(initialState.channel,settingsProperties)
 
@@ -38,6 +39,8 @@ class Config extends Component {
 		this.addRule 				= this.addRule.bind(this)
 		this.updateCooldown 		= this.updateCooldown.bind(this)
 		this.updateTheme 		    = this.updateTheme.bind(this)
+		this.updateTitle 		    = this.updateTitle.bind(this)
+		this.updateTitleFontSize    = this.updateTitleFontSize.bind(this)
 	}
 	componentWillReceiveProps(props){
         let settings = _.pick(props.channel, settingsProperties)
@@ -75,11 +78,15 @@ class Config extends Component {
                     />
                     <Theme
                         theme={settings.theme}
+                        title={settings.title}
+                        titleFontSize={settings.titleFontSize}
                         updateTheme={this.updateTheme}
                     />
                     <CustomTitle
                         title={settings.title}
+                        titleFontSize={settings.titleFontSize}
                         updateTitle={this.updateTitle}
+                        updateTitleFontSize={this.updateTitleFontSize}
                     />
 					<PostCooldown
                         postCooldownMinutes={settings.postCooldownMinutes}
@@ -134,6 +141,9 @@ class Config extends Component {
 	updateTitle(event) {
 		this.setState({ title: event.target.value })
 	}
+	updateTitleFontSize(event) {
+		this.setState({ titleFontSize: Number(event.target.value) })
+	}
 	async updateSettings(e){
 		e.preventDefault();
 		let settings  = _.pick(this.state,settingsProperties)
@@ -141,7 +151,7 @@ class Config extends Component {
 		this.setState({ isLoading: true })
 		await store.dispatch(updateChannel(settings))
         this.setState({ isLoading: false })
-	}
+	}updateTitleFontSize
 }
 
 const mapStateToProps = (state, ownProps) => {

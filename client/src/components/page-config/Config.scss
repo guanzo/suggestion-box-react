@@ -2,7 +2,14 @@
 	padding: 30px;
 	height: 100%;
 	overflow: auto;
-
+    .custom-title {
+		label{
+			font-weight: 400;
+		}
+		input[type="number"]{
+			max-width: 75px;
+		}
+    }
 	.post-cooldown{
 		.is-grouped .field{
 			margin-right: 0.75rem;

@@ -9,6 +9,7 @@ export const initialState = {
         channelId: -1,
         channelName: 'The broadcaster',
         title: 'Suggestion Box',
+        titleFontSize: 32, //px
         filterProfanity: true,
         requireApproval: false,
 		allowModAdmin: true,

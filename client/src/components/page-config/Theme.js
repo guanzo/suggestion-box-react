@@ -30,7 +30,7 @@ class Theme extends Component {
         this.handleClose()
     }
     render () {
-        const { updateTheme, theme } = this.props
+        const { updateTheme, theme, title, titleFontSize } = this.props
         this.applyThemeToPreview(theme)
         return (
             <div className="theme-layout">
@@ -51,7 +51,7 @@ class Theme extends Component {
                 </div>
                 <div className="theme-preview">
                     <h3 className="subtitle">Theme preview</h3>
-                    <Title/>
+                    <Title title={title} titleFontSize={titleFontSize}/>
                     <div className="theme-widgets">
                         <Fab />
                         <span className="icon">

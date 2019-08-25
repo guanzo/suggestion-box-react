@@ -28,6 +28,7 @@ function addChannel(channelId,channelName){
         channelId,
         suggestions:[],
         title: 'Suggestion Box',
+        titleFontSize: 32, //px
         filterProfanity: true,
         requireApproval: false,
         allowModAdmin: true
