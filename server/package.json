@@ -21,7 +21,7 @@
     "https": "^1.0.0",
     "jsonwebtoken": "^8.0.0",
     "knex": "^0.13.0",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.13",
     "moment": "^2.19.3",
     "mongodb": "^2.2.33",
     "node-cleanup": "^2.1.2",
