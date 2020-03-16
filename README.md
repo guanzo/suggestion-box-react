@@ -1,3 +1,11 @@
+# This repo is deprecated.
+
+This project was my React learning project. I wanted to give it a fair chance. That was a mistake.
+
+I've rewritten it in vue. You can find the new repo here: https://github.com/guanzo/suggestion-box
+
+--------------------------------------------------------
+
 # Suggestion Box
 
 A Twitch panel extension that lets viewers post suggestions about the stream.
